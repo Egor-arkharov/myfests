@@ -29,6 +29,7 @@ export default createStore({
 			fests: [],
 			bands: [],
 			cities: [],
+			myfests: [],
 		};
 	},
 	mutations: {
@@ -48,6 +49,7 @@ export default createStore({
 					genre: data.genre[getRandomInt(data.genre.length)],
 					date: dateStart + "-" + dateEnd,
 					id: Math.random().toString(36).substr(2, 9),
+					added: false,
 				};
 
 				fest.bands = state.bands[fest.genre];
@@ -77,6 +79,7 @@ export default createStore({
 				bands: data.bands,
 				date: data.date[0] + "-" + data.date[1],
 				id: Math.random().toString(36).substr(2, 9),
+				added: false,
 			};
 
 			state.fests.push(fest);
@@ -110,6 +113,11 @@ export default createStore({
 		},
 		setCities(state, data) {
 			state.cities = data;
+		},
+		addMyFest(state, data) {
+			const index = state.myfests.findIndex((item) => item === data);
+
+			index !== -1 ? state.myfests.splice(index, 1) : state.myfests.push(data);
 		},
 	},
 	actions: {
@@ -219,6 +227,9 @@ export default createStore({
 					console.log(e);
 				});
 		},
+		addMyFests({ commit }, payload) {
+			commit("addMyFest", payload);
+		},
 	},
 	getters: {
 		getFests(state) {
@@ -229,6 +240,9 @@ export default createStore({
 		},
 		getBandsByGenre: (state) => (genre) => {
 			return state.bands[genre];
+		},
+		getMyFests(state) {
+			return state.myfests;
 		},
 	},
 });

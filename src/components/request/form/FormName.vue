@@ -20,7 +20,7 @@ export default {
 		const festName = ref("");
 
 		const submitName = () => {
-			emit("submit", festName.value);
+			emit("submit", festName.value[0].toUpperCase() + festName.value.slice(1));
 		};
 
 		return {

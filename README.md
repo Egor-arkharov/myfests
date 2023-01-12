@@ -22,9 +22,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-TODO:
-* После гугла залить на гитхаб
-* Добавлять фесты в мои фесты (сделать кнопку)
-* Удалять фесты из моих фестов (кнопка)
-* В моих фестах свайпер
