@@ -1,0 +1,143 @@
+.visually-hidden {
+	position: absolute;
+
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0;
+	padding: 0;
+
+	white-space: nowrap;
+
+	clip-path: inset(100%);
+	clip: rect(0 0 0 0);
+	overflow: hidden;
+}
+
+.center {
+	margin: 0 auto;
+	padding: 1rem 2rem;
+	max-width: 1200px;
+
+	@media (max-width: $tablet-width) {
+		padding: $tablet-padding;
+	}
+
+	@media (max-width: $mobile-width) {
+		padding: $mobile-padding;
+	}
+}
+
+.card {
+	background-color: #fff;
+	color: black;
+	padding: 1rem 2rem;
+
+	&__title {
+		color: black;
+		font-size: 2.2rem;
+		font-weight: 600;
+	}
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    padding: .5rem 1rem;
+}
+
+.table td {
+    padding: .5rem 1rem;
+}
+
+.table tbody td {
+    text-align: center;
+}
+
+.table tbody tr:hover {
+    background: #eee;
+}
+
+.modal {
+	position: fixed;
+	top: 60px;
+	width: 1300px;
+	padding: 1rem;
+	background: #fff;
+	z-index: 1000;
+	left: 50%;
+	border-radius: 10px;
+	transform: translateX(-50%);
+	box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
+	color: black;
+	height: 90%;
+	overflow: scroll;
+}
+
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, .35);
+	z-index: 100;
+}
+
+.form-control {
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.form-control input,
+.form-control select,
+.form-control textarea{
+    font-family: Inter, Roboto, Oxygen, Fira Sans, Helvetica Neue, sans-serif;
+    margin: 0;
+    outline: none;
+    border: 2px solid #ccc;
+    display: block;
+    width: 100%;
+    color: #2c3e50;
+    padding: 0.5rem 1.5rem;
+    border-radius: 3px;
+    font-size: 1rem;
+    resize: none;
+}
+
+.form-control small {
+    color: #e53935;
+}
+
+.form-control.invalid input {
+    border-color: #e53935;
+}
+
+.form-checkbox {
+    margin-bottom: 1rem;
+}
+
+.form-checkbox .label {
+    display: block;
+    margin: 0 0 0.3rem 0.3rem;
+    font-weight: 500;
+}
+
+.form-checkbox .checkbox input {
+    margin-right: 1rem;
+}
+
+.form-control label {
+    display: block;
+    margin: 0 0 0.3rem 0.3rem;
+    font-weight: 500;
+}
+
+.form-control input:active,
+.form-control input:focus {
+    transition: border 0.22s;
+    border: 2px solid #42b983;
+}
