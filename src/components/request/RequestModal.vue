@@ -72,7 +72,7 @@ export default {
 				date: festDate.value,
 			};
 
-			store.dispatch("createFest", fest);
+			store.commit("addFest", fest);
 			emit("created");
 		};
 

@@ -34,7 +34,7 @@ export default {
 
 		if (!store.getters["getFests"].length) {
 			onMounted(async () => {
-				await store.dispatch("loadCities");
+				await store.dispatch("load/loadData");
 			});
 		}
 

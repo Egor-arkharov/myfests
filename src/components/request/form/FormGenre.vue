@@ -6,7 +6,7 @@
 				<option value="Pop">Pop</option>
 				<option value="Electronic">Electronic</option>
 				<option value="Rock">Rock</option>
-				<option value="All">All</option>
+				<option value="Mix">Mix</option>
 			</select>
 		</div>
 
