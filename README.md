@@ -26,6 +26,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 TODO's:
 * Поиск по группам
 * Add fest to localStorage
-* Картинки к фестам
-* Иконки под жанр
+* lazyload
+* input img add fest
 * Лоадер из иконок
+* Кнопка refreshFests
+* Функцию mix bands перенести в примеси
+
+фото https://unsplash.com/

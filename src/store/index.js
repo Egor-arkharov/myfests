@@ -8,13 +8,14 @@ if (process.env.NODE_ENV === "development") {
 	plugins.push(createLogger());
 }
 
+const getRandomInt = (max) => Math.floor(Math.random() * max);
+
 export default createStore({
 	plugins,
 	state() {
 		return {
 			fests: JSON.parse(localStorage.getItem("fests")) ?? [],
 			bands: JSON.parse(localStorage.getItem("bands")) ?? [],
-			cities: JSON.parse(localStorage.getItem("cities")) ?? [],
 			myfests: [],
 		};
 	},
@@ -99,8 +100,36 @@ export default createStore({
 		getFestsById(_, getters) {
 			return (id) => getters.getFests.find((t) => t.id === id);
 		},
-		getBandsByGenre: (state) => (genre) => {
-			return state.bands[genre];
+		getBandsByGenre: (state, rootGetters) => (genre) => {
+			const allGenres = rootGetters['load/getGenres']
+
+			let bands = null;
+
+			function getMixedBands() {
+				let mixedBands = [];
+
+				const genresWithoutMix = allGenres.filter((el) => el !== "Mix");
+
+				while (mixedBands.length !== 10) {
+					let randomGenre =
+						genresWithoutMix[getRandomInt(genresWithoutMix.length)];
+
+					let bandsFromRandomGenre = state.bands[randomGenre];
+
+					let randomBand =
+						bandsFromRandomGenre[getRandomInt(bandsFromRandomGenre.length)];
+
+					mixedBands.push(randomBand);
+
+					mixedBands = mixedBands.filter((el, i, arr) => arr.indexOf(el) === i);
+				}
+
+				return mixedBands;
+			}
+
+			bands = (genre !== "Mix") ? state.bands[genre] : getMixedBands();
+
+			return bands;
 		},
 		getMyFests(state) {
 			return state.myfests;

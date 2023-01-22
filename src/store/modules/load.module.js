@@ -2,9 +2,12 @@ import axios from "axios";
 import store from "../index";
 import { getDocs } from "firebase/firestore";
 import festsCollection from "@/use/fireBaseStore";
+import { geoConfig } from "@/use/geoStore";
 import { City } from "country-state-city";
 
-localStorage.clear();
+const IMG_AMOUNT = require
+	.context("@/assets/images/", true, /^.*\.jpg$/)
+	.keys();
 
 const shuffle = (array) => {
 	for (let i = array.length - 1; i > 0; i--) {
@@ -15,33 +18,44 @@ const shuffle = (array) => {
 	return array;
 };
 
+// localStorage.clear();
+
 const getRandomInt = (max) => Math.floor(Math.random() * max);
 
 export default {
 	namespaced: true,
+	state() {
+		return {
+			name: [],
+			genre: [],
+			cities: [],
+		};
+	},
 	mutations: {
-		setFests(_, data) {
-			function randomGenre() {
-				let genre = null;
+		setFests(state) {
+			function getMixedBands() {
+				let mixedBands = [];
 
-				for (let i = 0; i < data.genre.length; i++) {
-					const item = data.genre[i];
-					const isStateHasGenre = store.state.fests.find(
-						(fest) => fest.genre === item
-					);
+				const genresWithoutMix = state.genre.filter((el) => el !== "Mix");
 
-					if (isStateHasGenre) {
-						genre = data.genre[getRandomInt(data.genre.length)];
-					} else {
-						genre = item;
-						break;
-					}
+				while (mixedBands.length !== 10) {
+					let randomGenre =
+						genresWithoutMix[getRandomInt(genresWithoutMix.length)];
+
+					let bandsFromRandomGenre = store.state.bands[randomGenre];
+
+					let randomBand =
+						bandsFromRandomGenre[getRandomInt(bandsFromRandomGenre.length)];
+
+					mixedBands.push(randomBand);
+
+					mixedBands = mixedBands.filter((el, i, arr) => arr.indexOf(el) === i);
 				}
 
-				return genre;
+				return mixedBands;
 			}
 
-			function randomFestFromData(i) {
+			function getRandomDate() {
 				const randomDateStart = new Date().setDate(getRandomInt(300));
 
 				let copyDateStart = new Date(randomDateStart);
@@ -50,22 +64,38 @@ export default {
 				const dateStart = new Date(randomDateStart).toLocaleDateString();
 				const dateEnd = copyDateStart.toLocaleDateString();
 
+				return {
+					dateStart,
+					dateEnd,
+				};
+			}
+
+			function getRandomFest(i) {
+				const randomDate = getRandomDate();
+
 				const fest = {
-					name: data.name[i],
-					place: store.state.cities[i],
-					genre: randomGenre(),
+					name: state.name[i],
+					place: state.cities[i],
+					genre:
+						i < state.genre.length
+							? state.genre[i]
+							: state.genre[getRandomInt(state.genre.length)],
 					date: {
-						start: dateStart,
-						end: dateEnd,
+						start: randomDate.dateStart,
+						end: randomDate.dateEnd,
 						fullDateStart: new Date(
-							dateStart.replace(/(\d\d).(\d\d)/, "$2.$1")
+							randomDate.dateStart.replace(/(\d\d).(\d\d)/, "$2.$1")
 						),
 					},
 					id: Math.random().toString(36).substr(2, 9),
+					img: IMG_AMOUNT[getRandomInt(IMG_AMOUNT.length)].slice(1),
 					added: false,
 				};
 
-				fest.bands = store.state.bands[fest.genre];
+				fest.bands =
+					fest.genre !== "Mix"
+						? store.state.bands[fest.genre]
+						: getMixedBands();
 
 				let headliners = [];
 
@@ -79,119 +109,78 @@ export default {
 				return fest;
 			}
 
-			for (let i = 0; i < data.name.length; i++) {
-				store.state.fests.push(randomFestFromData(i));
+			for (let i = 0; i < state.name.length; i++) {
+				store.state.fests.push(getRandomFest(i));
 			}
 
 			localStorage.setItem("fests", JSON.stringify(store.state.fests));
 		},
-		setBands(_, data) {
-			store.state.bands = data.bands;
-
-			let allBands = [];
-
-			function setBandsInMix() {
-				const genresWithoutMix = data.genre.filter((el) => el !== "Mix");
-
-				while (allBands.length !== 10) {
-					let randomGenre =
-						genresWithoutMix[getRandomInt(genresWithoutMix.length)];
-
-					let bandsFromRandomGenre = data.bands[randomGenre];
-
-					let randomBand =
-						bandsFromRandomGenre[getRandomInt(bandsFromRandomGenre.length)];
-
-					allBands.push(randomBand);
-
-					allBands = allBands.filter((el, i, arr) => arr.indexOf(el) === i);
-				}
-			}
-
-			setBandsInMix();
-
-			store.state.bands["Mix"] = allBands;
-			localStorage.setItem("bands", JSON.stringify(store.state.bands));
-		},
-		setCities(_, data) {
-			store.state.cities = data;
-			localStorage.setItem("cities", JSON.stringify(store.state.cities));
-		},
 	},
 	actions: {
-		async loadFests({ commit }) {
+		async loadData({ state, dispatch }) {
 			try {
 				const fireBaseData = await getDocs(festsCollection);
 
 				fireBaseData.docs.forEach((doc) => {
 					const data = doc.data();
 
-					shuffle(data.name);
-					shuffle(data.place);
-					shuffle(data.genre);
-
-					commit("setBands", data);
-					commit("setFests", data);
+					state.name = shuffle(data.name);
+					state.genre = shuffle(data.genre);
+					store.state.bands = data.bands;
 				});
+
+				dispatch("loadCountries");
 			} catch (e) {
 				console.log(e.message);
 			}
 		},
-		async loadData({ commit, dispatch }) {
-			const COUNTRY_STATE_CITY_KEY =
-				"MUJDaWx3SXNpVWNRWHczR1dDa0pGUzZjYzJCTTJUdmJzR2RGTFh5NA==";
+		async loadCountries({ dispatch }) {
+			geoConfig.url = "https://api.countrystatecity.in/v1/countries";
 
-			const config = {
-				method: "get",
-				headers: {
-					"X-CSCAPI-KEY": COUNTRY_STATE_CITY_KEY,
-				},
-			};
-
-			config.url = "https://api.countrystatecity.in/v1/countries";
-
-			let randomCities = [];
-
-			axios(config)
+			axios(geoConfig)
 				.then(function (response) {
 					const data = response.data;
+
 					shuffle(data);
-					findCities(data);
+					dispatch("loadCities", data);
 				})
 				.catch(function (error) {
 					console.log(error);
 				});
-
-			async function findCities(slicedCountries) {
-				for (const item of slicedCountries) {
-					if (randomCities.length === 8) {
-						break;
-					}
-
-					config.url = `https://api.countrystatecity.in/v1/countries/${item.iso2}/`;
-
-					await axios(config)
-						.then(function (response) {
-							const data = response.data;
-							const capital = data.capital;
-
-							const cityData = City.getAllCities().find(
-								(item) => item.name === capital
-							);
-
-							if (capital && cityData) {
-								cityData.countryName = data.name;
-								randomCities.push(cityData);
-							}
-						})
-						.catch(function (error) {
-							console.log(error);
-						});
+		},
+		async loadCities({ state, commit }, countries) {
+			for (const item of countries) {
+				if (state.cities.length === state.name.length) {
+					break;
 				}
 
-				commit("setCities", randomCities);
-				dispatch("loadFests");
+				geoConfig.url = `https://api.countrystatecity.in/v1/countries/${item.iso2}/`;
+
+				await axios(geoConfig)
+					.then(function (response) {
+						const data = response.data;
+						const capital = data.capital;
+
+						const cityData = City.getAllCities().find(
+							(item) => item.name === capital
+						);
+
+						if (capital && cityData) {
+							cityData.countryName = data.name;
+							state.cities.push(cityData);
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
 			}
+
+			commit("setFests");
+		},
+	},
+	getters: {
+		getGenres(state) {
+			return state.genre;
 		},
 	},
 };

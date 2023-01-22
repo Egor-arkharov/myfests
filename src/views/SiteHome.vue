@@ -1,5 +1,5 @@
 <template>
-	<app-page title="All fests">
+	<app-page title="All fests" v-if="fests">
 		<template #button>
 			<button class="btn primary" @click="modal = true">Создать</button>
 		</template>
