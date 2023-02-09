@@ -1,10 +1,11 @@
 <template>
+	<h4 class="title__form">Choose date</h4>
 	<form @submit.prevent="submitDate">
 		<Datepicker
 			v-model="date"
 			range
+			auto-range="2"
 			:enable-time-picker="false"
-			max-range="2"
 			model-type="dd.MM.yyyy"
 			@update:modelValue="handleDate"
 			:min-date="new Date()"
@@ -12,7 +13,9 @@
 			placeholder="Select a Date. Can't have more than 2 days in between"
 			:partial-range="false"
 		></Datepicker>
-		<button type="submit" :disabled="!date">Submit form</button>
+		<button class="form__button btn btn--form" type="submit" :disabled="!date">
+			Add date
+		</button>
 	</form>
 </template>
 

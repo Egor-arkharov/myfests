@@ -1,6 +1,7 @@
 import { createStore, createLogger } from "vuex";
 import loader from "@/use/googleMapsStore";
 import load from "./modules/load.module";
+import { getMixedBands, AMOUNT_BANDS_MAX, getLineup } from "@/use/utils";
 
 const plugins = [];
 
@@ -8,15 +9,12 @@ if (process.env.NODE_ENV === "development") {
 	plugins.push(createLogger());
 }
 
-const getRandomInt = (max) => Math.floor(Math.random() * max);
-
 export default createStore({
 	plugins,
 	state() {
 		return {
 			fests: JSON.parse(localStorage.getItem("fests")) ?? [],
 			bands: JSON.parse(localStorage.getItem("bands")) ?? [],
-			myfests: [],
 		};
 	},
 	mutations: {
@@ -36,14 +34,19 @@ export default createStore({
 				},
 				id: Math.random().toString(36).substr(2, 9),
 				added: false,
+				own: true,
+				img: data.img,
+				lineup: getLineup(data.bands, data.headliners),
 			};
 
 			state.fests.push(fest);
+			localStorage["fests"] = JSON.stringify(state.fests);
 		},
-		addMyFest(state, data) {
-			const index = state.myfests.findIndex((item) => item === data);
+		changeMyFests(state, data) {
+			const fest = state.fests.find((el) => el === data);
+			fest.added = !fest.added;
 
-			index !== -1 ? state.myfests.splice(index, 1) : state.myfests.push(data);
+			localStorage["fests"] = JSON.stringify(state.fests);
 		},
 		sortFests(state, sortSettings) {
 			/* eslint-disable prettier/prettier */
@@ -64,8 +67,8 @@ export default createStore({
 	actions: {
 		async loadMap(_, payload) {
 			const myLatLng = {
-				lat: +payload.value.place.latitude,
-				lng: +payload.value.place.longitude,
+				lat: +payload.place.latitude,
+				lng: +payload.place.longitude,
 			};
 
 			const mapOptions = {
@@ -78,14 +81,14 @@ export default createStore({
 				.load()
 				.then((google) => {
 					const map = new google.maps.Map(
-						document.getElementById("map"),
+						document.getElementById(`map-${payload.name}`),
 						mapOptions
 					);
 
 					new google.maps.Marker({
 						position: myLatLng,
 						map,
-						title: payload.value.place.name,
+						title: payload.place.name,
 					});
 				})
 				.catch((e) => {
@@ -103,36 +106,10 @@ export default createStore({
 		getBandsByGenre: (state, rootGetters) => (genre) => {
 			const allGenres = rootGetters['load/getGenres']
 
-			let bands = null;
-
-			function getMixedBands() {
-				let mixedBands = [];
-
-				const genresWithoutMix = allGenres.filter((el) => el !== "Mix");
-
-				while (mixedBands.length !== 10) {
-					let randomGenre =
-						genresWithoutMix[getRandomInt(genresWithoutMix.length)];
-
-					let bandsFromRandomGenre = state.bands[randomGenre];
-
-					let randomBand =
-						bandsFromRandomGenre[getRandomInt(bandsFromRandomGenre.length)];
-
-					mixedBands.push(randomBand);
-
-					mixedBands = mixedBands.filter((el, i, arr) => arr.indexOf(el) === i);
-				}
-
-				return mixedBands;
-			}
-
-			bands = (genre !== "Mix") ? state.bands[genre] : getMixedBands();
-
-			return bands;
+			return (genre !== "Mix") ? state.bands[genre] : getMixedBands(allGenres, state.bands, AMOUNT_BANDS_MAX);
 		},
-		getMyFests(state) {
-			return state.myfests;
+		getMyFests(state, getters) {
+			return getters.getFests.filter((f) => f.added === true);
 		},
 	},
 	modules: {

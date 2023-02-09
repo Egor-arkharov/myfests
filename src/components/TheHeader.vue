@@ -27,6 +27,9 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	// margin: 15px 0;
+	margin-top: 15px;
+	margin-bottom: 15px;
 
 	&__menu {
 		display: flex;
@@ -50,7 +53,7 @@
 		color: white;
 
 		&.active {
-			color: red;
+			color: black;
 		}
 	}
 }

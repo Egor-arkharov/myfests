@@ -1,0 +1,55 @@
+.form {
+	display: flex;
+	flex-direction: column;
+
+	&__label {
+
+	}
+
+	&__input {
+		width: 100%;
+		padding: 10px 15px;
+
+		border: 1px solid lighten($main-color, 40%);
+		color: black;
+		outline: 0;
+
+		font-size: 20px;
+		line-height: 20px;
+		font-weight: 400;
+
+		&::placeholder {
+			font-size: 14px;
+		}
+
+		&:hover,
+		&:focus {
+			border-color: $main-color;
+		}
+	}
+
+	&__block {
+		margin-bottom: 10px;
+	}
+}
+
+.forms__list {
+	@for $i from 1 through length($form-colors) {
+		.forms__item:nth-child(#{$i}) .btn--form {
+			background-color: transparent;
+			border-color: nth($form-colors, $i);
+			color: nth($form-colors, $i);
+
+			&:hover:not(:disabled) {
+				background-color: nth($form-colors, $i);
+				color: white;
+			}
+		}
+	}
+}
+
+.title__form {
+	font-size: 24px;
+	font-weight: 900;
+	margin-bottom: 10px;
+}

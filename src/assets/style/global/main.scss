@@ -1,4 +1,4 @@
-.visually-hidden {
+.visuallyhidden {
 	position: absolute;
 
 	width: 1px;
@@ -29,9 +29,10 @@
 }
 
 .card {
-	background-color: #fff;
+	background-color: rgba(255, 2555, 2555, 0.8);
 	color: black;
 	padding: 1rem 2rem;
+	border-radius: 10px;
 
 	&__title {
 		color: black;
@@ -40,105 +41,35 @@
 	}
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
+// .form {
+// 	position: relative;
+// 	margin-bottom: 0.5rem;
+// }
 
-.table th {
-    padding: .5rem 1rem;
-}
+// .form input,
+// .form select,
+// .form textarea{
+// 	margin: 0;
+// 	outline: none;
+// 	border: 2px solid #ccc;
+// 	display: block;
+// 	width: 100%;
+// 	color: #2c3e50;
+// 	padding: 0.5rem 1.5rem;
+// 	border-radius: 3px;
+// 	font-size: 1rem;
+// 	resize: none;
+// }
 
-.table td {
-    padding: .5rem 1rem;
-}
+// .form label {
+// 	display: block;
+// 	margin: 0 0 0.3rem 0.3rem;
+// 	font-weight: 500;
+// }
 
-.table tbody td {
-    text-align: center;
-}
+// .form input:active,
+// .form input:focus {
+// 	transition: border 0.22s;
+// 	border: 2px solid #42b983;
+// }
 
-.table tbody tr:hover {
-    background: #eee;
-}
-
-.modal {
-	position: fixed;
-	top: 60px;
-	width: 1300px;
-	padding: 1rem;
-	background: #fff;
-	z-index: 1000;
-	left: 50%;
-	border-radius: 10px;
-	transform: translateX(-50%);
-	box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
-	color: black;
-	height: 90%;
-	overflow: scroll;
-}
-
-.modal-backdrop {
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	background: rgba(0, 0, 0, .35);
-	height: 100vh;
-	z-index: 1;
-}
-
-.form-control {
-    position: relative;
-    margin-bottom: 0.5rem;
-}
-
-.form-control input,
-.form-control select,
-.form-control textarea{
-    font-family: Inter, Roboto, Oxygen, Fira Sans, Helvetica Neue, sans-serif;
-    margin: 0;
-    outline: none;
-    border: 2px solid #ccc;
-    display: block;
-    width: 100%;
-    color: #2c3e50;
-    padding: 0.5rem 1.5rem;
-    border-radius: 3px;
-    font-size: 1rem;
-    resize: none;
-}
-
-.form-control small {
-    color: #e53935;
-}
-
-.form-control.invalid input {
-    border-color: #e53935;
-}
-
-.form-checkbox {
-    margin-bottom: 1rem;
-}
-
-.form-checkbox .label {
-    display: block;
-    margin: 0 0 0.3rem 0.3rem;
-    font-weight: 500;
-}
-
-.form-checkbox .checkbox input {
-    margin-right: 1rem;
-}
-
-.form-control label {
-    display: block;
-    margin: 0 0 0.3rem 0.3rem;
-    font-weight: 500;
-}
-
-.form-control input:active,
-.form-control input:focus {
-    transition: border 0.22s;
-    border: 2px solid #42b983;
-}

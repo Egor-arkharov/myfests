@@ -17,6 +17,7 @@ body {
 	// font-family: $main-font;
 	background-color: $main-color;
 	color: $text-color;
+	padding-bottom: 50px;
 }
 
 img {
@@ -34,36 +35,39 @@ a {
 	text-decoration: none;
 }
 
-// button {
-// 	border: none;
-// 	background: none;
-// }
+button {
+	// border: none;
+	// background: none;
+	cursor: pointer;
+	padding: 0;
+	margin: 0;
+}
 
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
 	margin: 0;
 	padding: 0;
 }
 
-body {
-	background: linear-gradient(90deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 30s ease infinite;
-	transform: translate3d(0, 0, 0);
-}
+// body {
+// 	background: linear-gradient(90deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+// 	background-size: 400% 400%;
+// 	animation: body-gradient 25s ease infinite;
+// }
  
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
+// @keyframes body-gradient {
+// 	0% {
+// 		background-position: 0% 50%;
+// 	}
+// 	50% {
+// 		background-position: 100% 50%;
+// 	}
+// 	100% {
+// 		background-position: 0% 50%;
+// 	}
+// }

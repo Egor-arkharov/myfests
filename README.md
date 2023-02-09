@@ -1,3 +1,21 @@
+TODO's:
+
+Base:
+* lazyload
+* Шрифты
+
+Tools:
+* Проверить refresh button - дизейблидть после нажатия сразу
+
+My-fests: 
+* 2 swiper ((((
+
+
+
+фото https://unsplash.com/
+
+
+
 # myfest
 
 ## Project setup
@@ -22,14 +40,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-TODO's:
-* Поиск по группам
-* Add fest to localStorage
-* lazyload
-* input img add fest
-* Лоадер из иконок
-* Кнопка refreshFests
-* Функцию mix bands перенести в примеси
-
-фото https://unsplash.com/

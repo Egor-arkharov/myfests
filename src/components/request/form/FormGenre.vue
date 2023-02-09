@@ -1,16 +1,19 @@
 <template>
-	<form @submit.prevent="submitGenre">
-		<div class="form-control">
-			<label for="genre">Жанр</label>
-			<select id="genre" v-model="festGenre">
-				<option value="Pop">Pop</option>
-				<option value="Electronic">Electronic</option>
-				<option value="Rock">Rock</option>
-				<option value="Mix">Mix</option>
-			</select>
-		</div>
+	<h4 class="title__form">Choose genre</h4>
+	<form @submit.prevent="submitGenre" class="form">
+		<select class="form__input" id="genre" v-model="festGenre">
+			<option class="option--hide" value="" disabled selected>
+				Select Genre
+			</option>
+			<option value="Pop">Pop</option>
+			<option value="Electronic">Electronic</option>
+			<option value="Rock">Rock</option>
+			<option value="Mix">Mix</option>
+		</select>
 
-		<button class="btn primary" :disabled="!festGenre">Добавить жанр</button>
+		<button class="form__button btn btn--form" :disabled="!festGenre">
+			Add Genre
+		</button>
 	</form>
 </template>
 
@@ -33,3 +36,9 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+.option--hide {
+	display: none;
+}
+</style>

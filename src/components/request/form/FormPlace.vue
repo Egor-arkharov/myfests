@@ -1,9 +1,9 @@
 <template>
-	<form @submit.prevent="submitPlace">
-		<div class="form-control">
-			<label for="country">Страна</label>
-
+	<h4 class="title__form">Choose place</h4>
+	<form @submit.prevent="submitPlace" class="form">
+		<div class="form__block">
 			<input
+				class="form__input"
 				list="countryList"
 				placeholder="Select a Country"
 				@input="selectCountry"
@@ -17,10 +17,13 @@
 			</datalist>
 		</div>
 
-		<div class="form-control" v-if="citiesByCode">
-			<label for="city">Город</label>
-
-			<input list="cityList" placeholder="Select a City" @input="selectCity" />
+		<div class="form__block" v-if="citiesByCode">
+			<input
+				class="form__input"
+				list="cityList"
+				placeholder="Select a City"
+				@input="selectCity"
+			/>
 			<datalist id="cityList">
 				<option
 					v-for="item in citiesByCode"
@@ -30,7 +33,9 @@
 			</datalist>
 		</div>
 
-		<button class="btn primary" :disabled="!festPlace">Добавить место</button>
+		<button class="form__button btn btn--form" :disabled="!festPlace">
+			Add place
+		</button>
 	</form>
 </template>
 

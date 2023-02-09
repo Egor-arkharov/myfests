@@ -4,10 +4,12 @@ import { getDocs } from "firebase/firestore";
 import festsCollection from "@/use/fireBaseStore";
 import { geoConfig } from "@/use/geoStore";
 import { City } from "country-state-city";
-
-const IMG_AMOUNT = require
-	.context("@/assets/images/", true, /^.*\.jpg$/)
-	.keys();
+import {
+	AMOUNT_HEADLINERS,
+	AMOUNT_BANDS,
+	getMixedBands,
+	getLineup,
+} from "@/use/utils";
 
 const shuffle = (array) => {
 	for (let i = array.length - 1; i > 0; i--) {
@@ -27,34 +29,34 @@ export default {
 	state() {
 		return {
 			name: [],
-			genre: [],
+			genre: JSON.parse(localStorage.getItem("genre")) ?? [],
 			cities: [],
+			img: [],
+			freeImg: JSON.parse(localStorage.getItem("freeImg")) ?? [],
 		};
 	},
 	mutations: {
-		setFests(state) {
-			function getMixedBands() {
-				let mixedBands = [];
+		setImages(state) {
+			const IMG_AMOUNT = require
+				.context("@/assets/images/", true, /^.*\.jpg$/)
+				.keys();
 
-				const genresWithoutMix = state.genre.filter((el) => el !== "Mix");
-
-				while (mixedBands.length !== 10) {
-					let randomGenre =
-						genresWithoutMix[getRandomInt(genresWithoutMix.length)];
-
-					let bandsFromRandomGenre = store.state.bands[randomGenre];
-
-					let randomBand =
-						bandsFromRandomGenre[getRandomInt(bandsFromRandomGenre.length)];
-
-					mixedBands.push(randomBand);
-
-					mixedBands = mixedBands.filter((el, i, arr) => arr.indexOf(el) === i);
-				}
-
-				return mixedBands;
+			while (state.img.length !== state.name.length) {
+				state.img.push(
+					IMG_AMOUNT[getRandomInt(IMG_AMOUNT.length)].slice(0, -4)
+				);
+				state.img = state.img.filter((el, i, arr) => arr.indexOf(el) === i);
 			}
 
+			IMG_AMOUNT.forEach((el) =>
+				state.img.includes(el.slice(0, -4))
+					? ""
+					: state.freeImg.push(el.slice(1, -4))
+			);
+
+			localStorage.setItem("freeImg", JSON.stringify(state.freeImg));
+		},
+		setFests(state) {
 			function getRandomDate() {
 				const randomDateStart = new Date().setDate(getRandomInt(300));
 
@@ -68,6 +70,20 @@ export default {
 					dateStart,
 					dateEnd,
 				};
+			}
+
+			function getGenreBands(genre) {
+				const genreBands = store.state.bands[genre];
+				let randomBands = [];
+
+				while (randomBands.length !== AMOUNT_BANDS) {
+					randomBands.push(genreBands[getRandomInt(genreBands.length)]);
+					randomBands = randomBands.filter(
+						(el, i, arr) => arr.indexOf(el) === i
+					);
+				}
+
+				return randomBands;
 			}
 
 			function getRandomFest(i) {
@@ -88,23 +104,25 @@ export default {
 						),
 					},
 					id: Math.random().toString(36).substr(2, 9),
-					img: IMG_AMOUNT[getRandomInt(IMG_AMOUNT.length)].slice(1),
+					img: state.img[i].slice(1),
 					added: false,
+					own: false,
 				};
 
 				fest.bands =
 					fest.genre !== "Mix"
-						? store.state.bands[fest.genre]
-						: getMixedBands();
+						? getGenreBands(fest.genre)
+						: getMixedBands(state.genre, store.state.bands, AMOUNT_BANDS);
 
 				let headliners = [];
 
-				while (headliners.length !== 3) {
+				while (headliners.length !== AMOUNT_HEADLINERS) {
 					headliners.push(fest.bands[getRandomInt(fest.bands.length)]);
 					headliners = headliners.filter((el, i, arr) => arr.indexOf(el) === i);
 				}
 
 				fest.headliners = headliners;
+				fest.lineup = getLineup(fest.bands, fest.headliners);
 
 				return fest;
 			}
@@ -112,6 +130,8 @@ export default {
 			for (let i = 0; i < state.name.length; i++) {
 				store.state.fests.push(getRandomFest(i));
 			}
+
+			shuffle(store.state.fests);
 
 			localStorage.setItem("fests", JSON.stringify(store.state.fests));
 		},
@@ -128,6 +148,9 @@ export default {
 					state.genre = shuffle(data.genre);
 					store.state.bands = data.bands;
 				});
+
+				localStorage.setItem("genre", JSON.stringify(state.genre));
+				localStorage.setItem("bands", JSON.stringify(store.state.bands));
 
 				dispatch("loadCountries");
 			} catch (e) {
@@ -175,12 +198,16 @@ export default {
 					});
 			}
 
+			commit("setImages");
 			commit("setFests");
 		},
 	},
 	getters: {
 		getGenres(state) {
 			return state.genre;
+		},
+		getFreeImg(state) {
+			return state.freeImg;
 		},
 	},
 };

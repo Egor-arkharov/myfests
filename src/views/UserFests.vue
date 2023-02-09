@@ -1,26 +1,25 @@
 <template>
-	<div class="card center">
+	<app-page title="My-fests">
 		<swiper
 			v-if="myFests.length"
 			:slidesPerView="1"
 			:spaceBetween="100"
 			:slidesPerGroup="1"
-			:loop="true"
-			:loopFillGroupWithBlank="true"
 			:navigation="true"
 			:modules="modules"
 			class="mySwiper"
 		>
 			<swiper-slide v-for="fest in myFests" :key="fest.id">
-				<h2>{{ fest.name }}</h2>
-				<p class="code">{{ fest }}</p>
+				<fest-page :fest="fest"></fest-page>
 			</swiper-slide>
 		</swiper>
 		<p v-else>Фестов нет(</p>
-	</div>
+	</app-page>
 </template>
 
 <script>
+import AppPage from "../components/ui/AppPage.vue";
+import FestPage from "../components/ui/FestPage.vue";
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -53,22 +52,14 @@ export default {
 	components: {
 		Swiper,
 		SwiperSlide,
+		FestPage,
+		AppPage,
 	},
 };
 </script>
 
 <style scoped lang="scss">
 .swiper {
-	margin: 20px 0;
-	background-color: lightblue;
-	cursor: grab;
-}
-
-.swiper-slide {
-	background-color: lightcoral;
-}
-
-.code {
-	white-space: pre;
+	opacity: 1;
 }
 </style>

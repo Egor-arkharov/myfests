@@ -1,5 +1,27 @@
 $main-color: #2c3e50;
 $text-color: #ffffff;
+$btn-color: #7140EB;
+
+$color-1: #EF476F;
+$color-2: #F78C6B;
+$color-3: #FFD166;
+$color-4: #83D483;
+$color-5: #06D6A0;
+$color-6: #0CB0A9;
+$color-7: #118AB2;
+$color-8: #073B4C;
+
+// $main-colors:
+// (base: $color-1, hover: darken($color-1, 10%)),
+// (base: $color-2, hover: darken($color-2, 10%)),
+// (base: $color-3, hover: darken($color-3, 10%)),
+// (base: $color-4, hover: darken($color-4, 10%)),
+// (base: $color-5, hover: darken($color-5, 10%)),
+// (base: $color-6, hover: darken($color-6, 10%));
+
+$colors: $color-1, $color-2, $color-3, $color-4, $color-5, $color-6, $color-7, $color-8;
+$form-colors: $color-2, $color-4, $color-5, $color-6, $color-7, $color-8;
+$tools-colors: $color-5, $color-6, $color-8, $color-2;
 
 $mobile-width: 320px;
 $mobile-padding: 15px;
