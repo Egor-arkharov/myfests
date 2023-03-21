@@ -1,6 +1,14 @@
-$main-color: #2c3e50;
-$text-color: #ffffff;
-$btn-color: #7140EB;
+@import "./mixins";
+
+$grey-color: #2c3e50;
+$main-color: #7140EB;
+
+$white-color: #ffffff;
+$black-color: #000000;
+
+:root {
+	--swiper-theme-color: #7140EB;
+}
 
 $color-1: #EF476F;
 $color-2: #F78C6B;
@@ -11,17 +19,10 @@ $color-6: #0CB0A9;
 $color-7: #118AB2;
 $color-8: #073B4C;
 
-// $main-colors:
-// (base: $color-1, hover: darken($color-1, 10%)),
-// (base: $color-2, hover: darken($color-2, 10%)),
-// (base: $color-3, hover: darken($color-3, 10%)),
-// (base: $color-4, hover: darken($color-4, 10%)),
-// (base: $color-5, hover: darken($color-5, 10%)),
-// (base: $color-6, hover: darken($color-6, 10%));
+$error-color: $color-1;
 
 $colors: $color-1, $color-2, $color-3, $color-4, $color-5, $color-6, $color-7, $color-8;
 $form-colors: $color-2, $color-4, $color-5, $color-6, $color-7, $color-8;
-$tools-colors: $color-5, $color-6, $color-8, $color-2;
 
 $mobile-width: 320px;
 $mobile-padding: 15px;
@@ -31,3 +32,61 @@ $tablet-padding: 45px;
 
 $desktop-width: 1366px;
 $desktop-padding: 98px;
+
+$breakpoints: (
+	"xs": 600px,
+	"sm": 798px,
+	"md": 1080px,
+	"lg": 1279px,
+	"xl": 1500px,
+);
+
+$main-font: 'Nunito regular', sans-serif;
+$main-font-italic: 'Nunito italic', sans-serif;
+$main-font-semibold: 'Nunito 600', sans-serif;
+$main-font-bold: 'Nunito 700', sans-serif;
+$main-font-bold-ex: 'Nunito 800', sans-serif;
+
+$title-font: 'Lora 600', serif;
+
+$font-size-s: 14px;
+$line-height-s: 16px;
+
+$font-size-l: 16px;
+$line-height-l: 19px;
+
+$font-size-m: 18px;
+$line-height-m: 21px;
+
+$font-size-xl: 24px;
+$line-height-xl: 26px;
+
+$font-size-xxl: 86px;
+$line-height-xxl: 90px;
+
+$band-fonts: (
+	"rock-0": "Anton", 
+	"rock-1": "Creepster", 
+	"rock-2": "Eater",
+	"rock-3": "Metal Mania", 
+	"rock-4": "Vast Shadow", 
+	"rock-5": "Caveat Brush",
+	"pop-0": "Bungee Shade", 
+	"pop-1": "Codystar", 
+	"pop-2": "Monoton",
+	"pop-3": "Nothing You Could Do", 
+	"pop-4": "Saira Stencil One", 
+	"pop-5": "Shadows Into Light",
+	"electronic-0": "Chakra Petch", 
+	"electronic-1": "Finger Paint", 
+	"electronic-2": "Kanit",
+	"electronic-3": "Noto Serif Khojki", 
+	"electronic-4": "Righteous", 
+	"electronic-5": "Titan One"
+);
+
+@each $name, $font in $band-fonts {
+	.font-#{$name} {
+		font-family: $font;
+	}
+}

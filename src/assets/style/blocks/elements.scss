@@ -1,0 +1,119 @@
+.decor {
+	&-0 {
+		transform: skewY(4deg);
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+
+			width: 105%;
+			height: 105%;
+
+			left: -2%;
+
+			border-right: 2px solid $black-color;
+			border-bottom: 2px solid $black-color;
+
+			transform: skew(-10deg);
+		}
+	}
+
+	&-1 {
+		transform: skewY(-4deg);
+	}
+
+	&-2 {
+		transform: scaleX(1.2);
+		border-top: 5px double $black-color;
+		border-bottom: 5px double $black-color;
+		max-width: 90%;
+	}
+
+	&-3 {
+		transform: scaleY(1.5);
+	}
+
+	&-4 {
+		transform: skew(5deg, 5deg);
+	}
+
+	&-5 {
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+
+			width: 110%;
+			height: 110%;
+			top: -5%;
+			left: -5%;
+
+			border-top: 3px solid $black-color;
+			border-left: 3px solid $black-color;
+			border-radius: 5px 20px 5px;
+		}
+	}
+}
+
+.dp__today {
+	border: 2px solid $color-5;
+}
+
+.dp__range_end, .dp__range_start, .dp__active_date {
+	background: $color-5;
+}
+
+.dp__select {
+	color: $color-5;
+}
+
+.dp__cell_auto_range_start,
+.dp__cell_auto_range_end {
+	border-top: 1px dashed $color-5;
+	border-bottom: 1px dashed $color-5;
+}
+
+.dp__cell_auto_range_start {
+	border-left: 1px dashed $color-5;
+}
+
+.dp__cell_auto_range {
+    border-top: 1px dashed $color-5;
+    border-bottom: 1px dashed $color-5;
+}
+
+.dp__cell_auto_range_end {
+    border-right: 1px dashed $color-5;
+}
+
+.dp__clear_icon {
+	display: none;
+}
+
+.list {
+	padding-left: 8px;
+
+	&__item {
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+	
+			top: 0.5em;
+			left: -8px;
+	
+			width: 4px;
+			height: 4px;
+	
+			background-color: $black-color;
+			border-radius: 50%;
+		}
+	
+		&:not(:last-child) {
+			margin-bottom: 5px;
+		}
+	}
+}

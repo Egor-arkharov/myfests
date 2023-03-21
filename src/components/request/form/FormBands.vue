@@ -1,5 +1,28 @@
 <template>
 	<h4 class="title__form">Choose bands</h4>
+	<p class="lead">
+		Pick up 9 bands
+		<span
+			>(
+			<inline-svg
+				:src="require('@/assets/icons/sub.svg')"
+				width="30"
+				height="30"
+			></inline-svg>
+			)
+		</span>
+		and 3 headliners
+		<span
+			>(
+			<inline-svg
+				:src="require('@/assets/icons/head.svg')"
+				width="30"
+				height="30"
+			></inline-svg>
+			)
+		</span>
+	</p>
+
 	<form @submit.prevent="submitBands" class="form">
 		<ul class="form__list">
 			<li class="form__item" v-for="(band, idx) in bandsFromGenre" :key="idx">
@@ -19,7 +42,8 @@
 						@mouseleave="hoverSub(idx, false)"
 						@click="submitSub(band, idx)"
 						:disabled="
-							festBands.length === maxSubBands && !festBands.includes(band)
+							festSubBands.length === maxSubBands &&
+							!festSubBands.includes(band)
 						"
 					>
 						<inline-svg
@@ -51,62 +75,100 @@
 			</li>
 		</ul>
 
-		<p>Headliners: {{ festHeadliners.join(", ") }}</p>
-		<p>Other bands: {{ festBands.join(", ") }}</p>
+		<p
+			class="form__text"
+			:class="{ full: festHeadliners.length === AMOUNT_HEADLINERS }"
+		>
+			Headliners ({{ festHeadliners.length + "/" + AMOUNT_HEADLINERS }}):
+			{{ festHeadliners.join(", ") }}
+		</p>
+		<p
+			class="form__text"
+			:class="{ full: festSubBands.length === maxSubBands }"
+		>
+			Other bands ({{ festSubBands.length + "/" + maxSubBands }}):
+			{{ festSubBands.join(", ") }}
+		</p>
 
 		<button
 			class="form__button btn btn--form"
+			:class="{ added: isChange }"
 			type="submit"
 			:disabled="
 				festHeadliners.length !== maxHeadliners ||
-				festBands.length < maxSubBands
+				festSubBands.length < maxSubBands
 			"
 		>
-			Add bands
+			{{ getButtonText() }}
 		</button>
 	</form>
 </template>
 
 <script>
+import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
 import InlineSvg from "vue-inline-svg";
-import { watch } from "@vue/runtime-core";
+import { onUpdated, watch } from "@vue/runtime-core";
 import { AMOUNT_HEADLINERS, AMOUNT_BANDS } from "@/use/utils";
 
 export default {
 	emits: ["submit"],
-	props: ["bandsFromGenre"],
+	props: ["genre"],
 	setup(props, { emit }) {
-		const festBands = ref([]);
+		const store = useStore();
+		const bandsFromGenre = ref([]);
+
+		const isChange = ref(false);
+		const isAdded = ref(false);
+
+		const festSubBands = ref([]);
 		const festHeadliners = ref([]);
 		const bandEls = ref([]);
 		const maxHeadliners = AMOUNT_HEADLINERS;
 		const maxSubBands = AMOUNT_BANDS - AMOUNT_HEADLINERS;
 
 		watch(props, () => {
-			festBands.value = [];
+			festSubBands.value = [];
 			festHeadliners.value = [];
+			bandsFromGenre.value = store.getters.getBandsByGenre(props.genre);
+
 			bandEls.value.forEach((item) =>
 				item.classList.remove(
-					"activesub",
-					"activehead",
+					"hover-sub",
+					"hover-head",
 					"addedSub",
-					"addedHead",
-					"added"
+					"addedHead"
 				)
 			);
 		});
 
+		onUpdated(() => {
+			if (
+				festHeadliners.value.length !== maxHeadliners ||
+				festSubBands.value.length !== maxSubBands
+			) {
+				isChange.value = false;
+			}
+		});
+
 		const hoverSub = (bandIdx, isHover) => {
+			if (festSubBands.value.length === maxSubBands) {
+				return;
+			}
+
 			isHover
-				? bandEls.value[bandIdx].classList.add("activesub")
-				: bandEls.value[bandIdx].classList.remove("activesub");
+				? bandEls.value[bandIdx].classList.add("hover-sub")
+				: bandEls.value[bandIdx].classList.remove("hover-sub");
 		};
 
 		const hoverHead = (bandIdx, isHover) => {
+			if (festHeadliners.value.length === AMOUNT_HEADLINERS) {
+				return;
+			}
+
 			isHover
-				? bandEls.value[bandIdx].classList.add("activehead")
-				: bandEls.value[bandIdx].classList.remove("activehead");
+				? bandEls.value[bandIdx].classList.add("hover-head")
+				: bandEls.value[bandIdx].classList.remove("hover-head");
 		};
 
 		const submitHead = (evt, bandIdx) => {
@@ -114,33 +176,54 @@ export default {
 				festHeadliners.value = festHeadliners.value.filter(
 					(item) => item !== evt
 				);
-				bandEls.value[bandIdx].classList.remove("addedHead", "added");
+				bandEls.value[bandIdx].classList.remove("addedHead");
 			} else {
 				festHeadliners.value.push(evt);
-				bandEls.value[bandIdx].classList.add("addedHead", "added");
+				bandEls.value[bandIdx].classList.add("addedHead");
 			}
 		};
 
 		const submitSub = (evt, bandIdx) => {
-			if (festBands.value.includes(evt)) {
-				festBands.value = festBands.value.filter((item) => item !== evt);
-				bandEls.value[bandIdx].classList.remove("addedSub", "added");
+			if (festSubBands.value.includes(evt)) {
+				festSubBands.value = festSubBands.value.filter((item) => item !== evt);
+				bandEls.value[bandIdx].classList.remove("addedSub");
 			} else {
-				festBands.value.push(evt);
-				bandEls.value[bandIdx].classList.add("addedSub", "added");
+				festSubBands.value.push(evt);
+				bandEls.value[bandIdx].classList.add("addedSub");
 			}
 		};
 
 		const submitBands = () => {
 			emit("submit", {
-				bands: festBands.value,
+				bands: festSubBands.value,
 				headliners: festHeadliners.value,
 			});
+
+			isChange.value = true;
+			isAdded.value = true;
+		};
+
+		const getButtonText = () => {
+			let btnText = "Add Bands";
+
+			if (isAdded.value) {
+				btnText = "Bands Added";
+			}
+
+			if (isAdded.value && !isChange.value) {
+				btnText = "Update Bands";
+			}
+
+			return btnText;
 		};
 
 		return {
-			festBands,
+			bandsFromGenre,
+			isChange,
+			getButtonText,
+			festSubBands,
 			festHeadliners,
+			AMOUNT_HEADLINERS,
 			submitBands,
 			submitHead,
 			submitSub,
@@ -158,8 +241,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$this-color: $color-7;
+
 ul {
 	margin-bottom: 20px;
+}
+
+.lead {
+	font-size: 24px;
+	margin-bottom: 10px;
+
+	span {
+		display: inline-flex;
+	}
+
+	svg {
+		margin: 0 -5px;
+	}
 }
 
 .form {
@@ -172,15 +270,25 @@ ul {
 		margin-right: 20px;
 		margin-bottom: 20px;
 	}
+
+	&__text {
+		padding-left: 20px;
+		text-indent: -20px;
+
+		&.full {
+			color: green;
+			font-weight: 600;
+		}
+	}
 }
 
 .band {
 	display: block;
 	background-color: transparent;
-	border: 2px solid $btn-color;
+	border: 2px solid $this-color;
 	padding: 15px 45px;
 	border-radius: 20px;
-	color: $btn-color;
+	color: $this-color;
 	font-weight: 900;
 	position: relative;
 	overflow: hidden;
@@ -198,29 +306,29 @@ ul {
 		}
 
 		svg {
-			fill: $btn-color;
+			fill: $this-color;
 		}
 
 		&-sub {
 			left: 0;
-			border-right: 2px solid $btn-color;
+			border-right: 2px solid $this-color;
 		}
 
 		&-head {
 			right: 0;
-			border-left: 2px solid $btn-color;
+			border-left: 2px solid $this-color;
 		}
 
-		&:hover {
-			background-color: $btn-color;
+		&:hover:not(:disabled) {
+			background-color: $this-color;
 
 			svg {
-				fill: white;
+				fill: $white-color;
 			}
 		}
 	}
 
-	&.activesub,
+	&.hover-sub,
 	&.addedSub {
 		.text {
 			display: block;
@@ -232,7 +340,7 @@ ul {
 		}
 	}
 
-	&.activehead,
+	&.hover-head,
 	&.addedHead {
 		.text {
 			display: block;
@@ -244,18 +352,17 @@ ul {
 		}
 	}
 
-	&.added .band__button {
-		background-color: $btn-color;
-
-		svg {
-			fill: white;
-		}
-
-		&:hover {
-			background-color: white;
+	&.addedSub,
+	&.addedHead {
+		.band__button {
+			background-color: $this-color;
 
 			svg {
-				fill: $btn-color;
+				fill: $white-color;
+			}
+
+			@include hover {
+				opacity: 0.7;
 			}
 		}
 	}

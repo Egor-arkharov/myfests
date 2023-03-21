@@ -2,7 +2,7 @@
 	<h4 class="title__form">Choose date</h4>
 	<form @submit.prevent="submitDate">
 		<Datepicker
-			v-model="date"
+			v-model="festDate"
 			range
 			auto-range="2"
 			:enable-time-picker="false"
@@ -10,11 +10,16 @@
 			@update:modelValue="handleDate"
 			:min-date="new Date()"
 			required
-			placeholder="Select a Date. Can't have more than 2 days in between"
+			placeholder="Select a Date"
 			:partial-range="false"
 		></Datepicker>
-		<button class="form__button btn btn--form" type="submit" :disabled="!date">
-			Add date
+		<button
+			class="form__button btn btn--form"
+			:class="{ added: isChange }"
+			type="submit"
+			:disabled="!festDate"
+		>
+			{{ getButtonText() }}
 		</button>
 	</form>
 </template>
@@ -23,24 +28,49 @@
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/src/VueDatePicker/style/main.scss";
 import { ref } from "@vue/reactivity";
+import { watch } from "@vue/runtime-core";
 
 export default {
 	emits: ["submit"],
 	setup(_, { emit }) {
-		const date = ref(null);
+		const festDate = ref(null);
+		const isChange = ref(false);
+		const isAdded = ref(false);
 
 		const handleDate = (modelData) => {
 			if (modelData) {
-				date.value = modelData;
+				festDate.value = modelData;
 			}
 		};
 
+		watch(festDate, () => {
+			isChange.value = false;
+		});
+
 		const submitDate = () => {
-			emit("submit", date.value);
+			emit("submit", festDate.value);
+			isChange.value = true;
+			isAdded.value = true;
+		};
+
+		const getButtonText = () => {
+			let btnText = "Add Date";
+
+			if (isAdded.value) {
+				btnText = "Date Added";
+			}
+
+			if (isAdded.value && !isChange.value) {
+				btnText = "Update Date";
+			}
+
+			return btnText;
 		};
 
 		return {
-			date,
+			festDate,
+			isChange,
+			getButtonText,
 			handleDate,
 			submitDate,
 		};

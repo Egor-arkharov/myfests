@@ -1,35 +1,64 @@
 <template>
-	<header class="header center">
-		<p class="header__title">My-Fest</p>
-		<nav class="header__nav nav">
-			<ul class="nav__menu">
-				<li class="nav__item">
-					<router-link to="/" class="nav__link">All fests</router-link>
-				</li>
-				<li class="nav__item">
-					<router-link to="/my-fests" class="nav__link">My fests</router-link>
-				</li>
-				<li class="nav__item">
-					<router-link to="/faq" class="nav__link">FAQ</router-link>
-				</li>
-				<li class="nav__item">
-					<router-link to="/contacts" class="nav__link">Contacts</router-link>
-				</li>
-			</ul>
-		</nav>
+	<header class="header">
+		<div class="header__wrapper center">
+			<p class="header__title">
+				<inline-svg
+					:src="require('@/assets/icons/logo.svg')"
+					width="120"
+					height="30"
+				></inline-svg>
+			</p>
+			<nav class="header__nav nav">
+				<ul class="nav__menu">
+					<li class="nav__item">
+						<router-link to="/" class="nav__link">All fests</router-link>
+					</li>
+					<li class="nav__item">
+						<router-link to="/my-fests" class="nav__link">My fests</router-link>
+					</li>
+					<li class="nav__item">
+						<router-link to="/faq" class="nav__link">FAQ</router-link>
+					</li>
+					<li class="nav__item">
+						<a class="nav__link" href="#" @click.prevent="open">Contacts</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 </template>
 
-<script></script>
+<script>
+import InlineSvg from "vue-inline-svg";
+import { useStore } from "vuex";
 
-<style scoped lang="scss">
+export default {
+	setup() {
+		const store = useStore();
+
+		return {
+			open: () => store.commit("openSidebar"),
+		};
+	},
+	components: {
+		InlineSvg,
+	},
+};
+</script>
+
+<style lang="scss" scoped>
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	// margin: 15px 0;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	padding: 20px 0;
+
+	&__wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__title {
+		transform: translateY(7px);
+	}
 
 	&__menu {
 		display: flex;
@@ -50,10 +79,17 @@
 	}
 
 	&__link {
-		color: white;
+		@include font-l;
+		font-family: $main-font-bold;
+		color: $white-color;
+
+		@include hover {
+			color: $main-color;
+		}
 
 		&.active {
-			color: black;
+			color: $black-color;
+			cursor: default;
 		}
 	}
 }

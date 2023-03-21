@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import AppPage from "../components/ui/AppPage.vue";
-import FestPage from "../components/ui/FestPage.vue";
+import AppPage from "../components/ui/App/AppPage.vue";
+import FestPage from "../components/ui/Fest/FestPage.vue";
 import { ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
@@ -20,8 +20,6 @@ export default {
 		const id = route.params.id;
 
 		fest.value = store.getters.getFestsById(id);
-
-		console.log("nen", fest.value);
 
 		return {
 			fest,

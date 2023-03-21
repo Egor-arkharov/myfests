@@ -1,0 +1,59 @@
+.form {
+	display: flex;
+	flex-direction: column;
+
+	&__label {
+
+	}
+
+	&__input {
+		width: 100%;
+		padding: 10px 15px;
+
+		border: 1px solid lighten($grey-color, 40%);
+		color: $black-color;
+		outline: 0;
+
+		font-size: 20px;
+		line-height: 20px;
+
+		&::placeholder {
+			font-size: 14px;
+		}
+
+		&:hover,
+		&:focus {
+			border-color: $grey-color;
+		}
+	}
+
+	&__block {
+		margin-bottom: 10px;
+	}
+}
+
+.forms__list {
+	@for $i from 1 through length($form-colors) {
+		.forms__item:nth-child(#{$i}) .btn--form {
+			background-color: transparent;
+			border-color: nth($form-colors, $i);
+			color: nth($form-colors, $i);
+
+			&:hover:not(:disabled) {
+				background-color: nth($form-colors, $i);
+				color: $white-color;
+			}
+
+			&.added {
+				background-color: nth($form-colors, $i);
+				color: $white-color;
+				pointer-events: none;
+			}
+		}
+	}
+}
+
+.title__form {
+	font-size: 24px;
+	margin-bottom: 10px;
+}

@@ -1,0 +1,206 @@
+.btn {
+	position: relative;
+	border: none;
+	overflow: hidden;
+	text-transform: uppercase;
+	background-color: transparent;
+
+	&:disabled {
+		cursor: auto;
+		opacity: 0.3;
+	}
+}
+
+.btn--open,
+.btn--add {
+	width: 100px;
+	padding: 10px 15px;
+
+	border: 2px solid $main-color;
+	border-radius: 10px;
+	background-color: $white-color;
+
+	font-family: $main-font-bold;
+	@include font-s;
+
+	&::before {
+		content: '';
+		position: absolute;
+
+		width: 100%;
+		height: 200%;
+
+		top: 50%;
+
+		background-color: $main-color;
+		transition: transform 0.3s ease-out;
+
+		z-index: 1;
+	}
+
+	@include hover {
+		.btn__text {
+			color: $white-color;
+		}
+	}
+
+	.btn__text {
+		position: relative;
+		z-index: 2;
+
+		color: $main-color;
+		transition: all 0.3s ease-out;
+	}
+
+	@keyframes glowing {
+		0% { background-position: 0 0; }
+		50% { background-position: 400% 0; }
+		100% { background-position: 0 0; }
+	}
+}
+
+.btn--open {
+	&::before {
+		left: -50%;
+		transform: translate(-50%, -50%) rotate(90deg);
+	}
+
+	@include hover {
+		&::before {
+			left: -50%;
+			transform: translate(50%, -50%) rotate(135deg);
+		}
+	}
+}
+
+.btn--add {
+	&::before {
+		right: 50%;
+		transform: translate(150%, -50%) rotate(90deg);
+	}
+
+	@include hover {
+		&::before {
+			right: 50%;
+			transform: translate(50%, -50%) rotate(50deg);
+		}
+	}
+
+	&.remove {
+		border-color: $color-1;
+	
+		.btn__text {
+			color: $color-1;
+		}
+	
+		&:before {
+			background-color: $color-1;
+		}
+	}
+
+	@include hover {
+		.btn__text {
+			color: $white-color;
+		}
+	}
+}
+
+.btn--with-icon {
+	padding: 10px 15px;
+
+	border: 2px solid $main-color;
+	border-radius: 10px;
+	color: $black-color;
+	background-color: $white-color;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	font-family: $main-font-bold;
+	@include font-s;
+}
+
+.btn--view-table {
+	display: flex;
+}
+
+.btn--view-list {
+	display: flex;
+}
+
+.btn--refresh {
+	display: flex;
+}
+
+.btn--create {
+	display: flex;
+}
+
+.btn--icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1px;
+
+	&::before {
+		content: none;
+		position: absolute;
+
+		width: 25px;
+		height: 25px;
+
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		border-radius: 50%;
+		border: 1px solid $main-color;
+	}
+
+	&.rotate,
+	&:hover {
+		&::before {
+			content: '';
+		}
+
+		svg {
+			fill: $main-color;
+		}
+	}
+}
+
+.btn--form {
+	width: 200px;
+	margin-top: 10px;
+	padding: 10px 20px;
+	border: 2px solid;
+}
+
+.btn--form-main {
+	width: 200px;
+	margin-top: 10px;
+	padding: 10px 20px;
+	border: 2px solid;
+
+	background-color: transparent;
+	border-color: $main-color;
+	color: $main-color;
+
+	&:hover:not(:disabled) {
+		background-color: $main-color;
+		color: $white-color;
+	}
+
+	&.added {
+		background-color: $main-color;
+		color: $white-color;
+	}
+}
+
+.btn--warn {
+	width: 160px;
+	padding: 20px 15px;
+	border-radius: 10px;
+}
+

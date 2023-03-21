@@ -6,6 +6,7 @@
 				class="form__input"
 				list="countryList"
 				placeholder="Select a Country"
+				data-role="picker"
 				@input="selectCountry"
 			/>
 			<datalist id="countryList">
@@ -22,6 +23,7 @@
 				class="form__input"
 				list="cityList"
 				placeholder="Select a City"
+				data-role="picker"
 				@input="selectCity"
 			/>
 			<datalist id="cityList">
@@ -33,8 +35,13 @@
 			</datalist>
 		</div>
 
-		<button class="form__button btn btn--form" :disabled="!festPlace">
-			Add place
+		<button
+			class="form__button btn btn--form"
+			:class="{ added: isChange }"
+			type="submit"
+			:disabled="!festPlace"
+		>
+			{{ getButtonText() }}
 		</button>
 	</form>
 </template>
@@ -42,10 +49,14 @@
 <script>
 import { ref } from "@vue/reactivity";
 import { Country, City } from "country-state-city";
+import { watch } from "@vue/runtime-core";
 
 export default {
 	emits: ["submit"],
 	setup(_, { emit }) {
+		const isChange = ref(false);
+		const isAdded = ref(false);
+
 		const allCountries = Country.getAllCountries();
 		const countriesWithCities = allCountries.filter(
 			(country) => City.getCitiesOfCountry(country.isoCode).length
@@ -81,14 +92,36 @@ export default {
 			}
 		};
 
+		watch(festPlace, () => {
+			isChange.value = false;
+		});
+
 		const submitPlace = () => {
 			emit("submit", festPlace.value);
+			isChange.value = true;
+			isAdded.value = true;
+		};
+
+		const getButtonText = () => {
+			let btnText = "Add Place";
+
+			if (isAdded.value) {
+				btnText = "Place Added";
+			}
+
+			if (isAdded.value && !isChange.value) {
+				btnText = "Update Place";
+			}
+
+			return btnText;
 		};
 
 		return {
 			countriesWithCities,
 			citiesByCode,
 			festPlace,
+			isChange,
+			getButtonText,
 			selectCountry,
 			selectCity,
 			submitPlace,
@@ -96,3 +129,13 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+$this-color: $color-4;
+.form__input {
+	&::-webkit-calendar-picker-indicator {
+		transform: rotate(-90deg);
+		color: $this-color;
+	}
+}
+</style>

@@ -6,44 +6,84 @@
 			type="text"
 			id="name"
 			v-model="festName"
-			placeholder="Min 3 symbols"
+			maxlength="20"
+			placeholder="Min 3, Max 20 symbols"
 		/>
-		<button class="form__button btn btn--form" :disabled="festName.length < 3">
-			Add name
+		<p v-if="similarName" class="form__error">
+			Sorry, we&nbsp;already have festival with this name, please write another.
+		</p>
+		<button
+			class="form__button btn btn--form"
+			:class="{ added: isChange }"
+			type="submit"
+			:disabled="festName.length < 3 || festName.length > 20 || similarName"
+		>
+			{{ getButtonText() }}
 		</button>
 	</form>
 </template>
 
 <script>
+import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
+import { watch } from "@vue/runtime-core";
 
 export default {
 	emits: ["submit"],
 	setup(_, { emit }) {
+		const store = useStore();
 		const festName = ref("");
+		const isChange = ref(false);
+		const isAdded = ref(false);
+		const similarName = ref(false);
+
+		watch(festName, () => {
+			const similarFest = store.getters["getFests"].find(
+				(el) => el.name.toLowerCase() === festName.value.toLowerCase()
+			);
+
+			similarFest ? (similarName.value = true) : (similarName.value = false);
+
+			isChange.value = false;
+		});
 
 		const submitName = () => {
 			emit("submit", festName.value[0].toUpperCase() + festName.value.slice(1));
+			isChange.value = true;
+			isAdded.value = true;
+		};
+
+		const getButtonText = () => {
+			let btnText = "Add Name";
+
+			if (isAdded.value) {
+				btnText = "Name Added";
+			}
+
+			if (isAdded.value && !isChange.value) {
+				btnText = "Update Name";
+			}
+
+			return btnText;
 		};
 
 		return {
 			festName,
+			similarName,
 			submitName,
+			isChange,
+			getButtonText,
 		};
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-$comp-color: $color-1;
-
-// .form {
-// 	&__input {
-// 		border-color: $comp-color;
-// 	}
-// }
-
-.btn--form {
-	border-color: $comp-color;
+.form {
+	&__error {
+		@include font-s;
+		margin-top: 10px;
+		color: $color-1;
+	}
 }
 </style>

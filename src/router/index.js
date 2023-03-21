@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import SiteHome from "../views/SiteHome.vue";
 import FAQ from "../views/FAQ.vue";
-import MyContacts from "../views/MyContacts.vue";
 import UserFests from "../views/UserFests.vue";
 import FestById from "../views/FestById.vue";
+import NotFound from "../views/NotFound.vue";
 
 const routes = [
 	{
 		path: "/",
-		name: "home",
+		name: "Home",
 		component: SiteHome,
 	},
 	{
@@ -18,15 +18,18 @@ const routes = [
 	},
 	{
 		path: "/my-fests",
+		name: "Myfests",
 		component: UserFests,
 	},
 	{
 		path: "/faq",
+		name: "F.A.Q.",
 		component: FAQ,
 	},
 	{
-		path: "/contacts",
-		component: MyContacts,
+		path: "/:catchAll(.*)",
+		name: "Not Found",
+		component: NotFound,
 	},
 ];
 
@@ -36,5 +39,10 @@ const router = createRouter({
 	linkActiveClass: "active",
 	linkExactActiveClass: "active",
 });
+
+// router.beforeEach((to, from, next) => {
+// 	document.title = to.name;
+// 	next();
+// });
 
 export default router;

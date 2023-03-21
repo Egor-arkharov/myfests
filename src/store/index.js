@@ -1,6 +1,6 @@
 import { createStore, createLogger } from "vuex";
 import loader from "@/use/googleMapsStore";
-import load from "./modules/load.module";
+import start from "./modules/start.module";
 import { getMixedBands, AMOUNT_BANDS_MAX, getLineup } from "@/use/utils";
 
 const plugins = [];
@@ -15,6 +15,16 @@ export default createStore({
 		return {
 			fests: JSON.parse(localStorage.getItem("fests")) ?? [],
 			bands: JSON.parse(localStorage.getItem("bands")) ?? [],
+			titleAnimate: true,
+			warnModal: false,
+			sidebar: false,
+			breakpoints: {
+				xs: 600,
+				sm: 798,
+				md: 1080,
+				lg: 1280,
+				xl: 1500,
+			},
 		};
 	},
 	mutations: {
@@ -36,7 +46,7 @@ export default createStore({
 				added: false,
 				own: true,
 				img: data.img,
-				lineup: getLineup(data.bands, data.headliners),
+				lineup: getLineup(data.bands, data.headliners, state.bands),
 			};
 
 			state.fests.push(fest);
@@ -63,6 +73,20 @@ export default createStore({
 				break
 			}
 		},
+		animateTitle(state) {
+			setTimeout(() => {
+				state.titleAnimate = false;
+			}, 0);
+		},
+		removeWarnModal(state) {
+			state.warnModal = true;
+		},
+		openSidebar(state) {
+			state.sidebar = true
+		},
+		closeSidebar(state) {
+			state.sidebar = false
+		}
 	},
 	actions: {
 		async loadMap(_, payload) {
@@ -95,6 +119,21 @@ export default createStore({
 					console.log(e);
 				});
 		},
+		clearAllData({ state, dispatch }) {
+			localStorage.clear();
+
+			state.bands = [];
+			state.fests = [];
+			state.myfests = [];
+
+			state.start.cities = [];
+			state.start.img = [];
+			state.start.name = [];
+			state.start.genre = [];
+			state.start.freeImg = [];
+
+			(async () => await dispatch('start/loadData', null, {root:true}))();
+		}
 	},
 	getters: {
 		getFests(state) {
@@ -104,15 +143,24 @@ export default createStore({
 			return (id) => getters.getFests.find((t) => t.id === id);
 		},
 		getBandsByGenre: (state, rootGetters) => (genre) => {
-			const allGenres = rootGetters['load/getGenres']
+			const allGenres = rootGetters['start/getGenres']
 
 			return (genre !== "Mix") ? state.bands[genre] : getMixedBands(allGenres, state.bands, AMOUNT_BANDS_MAX);
 		},
 		getMyFests(state, getters) {
 			return getters.getFests.filter((f) => f.added === true);
 		},
+		getTitleAnimate(state) {
+			return state.titleAnimate
+		},
+		getWarnModal(state) {
+			return state.warnModal
+		},
+		getMobileView() {
+			return window.innerWidth < 1500
+		}
 	},
 	modules: {
-		load,
+		start,
 	}
 });

@@ -1,0 +1,319 @@
+<template>
+	<ol class="forms__list">
+		<li class="forms__item">
+			<form-name @submit="submitName"></form-name>
+		</li>
+		<li class="forms__item" :class="{ visuallyhidden: !festName }">
+			<!-- <li class="forms__item"> -->
+			<form-place @submit="submitPlace"></form-place>
+		</li>
+		<li class="forms__item" :class="{ visuallyhidden: !festPlace }">
+			<!-- <li class="forms__item"> -->
+			<form-date @submit="submitDate"></form-date>
+		</li>
+		<li class="forms__item" :class="{ visuallyhidden: !festDate.length }">
+			<!-- <li class="forms__item"> -->
+			<form-genre @submit="submitGenre"></form-genre>
+		</li>
+		<li
+			class="forms__item forms__item--big"
+			:class="{ visuallyhidden: !festGenre }"
+		>
+			<!-- <li class="forms__item forms__item--big"> -->
+			<form-bands @submit="submitBands" :genre="festGenre"></form-bands>
+		</li>
+		<li
+			class="forms__item forms__item--big"
+			:class="{ visuallyhidden: !festBands.length && !festImg }"
+		>
+			<!-- <li class="forms__item forms__item--big"> -->
+			<form-img @submit="submitImg"></form-img>
+		</li>
+	</ol>
+	<form
+		v-if="festImg"
+		@submit.prevent="submitAll"
+		class="preview"
+		ref="preview"
+	>
+		<h4 class="preview__title">Preview</h4>
+		<ul class="preview__list">
+			<li class="preview__item">
+				<span class="preview__field">Name:&nbsp;</span> {{ festName }}
+			</li>
+			<li class="preview__item">
+				<span class="preview__field">Place:&nbsp;</span>
+				{{ festPlace.name + ", " + festPlace.countryName }}
+			</li>
+			<li class="preview__item">
+				<span class="preview__field">Date:&nbsp;</span
+				>{{ festDate[0] + " - " + festDate[1] }}
+			</li>
+			<li class="preview__item">
+				<span class="preview__field">Genre:&nbsp;</span>{{ festGenre }}
+			</li>
+			<li class="preview__item" :class="{ not_full: !festHeadliners.length }">
+				<span class="preview__field">Headliners:&nbsp;</span>
+				<span v-if="festHeadliners.length">{{
+					festHeadliners.join(", ")
+				}}</span>
+			</li>
+			<li class="preview__item" :class="{ not_full: !festBands.length }">
+				<span class="preview__field">Other Bands:&nbsp;</span>
+				<span v-if="festBands.length">{{
+					festBands.filter((el) => !festHeadliners.includes(el)).join(", ")
+				}}</span>
+			</li>
+			<li class="preview__item">
+				<span class="preview__field">Img:&nbsp;</span>
+				<picture v-if="festImg.startsWith('/img-')">
+					<source type="image/webp" :srcset="getImgUrl(festImg + '.webp')" />
+					<img
+						class="preview__img"
+						:src="getImgUrl(festImg + '.jpg')"
+						:alt="'Photo of the ' + festName + ' festival'"
+					/>
+				</picture>
+				<img
+					v-else
+					class="preview__img"
+					:src="festImg"
+					:alt="'Photo of the ' + festName + ' festival'"
+				/>
+			</li>
+		</ul>
+		<button class="btn btn--form-main" :disabled="!festBands.length">
+			Submit
+		</button>
+	</form>
+</template>
+
+<script>
+import { ref } from "@vue/reactivity";
+import { useStore } from "vuex";
+import { watchEffect } from "@vue/runtime-core";
+import FormName from "../form/FormName";
+import FormPlace from "../form/FormPlace";
+import FormGenre from "../form/FormGenre";
+import FormBands from "../form/FormBands";
+import FormDate from "../form/FormDate";
+import FormImg from "../form/FormImg";
+
+export default {
+	emits: ["close"],
+	setup(_, { emit }) {
+		const store = useStore();
+
+		const festName = ref("");
+		const festPlace = ref("");
+		const festDate = ref([]);
+		const festGenre = ref("");
+		const festHeadliners = ref([]);
+		const festBands = ref([]);
+		const festImg = ref("");
+
+		const preview = ref(null);
+
+		const submitName = (festNamefromComp) =>
+			(festName.value = festNamefromComp);
+
+		const submitPlace = (festPlaceFromComp) =>
+			(festPlace.value = festPlaceFromComp);
+
+		const submitDate = (festDatefromComp) =>
+			(festDate.value = festDatefromComp);
+
+		const submitGenre = (festGenreFromComp) => {
+			festHeadliners.value = ref([]);
+			festBands.value = ref([]);
+			festGenre.value = festGenreFromComp;
+		};
+
+		const submitBands = (festBandsFromComp) => {
+			festHeadliners.value = festBandsFromComp.headliners;
+			festBands.value = festBandsFromComp.bands;
+		};
+
+		const submitImg = (festImgFromComp) => {
+			festImg.value = festImgFromComp;
+		};
+
+		watchEffect(() => {
+			if (preview.value) {
+				preview.value.scrollIntoView({ behavior: "smooth" });
+			}
+		});
+
+		const getImgUrl = (img) => require("@/assets/images/fests" + img);
+
+		const submitAll = () => {
+			const fest = {
+				img: festImg.value,
+				name: festName.value,
+				place: festPlace.value,
+				genre: festGenre.value,
+				bands: festBands.value,
+				headliners: festHeadliners.value,
+				date: festDate.value,
+			};
+
+			store.commit("addFest", fest);
+			emit("close");
+		};
+
+		return {
+			festName,
+			festPlace,
+			festDate,
+			festGenre,
+			festHeadliners,
+			festBands,
+			festImg,
+			submitName,
+			submitPlace,
+			submitDate,
+			submitGenre,
+			submitBands,
+			submitImg,
+			submitAll,
+			preview,
+			getImgUrl,
+		};
+	},
+	components: {
+		FormName,
+		FormPlace,
+		FormDate,
+		FormGenre,
+		FormBands,
+		FormImg,
+	},
+};
+</script>
+
+<style scoped lang="scss">
+.visuallyhidden {
+	margin: 0;
+}
+
+.forms {
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		list-style: none;
+		counter-reset: counter;
+	}
+
+	&__item {
+		position: relative;
+		counter-increment: counter;
+		width: 20%;
+		padding-left: 70px;
+		margin-bottom: 100px;
+
+		&--big {
+			width: 48%;
+		}
+
+		&::before {
+			content: "0" counter(counter);
+			position: absolute;
+
+			font-family: $main-font-semibold;
+			left: -36px;
+
+			font-size: 64px;
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			border: 3px solid;
+			border-radius: 50%;
+
+			top: -10px;
+			left: -47px;
+		}
+	}
+
+	@for $i from 1 through length($form-colors) {
+		&__item:nth-child(#{$i}) {
+			&::before {
+				color: nth($form-colors, $i);
+			}
+
+			&::after {
+				border-color: nth($form-colors, $i);
+			}
+		}
+	}
+}
+
+.preview {
+	padding-top: 25px;
+	border-top: 5px dashed $main-color;
+	text-align: center;
+
+	&__title {
+		font-size: 36px;
+		font-weight: 600;
+	}
+
+	&__list {
+		width: 40%;
+		margin: 20px auto;
+		text-align: left;
+	}
+
+	&__item {
+		display: flex;
+		font-size: 24px;
+		margin-bottom: 7px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&.not_full {
+			color: $error-color;
+		}
+	}
+
+	&__field {
+		white-space: nowrap;
+		font-family: $main-font-bold;
+	}
+
+	&__img {
+		width: auto;
+		height: 100px;
+		object-fit: contain;
+	}
+}
+
+.submit {
+	text-align: center;
+}
+
+@media (max-width: #{map-get($breakpoints, 'xl')}) {
+	.forms {
+		&__item {
+			width: 45%;
+
+			&--big {
+				width: 100%;
+			}
+		}
+	}
+
+	.preview {
+		&__list {
+			width: 90%;
+		}
+	}
+}
+</style>

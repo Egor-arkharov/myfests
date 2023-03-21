@@ -40,11 +40,12 @@
 		</label>
 
 		<button
-			type="submit"
 			class="form__button btn btn--form"
+			:class="{ added: isChange }"
+			type="submit"
 			:disabled="!firstMove"
 		>
-			Add photo
+			{{ getButtonText() }}
 		</button>
 	</form>
 </template>
@@ -60,6 +61,8 @@ import "swiper/scss/navigation";
 export default {
 	emits: ["submit"],
 	setup(_, { emit }) {
+		const isChange = ref(false);
+		const isAdded = ref(false);
 		const swiperDefault = ref("");
 		const store = useStore();
 		const fileAcceptType = "jpeg";
@@ -95,7 +98,7 @@ export default {
 			}
 		};
 
-		const images = store.getters["load/getFreeImg"];
+		const images = store.getters["start/getFreeImg"];
 
 		const onSwiper = (swiper) => {
 			swiperDefault.value = swiper;
@@ -110,19 +113,38 @@ export default {
 
 		const slideChange = () => {
 			firstMove.value = true;
+			isChange.value = false;
 		};
 
-		const getImgUrl = (img) => require("@/assets/images" + img + ".jpg");
+		const getImgUrl = (img) => require("@/assets/images/fests" + img + ".jpg");
 
 		const submitImg = () => {
 			emit("submit", images[swiperDefault.value.activeIndex]);
+			isChange.value = true;
+			isAdded.value = true;
+		};
+
+		const getButtonText = () => {
+			let btnText = "Add Photo";
+
+			if (isAdded.value) {
+				btnText = "Photo Added";
+			}
+
+			if (isAdded.value && !isChange.value) {
+				btnText = "Update Photo";
+			}
+
+			return btnText;
 		};
 
 		return {
+			isChange,
 			imgSrc,
 			errorType,
 			errorAnimate,
 			firstMove,
+			getButtonText,
 			loadImg,
 			submitImg,
 			images,
@@ -141,8 +163,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$this-color: $color-8;
+
 .swiper {
-	height: 150px;
+	height: 200px;
 	margin-bottom: 10px;
 	padding: 20px 0;
 
@@ -150,18 +174,19 @@ export default {
 		content: "";
 		position: absolute;
 
-		width: 170px;
+		position: absolute;
+		width: 45%;
 		height: 100%;
 		top: 0;
 		left: 50%;
-		transform: translate(-50%, 0);
+		transform: translate(-50%, 0) scale(0.95);
 
-		border: 2px solid rgba(green, 0.2);
+		border: 2px solid rgba($this-color, 0.2);
 	}
 
 	&.active {
 		&::before {
-			border: 2px solid green;
+			border: 2px solid $this-color;
 		}
 	}
 }
@@ -186,7 +211,7 @@ export default {
 		position: relative;
 		width: 100%;
 		height: 100px;
-		border: 2px dashed green;
+		border: 2px dashed $this-color;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -227,10 +252,10 @@ export default {
 }
 
 .error {
-	border-color: red;
+	border-color: $error-color;
 
 	.form-file__valid {
-		color: red;
+		color: $error-color;
 	}
 
 	&-animate {

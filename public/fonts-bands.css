@@ -1,0 +1,233 @@
+@font-face {
+	font-display: swap;
+	font-family: 'Anton';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Rock/Anton/anton.eot');
+	src: url('/fonts/Bands/Rock/Anton/anton.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Rock/Anton/anton.woff2') format('woff2'),
+		 url('/fonts/Bands/Rock/Anton/anton.woff') format('woff'),
+		 url('/fonts/Bands/Rock/Anton/anton.ttf') format('truetype'),
+		 url('/fonts/Bands/Rock/Anton/anton.svg#Anton') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Bungee Shade';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Pop/Bungee_Shade/bungee-shade.eot');
+	src: url('/fonts/Bands/Pop/Bungee_Shade/bungee-shade.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Pop/Bungee_Shade/bungee-shade.woff2') format('woff2'),
+		 url('/fonts/Bands/Pop/Bungee_Shade/bungee-shade.woff') format('woff'),
+		 url('/fonts/Bands/Pop/Bungee_Shade/bungee-shade.ttf') format('truetype'),
+		 url('/fonts/Bands/Pop/Bungee_Shade/bungee-shade.svg#BungeeShade') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Chakra Petch';
+	font-style: italic;
+	font-weight: 300;
+	src: url('/fonts/Bands/Electronic/Chakra_Petch/chakra-petch.eot');
+	src: url('/fonts/Bands/Electronic/Chakra_Petch/chakra-petch.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Electronic/Chakra_Petch/chakra-petch.woff2') format('woff2'),
+		 url('/fonts/Bands/Electronic/Chakra_Petch/chakra-petch.woff') format('woff'),
+		 url('/fonts/Bands/Electronic/Chakra_Petch/chakra-petch.ttf') format('truetype'),
+		 url('/fonts/Bands/Electronic/Chakra_Petch/chakra-petch.svg#ChakraPetch') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Codystar';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Pop/Codystar/codystar.eot');
+	src: url('/fonts/Bands/Pop/Codystar/codystar.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Pop/Codystar/codystar.woff2') format('woff2'),
+		 url('/fonts/Bands/Pop/Codystar/codystar.woff') format('woff'),
+		 url('/fonts/Bands/Pop/Codystar/codystar.ttf') format('truetype'),
+		 url('/fonts/Bands/Pop/Codystar/codystar.svg#Codystar') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Creepster';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Rock/Creepster/creepster.eot');
+	src: url('/fonts/Bands/Rock/Creepster/creepster.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Rock/Creepster/creepster.woff2') format('woff2'),
+		 url('/fonts/Bands/Rock/Creepster/creepster.woff') format('woff'),
+		 url('/fonts/Bands/Rock/Creepster/creepster.ttf') format('truetype'),
+		 url('/fonts/Bands/Rock/Creepster/creepster.svg#Creepster') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Eater';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Rock/Eater/eater.eot');
+	src: url('/fonts/Bands/Rock/Eater/eater.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Rock/Eater/eater.woff2') format('woff2'),
+		 url('/fonts/Bands/Rock/Eater/eater.woff') format('woff'),
+		 url('/fonts/Bands/Rock/Eater/eater.ttf') format('truetype'),
+		 url('/fonts/Bands/Rock/Eater/eater.svg#Eater') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Finger Paint';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Electronic/Finger_Paint/finger-paint.eot');
+	src: url('/fonts/Bands/Electronic/Finger_Paint/finger-paint.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Electronic/Finger_Paint/finger-paint.woff2') format('woff2'),
+		 url('/fonts/Bands/Electronic/Finger_Paint/finger-paint.woff') format('woff'),
+		 url('/fonts/Bands/Electronic/Finger_Paint/finger-paint.ttf') format('truetype'),
+		 url('/fonts/Bands/Electronic/Finger_Paint/') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Kanit';
+	font-style: italic;
+	font-weight: 300;
+	src: url('/fonts/Bands/Electronic/Kanit/kanit.eot');
+	src: url('/fonts/Bands/Electronic/Kanit/kanit.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Electronic/Kanit/kanit.woff2') format('woff2'),
+		 url('/fonts/Bands/Electronic/Kanit/kanit.woff') format('woff'),
+		 url('/fonts/Bands/Electronic/Kanit/kanit.ttf') format('truetype'),
+		 url('/fonts/Bands/Electronic/Kanit/kanit.svg#Kanit') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Metal Mania';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Rock/Metal_Mania/metal-mania.eot');
+	src: url('/fonts/Bands/Rock/Metal_Mania/metal-mania.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Rock/Metal_Mania/metal-mania.woff2') format('woff2'),
+		 url('/fonts/Bands/Rock/Metal_Mania/metal-mania.woff') format('woff'),
+		 url('/fonts/Bands/Rock/Metal_Mania/metal-mania.ttf') format('truetype'),
+		 url('/fonts/Bands/Rock/Metal_Mania/metal-mania.svg#MetalMania') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Monoton';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Pop/Monoton/monoton.eot');
+	src: url('/fonts/Bands/Pop/Monoton/monoton.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Pop/Monoton/monoton.woff2') format('woff2'),
+		 url('/fonts/Bands/Pop/Monoton/monoton.woff') format('woff'),
+		 url('/fonts/Bands/Pop/Monoton/monoton.ttf') format('truetype'),
+		 url('/fonts/Bands/Pop/Monoton/monoton.svg#Monoton') format('svg');
+}
+
+  @font-face {
+	font-display: swap;
+	font-family: 'Nothing You Could Do';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Pop/Nothing_You_Could_Do/nothing-you-could-do.eot');
+	src: url('/fonts/Bands/Pop/Nothing_You_Could_Do/nothing-you-could-do.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Pop/Nothing_You_Could_Do/nothing-you-could-do.woff2') format('woff2'),
+		 url('/fonts/Bands/Pop/Nothing_You_Could_Do/nothing-you-could-do.woff') format('woff'),
+		 url('/fonts/Bands/Pop/Nothing_You_Could_Do/nothing-you-could-do.ttf') format('truetype'),
+		 url('/fonts/Bands/Pop/Nothing_You_Could_Do/nothing-you-could-do.svg#NothingYouCouldDo') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Noto Serif Khojki';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Electronic/Noto_Serif_Khojki/noto-serif-khojki.eot');
+	src: url('/fonts/Bands/Electronic/Noto_Serif_Khojki/noto-serif-khojki.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Electronic/Noto_Serif_Khojki/noto-serif-khojki.woff2') format('woff2'),
+		 url('/fonts/Bands/Electronic/Noto_Serif_Khojki/noto-serif-khojki.woff') format('woff'),
+		 url('/fonts/Bands/Electronic/Noto_Serif_Khojki/noto-serif-khojki.ttf') format('truetype'),
+		 url('/fonts/Bands/Electronic/Noto_Serif_Khojki/noto-serif-khojki.svg#NotoSerifKhojki') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Righteous';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Electronic/Righteous/righteous.eot');
+	src: url('/fonts/Bands/Electronic/Righteous/righteous.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Electronic/Righteous/righteous.woff2') format('woff2'),
+		 url('/fonts/Bands/Electronic/Righteous/righteous.woff') format('woff'),
+		 url('/fonts/Bands/Electronic/Righteous/righteous.ttf') format('truetype'),
+		 url('/fonts/Bands/Electronic/Righteous/righteous.svg#Righteous') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Saira Stencil One';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Pop/Saira_Stencil_One/saira-stencil-one.eot');
+	src: url('/fonts/Bands/Pop/Saira_Stencil_One/saira-stencil-one.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Pop/Saira_Stencil_One/saira-stencil-one.woff2') format('woff2'),
+		 url('/fonts/Bands/Pop/Saira_Stencil_One/saira-stencil-one.woff') format('woff'),
+		 url('/fonts/Bands/Pop/Saira_Stencil_One/saira-stencil-one.ttf') format('truetype'),
+		 url('/fonts/Bands/Pop/Saira_Stencil_One/saira-stencil-one.svg#SairaStencilOne') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Shadows Into Light';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Pop/Shadows_Into_Light/shadows-into-light.eot');
+	src: url('/fonts/Bands/Pop/Shadows_Into_Light/shadows-into-light.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Pop/Shadows_Into_Light/shadows-into-light.woff2') format('woff2'),
+		 url('/fonts/Bands/Pop/Shadows_Into_Light/shadows-into-light.woff') format('woff'),
+		 url('/fonts/Bands/Pop/Shadows_Into_Light/shadows-into-light.ttf') format('truetype'),
+		 url('/fonts/Bands/Pop/Shadows_Into_Light/shadows-into-light.svg#ShadowsIntoLight') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Titan One';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Electronic/Titan_One/titan-one.eot');
+	src: url('/fonts/Bands/Electronic/Titan_One/titan-one.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Electronic/Titan_One/titan-one.woff2') format('woff2'),
+		 url('/fonts/Bands/Electronic/Titan_One/titan-one.woff') format('woff'),
+		 url('/fonts/Bands/Electronic/Titan_One/titan-one.ttf') format('truetype'),
+		 url('/fonts/Bands/Electronic/Titan_One/titan-one.svg#TitanOne') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Vast Shadow';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Rock/Vast_Shadow/vast-shadow.eot');
+	src: url('/fonts/Bands/Rock/Vast_Shadow/vast-shadow.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Rock/Vast_Shadow/vast-shadow.woff2') format('woff2'),
+		 url('/fonts/Bands/Rock/Vast_Shadow/vast-shadow.woff') format('woff'),
+		 url('/fonts/Bands/Rock/Vast_Shadow/vast-shadow.ttf') format('truetype'),
+		 url('/fonts/Bands/Rock/Vast_Shadow/vast-shadow.svg#VastShadow') format('svg');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Caveat Brush';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/Bands/Rock/Caveat_Brush/caveat-brush.eot');
+	src: url('/fonts/Bands/Rock/Caveat_Brush/caveat-brush.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Bands/Rock/Caveat_Brush/caveat-brush.woff2') format('woff2'),
+		 url('/fonts/Bands/Rock/Caveat_Brush/caveat-brush.woff') format('woff'),
+		 url('/fonts/Bands/Rock/Caveat_Brush/caveat-brush.ttf') format('truetype'),
+		 url('/fonts/Bands/Rock/Caveat_Brush/caveat-brush.svg#CaveatBrush') format('svg');
+}
