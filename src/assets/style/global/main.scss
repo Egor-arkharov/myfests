@@ -19,12 +19,8 @@
 	// padding: 1rem 2rem;
 	max-width: 85%;
 
-	@media (max-width: $tablet-width) {
-		padding: $tablet-padding;
-	}
-
-	@media (max-width: $mobile-width) {
-		padding: $mobile-padding;
+	@media (max-width: #{map-get($breakpoints, 'md')}) {
+		max-width: 95%;
 	}
 }
 

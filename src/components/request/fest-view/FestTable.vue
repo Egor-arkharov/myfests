@@ -50,7 +50,7 @@
 					{{ idx + 1 }}
 				</td>
 				<td data-header="Name">
-					<div :class="{ own_name: f.own }">
+					<div :class="{ table__name: f.own }">
 						<span>{{ f.name }}</span>
 						<inline-svg
 							v-if="f.own"
@@ -184,7 +184,7 @@ export default {
 	}
 }
 
-table {
+.table {
 	width: 100%;
 	border-collapse: collapse;
 
@@ -203,16 +203,16 @@ table {
 	td {
 		@include font-l;
 	}
-}
 
-.own_name {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	&__name {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
-	svg {
-		margin-left: 3px;
-		transform: translateY(-2px);
+		svg {
+			margin-left: 3px;
+			transform: translateY(-2px);
+		}
 	}
 }
 
@@ -239,7 +239,7 @@ table {
 
 
 @media (max-width: #{map-get($breakpoints, 'lg')}) {
-	table {
+	.table {
 		thead {
 			display: none;
 		}
@@ -273,6 +273,10 @@ table {
 			&:first-child {
 				display: none;
 			}
+		}
+
+		&__name {
+			justify-content: flex-end;
 		}
 	}
 

@@ -20,6 +20,7 @@
 			<p v-else-if="fests.length === 0" class="search-no">
 				We&nbsp;don&rsquo;t have festivals with this artist yet. Try again!
 			</p>
+
 			<component :is="'fest-' + view" v-else :fests="fests" />
 		</div>
 	</app-page>
@@ -29,6 +30,7 @@
 import { ref } from "@vue/runtime-core";
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
+import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
 import AppLoader from "../components/ui/App/AppLoader.vue";
 import RequestTools from "../components/request/RequestTools.vue";
@@ -40,13 +42,30 @@ export default {
 		const store = useStore();
 		const search = ref();
 		const titleAnimate = store.getters["getTitleAnimate"];
-		const view = ref("table");
+
+		const breakpointLG = store.state.breakpoints.lg;
+		const breakpointSM = store.state.breakpoints.sm;
 
 		store.commit("animateTitle");
+
+		const view =
+			breakpointSM <= window.innerWidth && window.innerWidth < breakpointLG
+				? ref("list")
+				: ref("table");
 
 		const changeView = (viewType) => {
 			view.value = viewType;
 		};
+
+		window.addEventListener(
+			"resize",
+			debounce(() => {
+				view.value =
+					breakpointSM <= window.innerWidth && window.innerWidth < breakpointLG
+						? "list"
+						: "table";
+			}, 100)
+		);
 
 		const fests = computed(() =>
 			store.getters["getFests"].filter((fest) => {
@@ -82,6 +101,7 @@ export default {
 
 <style lang="scss" scoped>
 .title {
+	font-family: $title-font;
 	font-size: 48px;
 	text-align: center;
 
@@ -195,6 +215,35 @@ export default {
 
 		&__decor-wrapper {
 			font-size: 55px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.title {
+		font-size: 30px;
+
+		&__decor-wrapper {
+			font-size: 45px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.title {
+		font-size: 35px;
+
+		&__decor-wrapper {
+			display: flex;
+			justify-content: center;
+
+			font-size: 55px;
+			margin: -4px 0 4px;
+		}
+
+		&__decor:nth-child(2) {
+			left: 50%;
+			transform: translate(-50%);
 		}
 	}
 }

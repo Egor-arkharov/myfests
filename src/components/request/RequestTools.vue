@@ -6,7 +6,7 @@
 	>
 		<div class="tools__search">
 			<input
-				class="input"
+				class="tools__input"
 				type="text"
 				placeholder="Search for band (min 2 symbols)"
 				v-model="bandName"
@@ -16,7 +16,7 @@
 			</p>
 		</div>
 		<ul class="tools__button-list">
-			<li class="tools__button-item">
+			<li class="tools__button-item" v-if="desktopView">
 				<button
 					class="btn btn--with-icon btn--view-table"
 					@click="$emit('changeView', 'table')"
@@ -29,7 +29,7 @@
 					<span>Table view</span>
 				</button>
 			</li>
-			<li class="tools__button-item">
+			<li class="tools__button-item" v-if="desktopView">
 				<button
 					class="btn btn--with-icon btn--view-list"
 					@click="$emit('changeView', 'list')"
@@ -40,6 +40,26 @@
 						height="30"
 					></inline-svg>
 					<span>List view</span>
+				</button>
+			</li>
+			<li class="tools__button-item" v-if="!desktopView">
+				<button class="btn btn--with-icon">
+					<inline-svg
+						:src="require(`@/assets/icons/sort.svg`)"
+						width="30"
+						height="30"
+					></inline-svg>
+					<span>Sort by&nbsp;Date</span>
+				</button>
+			</li>
+			<li class="tools__button-item" v-if="!desktopView">
+				<button class="btn btn--with-icon">
+					<inline-svg
+						:src="require(`@/assets/icons/sort.svg`)"
+						width="30"
+						height="30"
+					></inline-svg>
+					<span>Sort by&nbsp;Genre</span>
 				</button>
 			</li>
 			<li class="tools__button-item">
@@ -80,6 +100,7 @@
 <script>
 import InlineSvg from "vue-inline-svg";
 import AppModal from "@/components/ui/App/AppModal.vue";
+import { debounce } from "vue-debounce";
 import { ref } from "@vue/reactivity";
 import { watch, computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
@@ -147,6 +168,16 @@ export default {
 
 		const isFests = computed(() => store.getters["getFests"].length);
 
+		const breakpointLG = store.state.breakpoints.lg;
+		const desktopView = ref(store.getters["getDesktopView"]);
+
+		window.addEventListener(
+			"resize",
+			debounce(() => {
+				desktopView.value = window.innerWidth >= breakpointLG;
+			}, 100)
+		);
+
 		return {
 			bandName,
 			modalView,
@@ -155,6 +186,7 @@ export default {
 			modalClass,
 			modalTitle,
 			isFests,
+			desktopView,
 			refresh,
 			openModalCreate,
 		};
@@ -172,31 +204,35 @@ export default {
 $tools-colors: $color-5, $color-6, $color-8, $color-2;
 .tools {
 	display: flex;
+	justify-content: space-between;
 	margin: 20px 0;
-	height: 45px;
+	// height: 45px;
 
 	&__search {
 		display: flex;
-		width: 20%;
-		position: relative;
+		align-items: center;
+	}
 
-		input {
-			width: 100%;
-		}
+	&__input {
+		width: 250px;
+		height: 100%;
+		padding: 0 5px;
+		border: 1px solid $black-color;
+		outline: none;
 	}
 
 	&__find {
-		position: absolute;
-		top: 50%;
-		left: 105%;
-		transform: translateY(-50%);
-
 		white-space: nowrap;
+		margin-left: 10px;
 	}
 
 	&__button-list {
 		display: flex;
-		margin-left: auto;
+	}
+
+	&__input,
+	&__button-item {
+		height: 45px;
 	}
 
 	&__button-item {
@@ -234,16 +270,50 @@ $tools-colors: $color-5, $color-6, $color-8, $color-2;
 	}
 }
 
-@media (max-width: 1600px) {
+@media (max-width: #{map-get($breakpoints, 'xl')}) {
 	.tools {
-		&.find {
-			margin: 20px 0 60px;
+		&__search {
+			align-items: flex-start;
+			flex-direction: column;
+
+			width: 250px;
+			max-width: 250px;
 		}
 
 		&__find {
-			top: unset;
-			bottom: -50px;
-			left: 0;
+			margin-left: 0;
+			margin-top: 10px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.tools {
+		flex-direction: column;
+
+		&__search {
+			width: 100%;
+			max-width: unset;
+		}
+
+		&__input {
+			width: 100%;
+		}
+
+		&__button-list {
+			order: -1;
+			margin-bottom: 20px;
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		&__button-item {
+			margin-right: 0;
+			width: 20%;
+
+			.btn {
+				width: 100%;
+			}
 		}
 	}
 }

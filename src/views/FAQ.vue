@@ -245,6 +245,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import VLazyImage from "v-lazy-image";
+import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
 
 export default {
@@ -253,9 +254,12 @@ export default {
 		const breakpointXL = store.state.breakpoints.xl;
 		const mobileView = ref(store.getters["getMobileView"]);
 
-		window.addEventListener("resize", () => {
-			mobileView.value = window.innerWidth < breakpointXL; // DEBOUNCE
-		});
+		window.addEventListener(
+			"resize",
+			debounce(() => {
+				mobileView.value = window.innerWidth < breakpointXL; // DEBOUNCE
+			}, 100)
+		);
 
 		return {
 			isOpenAbout: ref(false),

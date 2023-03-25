@@ -34,11 +34,11 @@ $desktop-width: 1366px;
 $desktop-padding: 98px;
 
 $breakpoints: (
-	"xs": 600px,
-	"sm": 798px,
-	"md": 1080px,
-	"lg": 1279px,
-	"xl": 1500px,
+	"xs": 600px - 1,
+	"sm": 798px - 1,
+	"md": 1080px - 1,
+	"lg": 1280px - 1,
+	"xl": 1500px - 1,
 );
 
 $main-font: 'Nunito regular', sans-serif;
