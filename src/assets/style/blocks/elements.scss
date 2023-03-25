@@ -117,3 +117,24 @@
 		}
 	}
 }
+
+.main__wrapper {
+	overflow: hidden;
+	height: auto;
+}
+
+.main__wrapper * {
+	transition: transform 0.25s ease-in-out;
+}
+
+.menu-open {
+	overflow: hidden;
+
+	.main__wrapper {
+		height: calc(100vh - 75px - 20px);
+	}
+
+	.main__wrapper * {
+		transform: translateX(999px);
+	}
+}

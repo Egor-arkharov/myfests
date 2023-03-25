@@ -293,4 +293,13 @@ export default {
 		display: block;
 	}
 }
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.headliners {
+		display: flex;
+		width: 60%;
+		margin-left: auto;
+		justify-content: flex-end;
+	}
+}
 </style>

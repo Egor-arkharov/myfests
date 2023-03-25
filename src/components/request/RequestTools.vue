@@ -317,4 +317,41 @@ $tools-colors: $color-5, $color-6, $color-8, $color-2;
 		}
 	}
 }
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	.tools {
+		&__button-list {
+			flex-wrap: wrap;
+		}
+
+		&__button-item {
+			width: 45%;
+			margin-bottom: 10px;
+
+			&:nth-child(even) {
+				.btn {
+					margin-left: auto;
+				}
+			}
+
+			.btn {
+				width: 80%;
+			}
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.tools {
+		&__find {
+			white-space: normal;
+		}
+
+		&__button-item {
+			.btn {
+				width: 100%;
+			}
+		}
+	}
+}
 </style>

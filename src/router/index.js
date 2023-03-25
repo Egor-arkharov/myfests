@@ -40,9 +40,11 @@ const router = createRouter({
 	linkExactActiveClass: "active",
 });
 
-// router.beforeEach((to, from, next) => {
-// 	document.title = to.name;
-// 	next();
-// });
+router.beforeEach((to, from, next) => {
+	next();
+	setTimeout(() => {
+		document.body.classList.remove("menu-open");
+	}, 100);
+});
 
 export default router;

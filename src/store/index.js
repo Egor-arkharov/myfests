@@ -157,7 +157,7 @@ export default createStore({
 			return state.warnModal
 		},
 		getMobileView(state) {
-			return window.innerWidth < state.breakpoints.xl
+			return window.innerWidth < state.breakpoints.xs
 		},
 		getDesktopView(state) {
 			return window.innerWidth >= state.breakpoints.xl

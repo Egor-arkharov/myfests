@@ -27,9 +27,14 @@ export default {
 		color: $black-color;
 		padding: 1rem 2rem;
 		border-radius: 10px;
+	}
+}
 
-		// max-height: 90vh;
-		// overflow-y: auto;
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.main {
+		&__wrapper {
+			padding: 1rem;
+		}
 	}
 }
 </style>

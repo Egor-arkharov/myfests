@@ -237,7 +237,7 @@
 				</div>
 			</div>
 		</div>
-		<p v-if="mobileView">HIIIIIIIIIIII</p>
+		<!-- <p v-if="mobileView">HIIIIIIIIIIII</p> -->
 	</app-page>
 </template>
 
@@ -245,21 +245,21 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import VLazyImage from "v-lazy-image";
-import { debounce } from "vue-debounce";
+// import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
 
 export default {
 	setup() {
 		const store = useStore();
-		const breakpointXL = store.state.breakpoints.xl;
-		const mobileView = ref(store.getters["getMobileView"]);
+		// const breakpointXL = store.state.breakpoints.xl;
+		// const mobileView = ref(store.getters["getMobileView"]);
 
-		window.addEventListener(
-			"resize",
-			debounce(() => {
-				mobileView.value = window.innerWidth < breakpointXL; // DEBOUNCE
-			}, 100)
-		);
+		// window.addEventListener(
+		// 	"resize",
+		// 	debounce(() => {
+		// 		mobileView.value = window.innerWidth < breakpointXL;
+		// 	}, 100)
+		// );
 
 		return {
 			isOpenAbout: ref(false),
@@ -267,7 +267,7 @@ export default {
 			isOpenData: ref(false),
 			isOpenAuthor: ref(false),
 			open: () => store.commit("openSidebar"),
-			mobileView,
+			// mobileView,
 		};
 	},
 	components: {

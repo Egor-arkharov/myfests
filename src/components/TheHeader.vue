@@ -9,6 +9,15 @@
 				></inline-svg>
 			</p>
 			<nav class="header__nav nav">
+				<button
+					v-if="mobileView"
+					class="btn btn--burger"
+					@click.prevent="toggleMenu"
+				>
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
 				<ul class="nav__menu">
 					<li class="nav__item">
 						<router-link to="/" class="nav__link">All fests</router-link>
@@ -29,15 +38,34 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { debounce } from "vue-debounce";
 import InlineSvg from "vue-inline-svg";
 import { useStore } from "vuex";
 
 export default {
 	setup() {
 		const store = useStore();
+		const mobileView = ref(store.getters["getMobileView"]);
+		const breakpointXS = store.state.breakpoints.xs;
+
+		const toggleMenu = () => {
+			document.body.classList.toggle("menu-open");
+		};
+
+		window.addEventListener(
+			"resize",
+			debounce(() => {
+				mobileView.value = window.innerWidth < breakpointXS;
+
+				mobileView.value ? document.body.classList.remove("menu-open") : "";
+			}, 100)
+		);
 
 		return {
+			mobileView,
 			open: () => store.commit("openSidebar"),
+			toggleMenu,
 		};
 	},
 	components: {
@@ -48,6 +76,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+	height: 75px;
 	padding: 20px 0;
 
 	&__wrapper {
@@ -90,6 +119,42 @@ export default {
 		&.active {
 			color: $black-color;
 			cursor: default;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.nav {
+		&__menu {
+			position: fixed;
+			top: calc(75px + 1rem);
+			left: 0;
+
+			transition: transform 0.25s ease-in-out;
+			transform: translateX(-999px);
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 100vw;
+
+			.menu-open & {
+				transform: translateX(0);
+			}
+		}
+
+		&__item {
+			margin-right: 0;
+			margin-bottom: 10px;
+		}
+
+		&__link {
+			color: $black-color;
+
+			&.active {
+				color: $main-color;
+			}
 		}
 	}
 }
