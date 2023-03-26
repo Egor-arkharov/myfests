@@ -152,11 +152,15 @@ export default {
 .swiper-bottom {
 	&__slide {
 		background: $white-color;
-		// opacity: 0 !important;
 
-		// &.swiper-slide-active {
-		// 	opacity: 1 !important;
-		// }
+		.fest {
+			padding: 20px 25px;
+		}
+
+		.lineup {
+			width: calc(100% + 50px);
+			transform: translateX(-25px);
+		}
 	}
 }
 

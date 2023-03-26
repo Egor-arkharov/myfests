@@ -1,5 +1,5 @@
 <template>
-	<h4 class="title__form">Choose bands</h4>
+	<h4 class="form__title">Choose bands</h4>
 	<p class="lead">
 		Pick up 9 bands
 		<span
@@ -365,6 +365,22 @@ ul {
 				opacity: 0.7;
 			}
 		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.lead {
+		font-size: 20px;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.lead {
+		font-size: 16px;
+	}
+
+	.band {
+		font-size: 14px;
 	}
 }
 </style>

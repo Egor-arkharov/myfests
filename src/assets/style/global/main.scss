@@ -19,7 +19,7 @@
 	// padding: 1rem 2rem;
 	max-width: 85%;
 
-	@media (max-width: #{map-get($breakpoints, 'md')}) {
+	@media (max-width: #{map-get($breakpoints, 'lg')}) {
 		max-width: 95%;
 	}
 }

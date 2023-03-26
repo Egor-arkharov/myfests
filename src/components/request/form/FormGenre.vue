@@ -1,5 +1,5 @@
 <template>
-	<h4 class="title__form">Choose genre</h4>
+	<h4 class="form__title">Choose genre</h4>
 	<form @submit.prevent="submitGenre" class="form">
 		<select class="form__input" id="genre" v-model="festGenre">
 			<option class="option--hide" value="" disabled selected>

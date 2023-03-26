@@ -110,7 +110,7 @@ export default {
 }
 </style>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .fest {
 	.img-wrap {
 		margin-bottom: 20px;
@@ -129,4 +129,4 @@ export default {
 		object-fit: cover;
 	}
 }
-</style>
+</style> -->

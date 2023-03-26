@@ -40,7 +40,7 @@ export default {
 	color: $black-color;
 
 	&--create {
-		width: 90%;
+		width: 85%;
 		height: 90%;
 
 		padding-bottom: 50px;
@@ -78,5 +78,38 @@ h3 {
 	text-align: center;
 	margin-bottom: 50px;
 	color: $black-color;
+}
+
+@media (max-width: #{map-get($breakpoints, 'lg')}) {
+	.modal {
+		&--create {
+			width: 95%;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	h3 {
+		font-size: 32px;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	h3 {
+		font-size: 30px;
+	}
+
+	.modal {
+		&--create {
+			padding: 20px 15px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	h3 {
+		font-size: 28px;
+		margin-bottom: 40px;
+	}
 }
 </style>

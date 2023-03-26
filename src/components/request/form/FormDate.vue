@@ -1,5 +1,5 @@
 <template>
-	<h4 class="title__form">Choose date</h4>
+	<h4 class="form__title">Choose date</h4>
 	<form @submit.prevent="submitDate">
 		<Datepicker
 			v-model="festDate"

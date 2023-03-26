@@ -169,7 +169,7 @@ export default {
 		const isFests = computed(() => store.getters["getFests"].length);
 
 		const breakpointLG = store.state.breakpoints.lg;
-		const desktopView = ref(store.getters["getDesktopView"]);
+		const desktopView = ref(window.innerWidth >= breakpointLG);
 
 		window.addEventListener(
 			"resize",

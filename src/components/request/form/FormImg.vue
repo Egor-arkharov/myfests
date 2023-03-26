@@ -1,5 +1,5 @@
 <template>
-	<h4 class="title__form">Choose photo</h4>
+	<h4 class="form__title">Choose photo</h4>
 	<swiper
 		:slidesPerView="2.5"
 		:centeredSlides="true"

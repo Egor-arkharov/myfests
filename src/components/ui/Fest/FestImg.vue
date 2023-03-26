@@ -39,4 +39,37 @@ export default {
 .img-wrap {
 	background-color: lighten($grey-color, 20%);
 }
+
+.img {
+	display: block;
+	width: 100%;
+	height: 400px;
+
+	margin: 20px auto;
+	object-fit: cover;
+}
+
+@media (max-width: #{map-get($breakpoints, 'xl')}) {
+	.img {
+		height: 300px;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'lg')}) {
+	.img {
+		height: 250px;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	.img {
+		height: 220px;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xxs')}) {
+	.img {
+		height: 180px;
+	}
+}
 </style>

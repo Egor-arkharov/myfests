@@ -1,5 +1,5 @@
 <template>
-	<div class="fest fest-page">
+	<div class="fest">
 		<p class="fest__title">{{ fest.name }}</p>
 		<fest-img :fest="fest"></fest-img>
 		<div class="fest__desc">
@@ -107,23 +107,15 @@ export default {
 
 <style lang="scss" scoped>
 .fest {
-	padding: 15px 20px 50px;
+	padding: 20px 0 30px;
 
 	&__title {
 		font-family: $title-font;
 		text-align: center;
 		font-size: 64px;
+		line-height: 1;
 		width: 100%;
 		border-bottom: 1px solid #000;
-	}
-
-	&__img {
-		display: block;
-		width: 100%;
-		height: 400px;
-
-		margin: 20px auto;
-		object-fit: cover;
 	}
 
 	&__desc {
@@ -145,26 +137,10 @@ export default {
 	}
 }
 
-.text {
-	&__block {
-		color: $black-color;
-		margin-bottom: 15px;
-
-		&:last-child {
-			margin-bottom: 0;
-		}
-	}
-
-	&__field {
-		font-size: 24px;
-	}
-
-	&__value {
-		font-size: 24px;
-	}
-}
-
 .lineup {
+	width: calc(100% + 4rem);
+	transform: translateX(-2rem);
+
 	&__title {
 		font-family: $title-font;
 		text-align: center;
@@ -274,21 +250,218 @@ export default {
 		margin-top: 15px;
 	}
 }
-</style>
 
-<style lang="scss">
-.fest-page {
-	.img {
-		display: block;
-		width: 100%;
-		height: 400px;
+.other-bands {
+	display: flex;
+}
 
-		margin: 20px auto;
-		object-fit: cover;
+@media (max-width: #{map-get($breakpoints, 'xl')}) {
+	.fest {
+		&__title {
+			font-size: 54px;
+		}
 	}
 
-	.other-bands {
-		display: flex;
+	.lineup {
+		&__title {
+			font-size: 44px;
+		}
+
+		&__head {
+			font-size: 32px;
+		}
+
+		&__sub-band {
+			font-size: 26px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'lg')}) {
+	.fest {
+		&__title {
+			font-size: 44px;
+		}
+	}
+
+	.lineup {
+		&__title {
+			font-size: 42px;
+		}
+
+		&__head {
+			font-size: 30px;
+		}
+
+		&__day {
+			&:nth-child(1),
+			&:nth-child(3) {
+				.lineup__sub-band {
+					&:nth-child(1),
+					&:nth-child(3) {
+						margin-right: 0;
+						margin-left: 0;
+						text-align: left;
+					}
+
+					&:nth-child(2) {
+						margin-left: 0;
+						margin-right: 0;
+						text-align: end;
+					}
+				}
+			}
+
+			&:nth-child(2) {
+				.lineup__sub-band {
+					&:nth-child(1),
+					&:nth-child(3) {
+						margin-left: 0;
+						margin-right: 0;
+						text-align: end;
+					}
+
+					&:nth-child(2) {
+						margin-right: 0;
+						margin-left: 0;
+						text-align: left;
+					}
+				}
+			}
+		}
+
+		&__sub-band {
+			font-size: 24px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.fest {
+		&__title {
+			font-size: 42px;
+		}
+
+		&__desc {
+			flex-direction: column;
+
+			&-left,
+			&-right {
+				width: 100%;
+			}
+
+			&-left {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				margin-bottom: 25px;
+			}
+		}
+
+		&__map {
+			height: 200px;
+		}
+	}
+
+	.lineup {
+		&__title {
+			font-size: 40px;
+		}
+
+		&__date {
+			font-size: 26px;
+		}
+
+		&__head {
+			font-size: 24px;
+		}
+
+		&__sub-band {
+			font-size: 22px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	.fest {
+		&__title {
+			font-size: 36px;
+		}
+	}
+
+	.lineup {
+		&__title {
+			font-size: 38px;
+		}
+
+		&__wrapper {
+			flex-direction: column;
+		}
+
+		&__day {
+			width: 100%;
+			border-right: 0;
+			margin-bottom: 40px;
+		}
+
+		&__head {
+			font-size: 36px;
+		}
+
+		&__sub-band {
+			font-size: 28px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.fest {
+		&__title {
+			font-size: 32px;
+		}
+
+		&__desc {
+			&-left {
+				flex-wrap: nowrap;
+				flex-direction: column;
+			}
+		}
+	}
+
+	.lineup {
+		&__title {
+			font-size: 36px;
+		}
+
+		&__head {
+			font-size: 34px;
+		}
+
+		&__sub-band {
+			font-size: 26px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xxs')}) {
+	.fest {
+		&__title {
+			font-size: 26px;
+		}
+	}
+
+	.lineup {
+		&__title {
+			font-size: 34px;
+		}
+
+		&__head {
+			font-size: 30px;
+		}
+
+		&__sub-band {
+			font-size: 24px;
+		}
 	}
 }
 </style>

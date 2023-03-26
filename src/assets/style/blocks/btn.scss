@@ -175,6 +175,14 @@
 	margin-top: 10px;
 	padding: 10px 20px;
 	border: 2px solid;
+
+	@media (max-width: #{map-get($breakpoints, 'md')}) {
+		width: 150px;
+	}
+
+	@media (max-width: #{map-get($breakpoints, 'xs')}) {
+		width: 150px;
+	}
 }
 
 .btn--form-main {

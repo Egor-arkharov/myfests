@@ -30,6 +30,11 @@
 	&__block {
 		margin-bottom: 10px;
 	}
+
+	&__title {
+		font-size: 24px;
+		margin-bottom: 10px;
+	}
 }
 
 .forms__list {
@@ -53,7 +58,26 @@
 	}
 }
 
-.title__form {
-	font-size: 24px;
-	margin-bottom: 10px;
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.form {
+		&__input {
+			font-size: 18px;
+		}
+
+		&__title {
+			font-size: 22px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.form {
+		&__input {
+			font-size: 18px;
+		}
+
+		&__title {
+			font-size: 20px;
+		}
+	}
 }

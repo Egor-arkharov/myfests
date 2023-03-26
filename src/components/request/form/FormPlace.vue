@@ -1,5 +1,5 @@
 <template>
-	<h4 class="title__form">Choose place</h4>
+	<h4 class="form__title">Choose place</h4>
 	<form @submit.prevent="submitPlace" class="form">
 		<div class="form__block">
 			<input

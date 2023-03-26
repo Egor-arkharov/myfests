@@ -1,35 +1,32 @@
 <template>
-	<ol class="forms__list">
-		<li class="forms__item">
-			<form-name @submit="submitName"></form-name>
-		</li>
-		<li class="forms__item" :class="{ visuallyhidden: !festName }">
-			<!-- <li class="forms__item"> -->
-			<form-place @submit="submitPlace"></form-place>
-		</li>
-		<li class="forms__item" :class="{ visuallyhidden: !festPlace }">
-			<!-- <li class="forms__item"> -->
-			<form-date @submit="submitDate"></form-date>
-		</li>
-		<li class="forms__item" :class="{ visuallyhidden: !festDate.length }">
-			<!-- <li class="forms__item"> -->
-			<form-genre @submit="submitGenre"></form-genre>
-		</li>
-		<li
-			class="forms__item forms__item--big"
-			:class="{ visuallyhidden: !festGenre }"
-		>
-			<!-- <li class="forms__item forms__item--big"> -->
-			<form-bands @submit="submitBands" :genre="festGenre"></form-bands>
-		</li>
-		<li
-			class="forms__item forms__item--big"
-			:class="{ visuallyhidden: !festBands.length && !festImg }"
-		>
-			<!-- <li class="forms__item forms__item--big"> -->
-			<form-img @submit="submitImg"></form-img>
-		</li>
-	</ol>
+	<div class="forms">
+		<ol class="forms__list">
+			<li class="forms__item">
+				<form-name @submit="submitName"></form-name>
+			</li>
+			<li class="forms__item" :class="{ visuallyhidden: !festName }">
+				<form-place @submit="submitPlace"></form-place>
+			</li>
+			<li class="forms__item" :class="{ visuallyhidden: !festPlace }">
+				<form-date @submit="submitDate"></form-date>
+			</li>
+			<li class="forms__item" :class="{ visuallyhidden: !festDate.length }">
+				<form-genre @submit="submitGenre"></form-genre>
+			</li>
+			<li
+				class="forms__item forms__item--big"
+				:class="{ visuallyhidden: !festGenre }"
+			>
+				<form-bands @submit="submitBands" :genre="festGenre"></form-bands>
+			</li>
+			<li
+				class="forms__item forms__item--big"
+				:class="{ visuallyhidden: !festBands.length && !festImg }"
+			>
+				<form-img @submit="submitImg"></form-img>
+			</li>
+		</ol>
+	</div>
 	<form
 		v-if="festImg"
 		@submit.prevent="submitAll"
@@ -302,10 +299,21 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'xl')}) {
 	.forms {
 		&__item {
+			padding-left: 60px;
 			width: 45%;
+			margin-bottom: 50px;
 
 			&--big {
 				width: 100%;
+			}
+
+			&::before {
+				font-size: 54px;
+			}
+
+			&::after {
+				width: 90px;
+				height: 90px;
 			}
 		}
 	}
@@ -313,6 +321,56 @@ export default {
 	.preview {
 		&__list {
 			width: 90%;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.forms {
+		&__item {
+			width: 43%;
+			padding-left: 50px;
+			margin-bottom: 30px;
+
+			&--big {
+				width: 100%;
+			}
+
+			&::before {
+				font-size: 46px;
+			}
+
+			&::after {
+				width: 80px;
+				height: 80px;
+			}
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	.forms {
+		&__item {
+			width: 100%;
+			margin-bottom: 40px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.forms {
+		&__item {
+			width: 100%;
+			padding-left: 24px;
+
+			&::before {
+				font-size: 34px;
+			}
+
+			&::after {
+				width: 64px;
+				height: 64px;
+			}
 		}
 	}
 }
