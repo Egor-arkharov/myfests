@@ -1,5 +1,5 @@
 <template>
-	<div class="fest">
+	<div class="fest" :class="{ fest_slide: slide }">
 		<p class="fest__title">{{ fest.name }}</p>
 		<fest-img :fest="fest"></fest-img>
 		<div class="fest__desc">
@@ -51,12 +51,10 @@ import FestImg from "@/components/ui/Fest/FestImg.vue";
 import FestDesc from "@/components/ui/Fest/FestDesc.vue";
 
 export default {
-	props: ["fest"],
+	props: ["fest", "slide"],
 	setup(props) {
 		const store = useStore();
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
-
-		console.log(props.fest);
 
 		onMounted(async () => {
 			await store.dispatch("loadMap", props.fest);
@@ -134,6 +132,15 @@ export default {
 
 	&__map {
 		height: 250px;
+	}
+}
+
+.fest_slide {
+	padding: 20px 25px;
+
+	.lineup {
+		width: calc(100% + 50px);
+		transform: translateX(-25px);
 	}
 }
 
@@ -396,12 +403,14 @@ export default {
 
 		&__wrapper {
 			flex-direction: column;
+			padding: 0 30px;
 		}
 
 		&__day {
 			width: 100%;
 			border-right: 0;
 			margin-bottom: 40px;
+			padding: 0;
 		}
 
 		&__head {

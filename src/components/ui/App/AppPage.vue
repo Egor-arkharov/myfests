@@ -30,7 +30,7 @@ export default {
 	}
 }
 
-@media (max-width: #{map-get($breakpoints, 'xs')}) {
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
 	.main {
 		&__wrapper {
 			padding: 1rem;

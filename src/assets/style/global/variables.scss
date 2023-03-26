@@ -6,8 +6,21 @@ $main-color: #7140EB;
 $white-color: #ffffff;
 $black-color: #000000;
 
+$breakpoints: (
+	"xxs": 360px,
+	"xs": 600px - 1,
+	"sm": 798px - 1,
+	"md": 1080px - 1,
+	"lg": 1280px - 1,
+	"xl": 1500px - 1,
+);
+
 :root {
 	--swiper-theme-color: #7140EB;
+
+	@media (max-width: #{map-get($breakpoints, 'xs')}) {
+		--swiper-navigation-size: 30px;
+	}
 }
 
 $color-1: #EF476F;
@@ -32,15 +45,6 @@ $tablet-padding: 45px;
 
 $desktop-width: 1366px;
 $desktop-padding: 98px;
-
-$breakpoints: (
-	"xxs": 360px,
-	"xs": 600px - 1,
-	"sm": 798px - 1,
-	"md": 1080px - 1,
-	"lg": 1280px - 1,
-	"xl": 1500px - 1,
-);
 
 $main-font: 'Nunito regular', sans-serif;
 $main-font-italic: 'Nunito italic', sans-serif;
@@ -89,5 +93,18 @@ $band-fonts: (
 @each $name, $font in $band-fonts {
 	.font-#{$name} {
 		font-family: $font;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.swiper-button-prev:after, .swiper-button-next:after {
+		font-weight: 900;
+	}
+
+	.fest__map {
+		.gmnoprint,
+		.gm-fullscreen-control {
+			display: none;
+		}
 	}
 }

@@ -2,8 +2,6 @@
 	<app-page title="My-fests">
 		<div v-if="myFests.length">
 			<swiper
-				:slidesPerView="3"
-				:spaceBetween="30"
 				:slidesPerGroup="1"
 				:grabCursor="true"
 				:navigation="true"
@@ -11,6 +9,7 @@
 				:modules="[Navigation, Controller]"
 				:controller="{ control: controlledSwiper }"
 				class="swiper-top"
+				@swiper="onSwiper"
 			>
 				<swiper-slide
 					v-for="fest in myFests"
@@ -48,7 +47,7 @@
 					:key="fest.id"
 					class="swiper-bottom__slide"
 				>
-					<fest-page :fest="fest"></fest-page>
+					<fest-page :fest="fest" :slide="true"></fest-page>
 				</swiper-slide>
 			</swiper>
 		</div>
@@ -84,6 +83,19 @@ export default {
 			controlledSwiper.value = swiper;
 		};
 
+		const onSwiper = (swiper) => {
+			swiper.params.breakpoints = {
+				320: {
+					slidesPerView: 2.5,
+					spaceBetween: 10,
+				},
+				600: {
+					slidesPerView: 3,
+					spaceBetween: 30,
+				},
+			};
+		};
+
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
 
 		return {
@@ -94,6 +106,7 @@ export default {
 			EffectFade,
 			controlledSwiper,
 			setControlledSwiper,
+			onSwiper,
 		};
 	},
 	components: {
@@ -106,10 +119,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-:root {
-	--swiper-theme-color: red; // ???????????????????
-}
-
 .swiper {
 	opacity: 1;
 }
@@ -135,10 +144,9 @@ export default {
 
 		&-img {
 			width: 150px;
-			height: 150px !important;
+			height: 150px;
 			object-fit: cover;
 			border-radius: 50%;
-			height: 100%;
 		}
 	}
 
@@ -152,15 +160,6 @@ export default {
 .swiper-bottom {
 	&__slide {
 		background: $white-color;
-
-		.fest {
-			padding: 20px 25px;
-		}
-
-		.lineup {
-			width: calc(100% + 50px);
-			transform: translateX(-25px);
-		}
 	}
 }
 
@@ -182,6 +181,87 @@ export default {
 
 	@include hover {
 		color: darken($main-color, 20%);
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'lg')}) {
+	.swiper-top {
+		margin-bottom: 30px;
+
+		&__img-img {
+			width: 120px;
+			height: 120px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.swiper-top {
+		margin-bottom: 25px;
+
+		&__img-img {
+			width: 120px;
+			height: 120px;
+		}
+
+		&__text {
+			margin-top: 10px;
+			font-size: 20px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	.swiper-top {
+		margin-bottom: 20px;
+
+		&__img-img {
+			width: 100px;
+			height: 100px;
+		}
+
+		&__text {
+			margin-top: 7px;
+			font-size: 16px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.swiper-top {
+		position: relative;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+
+			top: 0;
+			width: 50px;
+			height: 100%;
+
+			background-color: $white-color;
+			filter: blur(15px);
+			z-index: 2;
+		}
+
+		&::before {
+			left: 0;
+		}
+
+		&:after {
+			right: 0;
+		}
+
+		&__img-img {
+			width: 80px;
+			height: 80px;
+		}
+
+		&__text {
+			margin-top: 5px;
+			font-size: 14px;
+		}
 	}
 }
 </style>
