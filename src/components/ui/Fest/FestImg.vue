@@ -1,5 +1,8 @@
 <template>
-	<div class="img-wrap">
+	<div
+		class="img_wrap"
+		:class="{ img_wrap_main: mainPage, img_wrap_fest: festPage }"
+	>
 		<picture v-if="fest.img.startsWith('/img-')">
 			<source type="image/webp" :srcset="getImgUrl(fest.img + '.webp')" />
 			<v-lazy-image
@@ -11,6 +14,7 @@
 		<v-lazy-image
 			v-else
 			class="img"
+			:class="{ img_main: mainPage, img_fest: festPage }"
 			:src="fest.img"
 			:alt="'Photo of the ' + fest.name + ' festival'"
 		/>
@@ -21,7 +25,7 @@
 import VLazyImage from "v-lazy-image";
 
 export default {
-	props: ["fest"],
+	props: ["fest", "mainPage", "festPage"],
 	setup() {
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
 
@@ -36,40 +40,79 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.img-wrap {
+.img_wrap {
 	background-color: lighten($grey-color, 20%);
+
+	&_main {
+		width: 350px;
+		margin-bottom: 40px;
+
+		.img {
+			width: 100%;
+			height: 200px;
+		}
+	}
+
+	&_fest {
+		.img {
+			width: 100%;
+			height: 400px;
+
+			margin: 20px auto;
+		}
+	}
 }
 
 .img {
 	display: block;
-	width: 100%;
-	height: 400px;
-
-	margin: 20px auto;
 	object-fit: cover;
 }
 
 @media (max-width: #{map-get($breakpoints, 'xl')}) {
-	.img {
-		height: 300px;
+	.img_wrap {
+		&_fest {
+			.img {
+				height: 300px;
+			}
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.img_wrap {
+		&_main {
+			width: 300px;
+		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'lg')}) {
-	.img {
-		height: 250px;
+	.img_wrap {
+		&_fest {
+			.img {
+				height: 250px;
+			}
+		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'sm')}) {
-	.img {
-		height: 220px;
+	.img_wrap {
+		&_fest {
+			.img {
+				height: 220px;
+			}
+		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'xxs')}) {
-	.img {
-		height: 180px;
+	.img_wrap {
+		&_fest {
+			.img {
+				height: 180px;
+			}
+		}
 	}
 }
 </style>

@@ -57,6 +57,11 @@
 		50% { background-position: 400% 0; }
 		100% { background-position: 0 0; }
 	}
+
+	@media (max-width: #{map-get($breakpoints, 'xs')}) {
+		width: 90px;
+		padding: 5px 10px;
+	}
 }
 
 .btn--open {

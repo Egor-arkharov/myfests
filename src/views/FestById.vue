@@ -2,7 +2,16 @@
 	<app-page v-if="fest" :title="fest.name">
 		<fest-page :fest="fest"></fest-page>
 	</app-page>
-	<div v-else>Фест утрачен(</div>
+
+	<app-page v-else :title="'No fest'">
+		<p class="no-fests">
+			This page id&nbsp;is&nbsp;out of&nbsp;date :(
+			<span
+				>Maybe you will find festivals on&nbsp;the
+				<router-link to="/" class="link">home page</router-link>!</span
+			>
+		</p>
+	</app-page>
 </template>
 
 <script>

@@ -75,32 +75,33 @@
 			</li>
 		</ul>
 
-		<p
-			class="form__text"
-			:class="{ full: festHeadliners.length === AMOUNT_HEADLINERS }"
-		>
-			Headliners ({{ festHeadliners.length + "/" + AMOUNT_HEADLINERS }}):
-			{{ festHeadliners.join(", ") }}
-		</p>
-		<p
-			class="form__text"
-			:class="{ full: festSubBands.length === maxSubBands }"
-		>
-			Other bands ({{ festSubBands.length + "/" + maxSubBands }}):
-			{{ festSubBands.join(", ") }}
-		</p>
-
-		<button
-			class="form__button btn btn--form"
-			:class="{ added: isChange }"
-			type="submit"
-			:disabled="
-				festHeadliners.length !== maxHeadliners ||
-				festSubBands.length < maxSubBands
-			"
-		>
-			{{ getButtonText() }}
-		</button>
+		<div class="form__settings">
+			<p
+				class="form__text"
+				:class="{ full: festHeadliners.length === AMOUNT_HEADLINERS }"
+			>
+				Headliners ({{ festHeadliners.length + "/" + AMOUNT_HEADLINERS }}):
+				{{ festHeadliners.join(", ") }}
+			</p>
+			<p
+				class="form__text"
+				:class="{ full: festSubBands.length === maxSubBands }"
+			>
+				Other bands ({{ festSubBands.length + "/" + maxSubBands }}):
+				{{ festSubBands.join(", ") }}
+			</p>
+			<button
+				class="form__button btn btn--form"
+				:class="{ added: isChange }"
+				type="submit"
+				:disabled="
+					festHeadliners.length !== maxHeadliners ||
+					festSubBands.length < maxSubBands
+				"
+			>
+				{{ getButtonText() }}
+			</button>
+		</div>
 	</form>
 </template>
 
@@ -261,9 +262,19 @@ ul {
 }
 
 .form {
+	flex-direction: row;
+
 	&__list {
 		display: flex;
 		flex-wrap: wrap;
+		margin-right: 20px;
+	}
+
+	&__settings {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 
 	&__item {
@@ -272,7 +283,6 @@ ul {
 	}
 
 	&__text {
-		padding-left: 20px;
 		text-indent: -20px;
 
 		&.full {
@@ -289,9 +299,10 @@ ul {
 	padding: 15px 45px;
 	border-radius: 20px;
 	color: $this-color;
-	font-weight: 900;
 	position: relative;
 	overflow: hidden;
+
+	font-family: $main-font-bold-ex;
 
 	&__button {
 		position: absolute;

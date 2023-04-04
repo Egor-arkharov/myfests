@@ -42,9 +42,14 @@
 					<span>List view</span>
 				</button>
 			</li>
-			<li class="tools__button-item" v-if="!desktopView">
+			<li
+				class="tools__button-item"
+				v-if="!desktopView"
+				@click.prevent="sortFests('date', (sortByDate = !sortByDate))"
+			>
 				<button class="btn btn--with-icon">
 					<inline-svg
+						:class="{ rotate: rotateDateIcon }"
 						:src="require(`@/assets/icons/sort.svg`)"
 						width="30"
 						height="30"
@@ -53,8 +58,12 @@
 				</button>
 			</li>
 			<li class="tools__button-item" v-if="!desktopView">
-				<button class="btn btn--with-icon">
+				<button
+					class="btn btn--with-icon"
+					@click.prevent="sortFests('genre', (sortByGenre = !sortByGenre))"
+				>
 					<inline-svg
+						:class="{ rotate: rotateGenreIcon }"
 						:src="require(`@/assets/icons/sort.svg`)"
 						width="30"
 						height="30"
@@ -105,8 +114,8 @@ import { ref } from "@vue/reactivity";
 import { watch, computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
 
-import createModal from "./modal-view/createModal.vue";
-import warnModal from "./modal-view/warnModal.vue";
+import createModal from "./modal/createModal.vue";
+import warnModal from "./modal/warnModal.vue";
 
 export default {
 	emits: ["update:modelValue", "changeView"],
@@ -115,6 +124,11 @@ export default {
 		const store = useStore();
 		const bandName = ref();
 		const searchedBands = ref([]);
+
+		const sortByDate = ref(false);
+		const sortByGenre = ref(false);
+		const rotateDateIcon = ref(false);
+		const rotateGenreIcon = ref(false);
 
 		const modal = ref();
 		const modalView = ref("");
@@ -166,6 +180,29 @@ export default {
 			modalTitle.value = "Create own festival";
 		};
 
+		const sortFests = (sortType, isSorted) => {
+			store.commit("sortFests", {
+				sortType,
+				isSorted,
+			});
+
+			/* eslint-disable prettier/prettier */
+			switch (sortType) {
+			case "date":
+				rotateDateIcon.value = true;
+				setTimeout(() => {
+					rotateDateIcon.value = false
+				}, 300)
+				break;
+			case "genre":
+				rotateGenreIcon.value = true;
+				setTimeout(() => {
+					rotateGenreIcon.value = false
+				}, 300)
+				break;
+			}
+		};
+
 		const isFests = computed(() => store.getters["getFests"].length);
 
 		const breakpointLG = store.state.breakpoints.lg;
@@ -187,8 +224,13 @@ export default {
 			modalTitle,
 			isFests,
 			desktopView,
+			sortByDate,
+			sortByGenre,
+			rotateDateIcon,
+			rotateGenreIcon,
 			refresh,
 			openModalCreate,
+			sortFests,
 		};
 	},
 	components: {
@@ -267,6 +309,19 @@ $tools-colors: $color-5, $color-6, $color-8, $color-2;
 				}
 			}
 		}
+	}
+}
+
+.rotate {
+	animation: rotate 0.2s ease-in;
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0turn);
+	}
+	to {
+		transform: rotate(0.5turn);
 	}
 }
 

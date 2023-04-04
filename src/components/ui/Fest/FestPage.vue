@@ -1,7 +1,7 @@
 <template>
 	<div class="fest" :class="{ fest_slide: slide }">
 		<p class="fest__title">{{ fest.name }}</p>
-		<fest-img :fest="fest"></fest-img>
+		<fest-img :fest="fest" :festPage="true"></fest-img>
 		<div class="fest__desc">
 			<div class="fest__desc-left">
 				<fest-desc :fest="fest"></fest-desc>

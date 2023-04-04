@@ -15,7 +15,7 @@
 			fest.place.name + ", " + fest.place.countryName
 		}}</span>
 	</p>
-	<p class="text__block">
+	<p class="text__block text__block--date">
 		<span class="text__field">Date: </span>
 		<span class="text__value">{{ fest.date.start + "-" + fest.date.end }}</span>
 	</p>
@@ -40,6 +40,9 @@ import InlineSvg from "vue-inline-svg";
 
 export default {
 	props: ["fest"],
+	setup(props) {
+		console.log(props);
+	},
 	components: {
 		InlineSvg,
 	},
@@ -61,6 +64,10 @@ export default {
 
 		&--name {
 			align-items: center;
+		}
+
+		&--date {
+			white-space: nowrap;
 		}
 	}
 

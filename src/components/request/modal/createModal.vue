@@ -78,6 +78,7 @@
 					:alt="'Photo of the ' + festName + ' festival'"
 				/>
 			</li>
+			<fest-desc v-if="festImg" :fest="previewData"></fest-desc>
 		</ul>
 		<button class="btn btn--form-main" :disabled="!festBands.length">
 			Submit
@@ -95,6 +96,7 @@ import FormGenre from "../form/FormGenre";
 import FormBands from "../form/FormBands";
 import FormDate from "../form/FormDate";
 import FormImg from "../form/FormImg";
+import FestDesc from "@/components/ui/Fest/FestDesc.vue";
 
 export default {
 	emits: ["close"],
@@ -110,6 +112,7 @@ export default {
 		const festImg = ref("");
 
 		const preview = ref(null);
+		const previewData = ref({});
 
 		const submitName = (festNamefromComp) =>
 			(festName.value = festNamefromComp);
@@ -133,6 +136,15 @@ export default {
 
 		const submitImg = (festImgFromComp) => {
 			festImg.value = festImgFromComp;
+
+			previewData.value = {
+				name: festName.value,
+				place: festPlace.value,
+				date: festDate.value,
+				genre: festGenre.value,
+				headliners: festHeadliners.value,
+				bands: festBands.value,
+			};
 		};
 
 		watchEffect(() => {
@@ -145,13 +157,12 @@ export default {
 
 		const submitAll = () => {
 			const fest = {
-				img: festImg.value,
 				name: festName.value,
 				place: festPlace.value,
-				genre: festGenre.value,
-				bands: festBands.value,
-				headliners: festHeadliners.value,
 				date: festDate.value,
+				genre: festGenre.value,
+				headliners: festHeadliners.value,
+				bands: festBands.value,
 			};
 
 			store.commit("addFest", fest);
@@ -174,7 +185,9 @@ export default {
 			submitImg,
 			submitAll,
 			preview,
+			previewData,
 			getImgUrl,
+			FestDesc,
 		};
 	},
 	components: {
@@ -184,6 +197,7 @@ export default {
 		FormGenre,
 		FormBands,
 		FormImg,
+		FestDesc,
 	},
 };
 </script>
@@ -211,7 +225,7 @@ export default {
 		margin-bottom: 100px;
 
 		&--big {
-			width: 48%;
+			width: 100%;
 		}
 
 		&::before {
@@ -303,10 +317,6 @@ export default {
 			width: 45%;
 			margin-bottom: 50px;
 
-			&--big {
-				width: 100%;
-			}
-
 			&::before {
 				font-size: 54px;
 			}
@@ -331,10 +341,6 @@ export default {
 			width: 43%;
 			padding-left: 50px;
 			margin-bottom: 30px;
-
-			&--big {
-				width: 100%;
-			}
 
 			&::before {
 				font-size: 46px;

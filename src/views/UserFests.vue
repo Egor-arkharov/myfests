@@ -163,27 +163,6 @@ export default {
 	}
 }
 
-.no-fests {
-	@include font-m;
-	font-family: $main-font-semibold;
-	margin: 30px 0;
-	text-align: center;
-
-	span {
-		display: block;
-		margin-top: 10px;
-	}
-}
-
-.link {
-	font-family: $main-font-bold;
-	color: $main-color;
-
-	@include hover {
-		color: darken($main-color, 20%);
-	}
-}
-
 @media (max-width: #{map-get($breakpoints, 'lg')}) {
 	.swiper-top {
 		margin-bottom: 30px;

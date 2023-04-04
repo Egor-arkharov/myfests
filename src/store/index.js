@@ -59,6 +59,8 @@ export default createStore({
 			localStorage["fests"] = JSON.stringify(state.fests);
 		},
 		sortFests(state, sortSettings) {
+			console.log("before", state.fests);
+
 			/* eslint-disable prettier/prettier */
 			switch (sortSettings.sortType) {
 			case "genre":
@@ -72,6 +74,8 @@ export default createStore({
 					: state.fests.sort((a, b) => (a.date.fullDateStart < b.date.fullDateStart ? 1 : -1));
 				break
 			}
+
+			console.log("after", state.fests);
 		},
 		animateTitle(state) {
 			setTimeout(() => {

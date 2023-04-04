@@ -6,7 +6,7 @@
 					<fest-desc :fest="f"></fest-desc>
 				</div>
 				<div class="fest__img">
-					<fest-img :fest="f"></fest-img>
+					<fest-img :fest="f" :mainPage="true"></fest-img>
 					<div class="buttons">
 						<router-link
 							v-slot="{ navigate }"
@@ -62,7 +62,7 @@ export default {
 <style lang="scss" scoped>
 .fests {
 	&__item {
-		padding: 20px 12%;
+		padding: 20px 10%;
 
 		border-top: 2px solid $main-color;
 
@@ -109,24 +109,3 @@ export default {
 	}
 }
 </style>
-
-<!-- <style lang="scss">
-.fest {
-	.img-wrap {
-		margin-bottom: 20px;
-	}
-
-	.other-bands {
-		display: none;
-	}
-
-	.img {
-		display: block;
-
-		width: 350px;
-		height: 200px;
-
-		object-fit: cover;
-	}
-}
-</style> -->

@@ -34,8 +34,8 @@ import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
 import AppLoader from "../components/ui/App/AppLoader.vue";
 import RequestTools from "../components/request/RequestTools.vue";
-import FestTable from "../components/request/fest-view/FestTable.vue";
-import FestList from "../components/request/fest-view/FestList.vue";
+import FestTable from "../components/request/main/FestTable.vue";
+import FestList from "../components/request/main/FestList.vue";
 
 export default {
 	setup() {
