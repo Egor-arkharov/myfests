@@ -55,6 +55,15 @@
 			border-radius: 5px 20px 5px;
 		}
 	}
+
+	@media (max-width: #{map-get($breakpoints, 'xs')}) {
+		&-5 {
+			&::before {
+				width: 105%;
+				left: -2.5%;
+			}
+		}
+	}
 }
 
 .dp__today {

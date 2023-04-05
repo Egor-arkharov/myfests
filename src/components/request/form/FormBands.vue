@@ -275,6 +275,7 @@ ul {
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		max-width: 200px;
 	}
 
 	&__item {
@@ -284,11 +285,16 @@ ul {
 
 	&__text {
 		text-indent: -20px;
+		margin-bottom: 10px;
 
 		&.full {
 			color: green;
 			font-weight: 600;
 		}
+	}
+
+	&__button {
+		margin-top: 30px;
 	}
 }
 
@@ -317,6 +323,7 @@ ul {
 		}
 
 		svg {
+			display: block;
 			fill: $this-color;
 		}
 
@@ -380,18 +387,59 @@ ul {
 }
 
 @media (max-width: #{map-get($breakpoints, 'md')}) {
+	.form {
+		flex-direction: column;
+
+		&__list {
+			margin-right: 0;
+		}
+
+		&__settings {
+			align-items: flex-start;
+			justify-content: flex-start;
+			max-width: 100%;
+		}
+
+		&__text {
+			padding-left: 20px;
+		}
+
+		&__button {
+			margin-top: 0;
+		}
+	}
+
 	.lead {
 		font-size: 20px;
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.form {
+		margin-left: -64px;
+		margin-right: -10px;
+
+		&__item {
+			margin-right: 10px;
+		}
+
+		&__text {
+			@include font-s;
+		}
+	}
+
 	.lead {
 		font-size: 16px;
 	}
 
 	.band {
 		font-size: 14px;
+		padding: 10px 35px;
+
+		&__button svg {
+			width: 25px;
+			height: 100%;
+		}
 	}
 }
 </style>

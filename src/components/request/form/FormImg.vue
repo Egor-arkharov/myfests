@@ -1,9 +1,7 @@
 <template>
 	<h4 class="form__title">Choose photo</h4>
 	<swiper
-		:slidesPerView="2.5"
 		:centeredSlides="true"
-		:spaceBetween="40"
 		:grabCursor="true"
 		:navigation="true"
 		:modules="modules"
@@ -103,6 +101,17 @@ export default {
 		const onSwiper = (swiper) => {
 			swiperDefault.value = swiper;
 			swiperInit.value = true;
+
+			swiper.params.breakpoints = {
+				320: {
+					slidesPerView: 1.5,
+					spaceBetween: 10,
+				},
+				600: {
+					slidesPerView: 2.5,
+					spaceBetween: 40,
+				},
+			};
 		};
 
 		const slidesLengthChange = (swiper) => {
@@ -174,7 +183,6 @@ $this-color: $color-8;
 		content: "";
 		position: absolute;
 
-		position: absolute;
 		width: 45%;
 		height: 100%;
 		top: 0;
@@ -192,6 +200,8 @@ $this-color: $color-8;
 }
 
 .swiper-slide {
+	display: flex;
+	justify-content: center;
 	overflow: hidden;
 	transform: scale(0.8);
 
@@ -201,21 +211,25 @@ $this-color: $color-8;
 
 	img {
 		object-fit: cover;
+		width: 60%;
 		height: 100%;
 		transform: scale(1.5);
 	}
 }
 
 .form-file {
+	align-items: center;
+
 	&__label {
 		position: relative;
-		width: 100%;
+		width: 50%;
 		height: 100px;
 		border: 2px dashed $this-color;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		border-radius: 10px;
+		margin: 20px 0;
 		cursor: pointer;
 
 		input {
@@ -280,6 +294,33 @@ $this-color: $color-8;
 			100% {
 				transform: translate(0px);
 			}
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.form-file {
+		align-items: flex-start;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.swiper,
+	.form {
+		margin-top: 30px;
+		margin-left: -64px;
+		margin-right: -5px;
+	}
+
+	.swiper {
+		&:before {
+			width: 75%;
+		}
+	}
+
+	.form-file {
+		&__label {
+			width: 100%;
 		}
 	}
 }

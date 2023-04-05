@@ -1,7 +1,11 @@
 <template>
 	<div
 		class="img_wrap"
-		:class="{ img_wrap_main: mainPage, img_wrap_fest: festPage }"
+		:class="{
+			img_wrap_main: mainPage,
+			img_wrap_fest: festPage,
+			img_wrap_modal: modal,
+		}"
 	>
 		<picture v-if="fest.img.startsWith('/img-')">
 			<source type="image/webp" :srcset="getImgUrl(fest.img + '.webp')" />
@@ -14,7 +18,6 @@
 		<v-lazy-image
 			v-else
 			class="img"
-			:class="{ img_main: mainPage, img_fest: festPage }"
 			:src="fest.img"
 			:alt="'Photo of the ' + fest.name + ' festival'"
 		/>
@@ -25,7 +28,7 @@
 import VLazyImage from "v-lazy-image";
 
 export default {
-	props: ["fest", "mainPage", "festPage"],
+	props: ["fest", "mainPage", "festPage", "modal"],
 	setup() {
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
 
@@ -59,6 +62,12 @@ export default {
 			height: 400px;
 
 			margin: 20px auto;
+		}
+	}
+
+	&_modal {
+		.img {
+			max-height: 100px;
 		}
 	}
 }

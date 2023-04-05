@@ -103,6 +103,10 @@ h3 {
 		&--create {
 			padding: 20px 15px;
 		}
+
+		&--warn {
+			width: 85%;
+		}
 	}
 }
 
@@ -110,6 +114,12 @@ h3 {
 	h3 {
 		font-size: 28px;
 		margin-bottom: 40px;
+	}
+
+	.modal {
+		&--warn {
+			width: 95%;
+		}
 	}
 }
 </style>

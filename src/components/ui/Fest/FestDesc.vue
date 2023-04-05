@@ -23,20 +23,33 @@
 		<span class="text__field">Genre: </span>
 		<span class="text__value">{{ fest.genre }}</span>
 	</p>
-	<p class="text__block text__block--big">
+	<p
+		class="text__block text__block--big"
+		:class="{ text_error: !fest.headliners.length }"
+	>
 		<span class="text__field">Headliners: </span>
-		<span class="text__value">{{ fest.headliners.join(", ") }}</span>
+		<span class="text__value" v-if="fest.headliners.length">{{
+			fest.headliners.join(", ")
+		}}</span>
 	</p>
-	<p class="text__block text__block--big other-bands">
+	<p
+		class="text__block text__block--big other-bands"
+		:class="{ text_error: !fest.bands.length }"
+	>
 		<span class="text__field">Other bands: </span>
-		<span class="text__value">{{
+		<span class="text__value" v-if="fest.headliners.length">{{
 			fest.bands.filter((el) => !fest.headliners.includes(el)).join(", ")
 		}}</span>
+	</p>
+	<p class="text__block" v-if="fest.fromModal">
+		<span class="text__field">Img:&nbsp; </span>
+		<fest-img :fest="fest" :modal="true"></fest-img>
 	</p>
 </template>
 
 <script>
 import InlineSvg from "vue-inline-svg";
+import FestImg from "@/components/ui/Fest/FestImg.vue";
 
 export default {
 	props: ["fest"],
@@ -45,6 +58,7 @@ export default {
 	},
 	components: {
 		InlineSvg,
+		FestImg,
 	},
 };
 </script>
@@ -75,6 +89,10 @@ export default {
 		font-family: $main-font-bold;
 		margin-right: 5px;
 		white-space: nowrap;
+	}
+
+	&_error {
+		color: $error-color;
 	}
 }
 

@@ -35,19 +35,17 @@ export default createStore({
 				genre: data.genre,
 				headliners: data.headliners,
 				bands: data.bands,
-				date: {
-					start: data.date[0],
-					end: data.date[1],
-					fullDateStart: new Date(
-						data.date[0].replace(/(\d\d).(\d\d)/, "$2.$1")
-					),
-				},
+				date: data.date,
 				id: Math.random().toString(36).substr(2, 9),
 				added: false,
 				own: true,
 				img: data.img,
 				lineup: getLineup(data.bands, data.headliners, state.bands),
 			};
+
+			fest.date.fullDateStart = new Date(
+				data.date.start.replace(/(\d\d).(\d\d)/, "$2.$1")
+			);
 
 			state.fests.push(fest);
 			localStorage["fests"] = JSON.stringify(state.fests);
@@ -59,8 +57,6 @@ export default createStore({
 			localStorage["fests"] = JSON.stringify(state.fests);
 		},
 		sortFests(state, sortSettings) {
-			console.log("before", state.fests);
-
 			/* eslint-disable prettier/prettier */
 			switch (sortSettings.sortType) {
 			case "genre":
@@ -74,8 +70,6 @@ export default createStore({
 					: state.fests.sort((a, b) => (a.date.fullDateStart < b.date.fullDateStart ? 1 : -1));
 				break
 			}
-
-			console.log("after", state.fests);
 		},
 		animateTitle(state) {
 			setTimeout(() => {

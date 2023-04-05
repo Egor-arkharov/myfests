@@ -72,7 +72,7 @@
 						</li>
 					</ul>
 
-					<p class="accordion__subtext">Libraries:</p>
+					<p class="accordion__subtext">Main libraries:</p>
 
 					<ul class="list">
 						<li class="list__item">
@@ -237,7 +237,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- <p v-if="mobileView">HIIIIIIIIIIII</p> -->
 	</app-page>
 </template>
 
@@ -245,21 +244,11 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import VLazyImage from "v-lazy-image";
-// import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
 
 export default {
 	setup() {
 		const store = useStore();
-		// const breakpointXL = store.state.breakpoints.xl;
-		// const mobileView = ref(store.getters["getMobileView"]);
-
-		// window.addEventListener(
-		// 	"resize",
-		// 	debounce(() => {
-		// 		mobileView.value = window.innerWidth < breakpointXL;
-		// 	}, 100)
-		// );
 
 		return {
 			isOpenAbout: ref(false),
@@ -267,7 +256,6 @@ export default {
 			isOpenData: ref(false),
 			isOpenAuthor: ref(false),
 			open: () => store.commit("openSidebar"),
-			// mobileView,
 		};
 	},
 	components: {
@@ -366,5 +354,30 @@ h1 {
 
 p:not(:last-child) {
 	margin-bottom: 7px;
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.accordion {
+		width: 100%;
+
+		&__body {
+			flex-direction: column;
+		}
+
+		&__text,
+		&__pic {
+			width: 100%;
+		}
+
+		&__pic {
+			height: 200px;
+			margin-top: 35px;
+			order: 1;
+
+			&-img {
+				width: 100%;
+			}
+		}
+	}
 }
 </style>

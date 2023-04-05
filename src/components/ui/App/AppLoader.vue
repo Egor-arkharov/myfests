@@ -126,4 +126,10 @@ $spin-animation: 5s infinite linear;
 		}
 	}
 }
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.loader {
+		display: flex;
+	}
+}
 </style>

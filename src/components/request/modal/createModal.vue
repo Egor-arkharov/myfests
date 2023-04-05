@@ -34,52 +34,10 @@
 		ref="preview"
 	>
 		<h4 class="preview__title">Preview</h4>
-		<ul class="preview__list">
-			<li class="preview__item">
-				<span class="preview__field">Name:&nbsp;</span> {{ festName }}
-			</li>
-			<li class="preview__item">
-				<span class="preview__field">Place:&nbsp;</span>
-				{{ festPlace.name + ", " + festPlace.countryName }}
-			</li>
-			<li class="preview__item">
-				<span class="preview__field">Date:&nbsp;</span
-				>{{ festDate[0] + " - " + festDate[1] }}
-			</li>
-			<li class="preview__item">
-				<span class="preview__field">Genre:&nbsp;</span>{{ festGenre }}
-			</li>
-			<li class="preview__item" :class="{ not_full: !festHeadliners.length }">
-				<span class="preview__field">Headliners:&nbsp;</span>
-				<span v-if="festHeadliners.length">{{
-					festHeadliners.join(", ")
-				}}</span>
-			</li>
-			<li class="preview__item" :class="{ not_full: !festBands.length }">
-				<span class="preview__field">Other Bands:&nbsp;</span>
-				<span v-if="festBands.length">{{
-					festBands.filter((el) => !festHeadliners.includes(el)).join(", ")
-				}}</span>
-			</li>
-			<li class="preview__item">
-				<span class="preview__field">Img:&nbsp;</span>
-				<picture v-if="festImg.startsWith('/img-')">
-					<source type="image/webp" :srcset="getImgUrl(festImg + '.webp')" />
-					<img
-						class="preview__img"
-						:src="getImgUrl(festImg + '.jpg')"
-						:alt="'Photo of the ' + festName + ' festival'"
-					/>
-				</picture>
-				<img
-					v-else
-					class="preview__img"
-					:src="festImg"
-					:alt="'Photo of the ' + festName + ' festival'"
-				/>
-			</li>
-			<fest-desc v-if="festImg" :fest="previewData"></fest-desc>
-		</ul>
+		<div class="preview__list">
+			<fest-desc :fest="fest"></fest-desc>
+		</div>
+
 		<button class="btn btn--form-main" :disabled="!festBands.length">
 			Submit
 		</button>
@@ -89,7 +47,7 @@
 <script>
 import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
-import { watchEffect } from "@vue/runtime-core";
+import { computed, watchEffect } from "@vue/runtime-core";
 import FormName from "../form/FormName";
 import FormPlace from "../form/FormPlace";
 import FormGenre from "../form/FormGenre";
@@ -112,7 +70,6 @@ export default {
 		const festImg = ref("");
 
 		const preview = ref(null);
-		const previewData = ref({});
 
 		const submitName = (festNamefromComp) =>
 			(festName.value = festNamefromComp);
@@ -124,8 +81,8 @@ export default {
 			(festDate.value = festDatefromComp);
 
 		const submitGenre = (festGenreFromComp) => {
-			festHeadliners.value = ref([]);
-			festBands.value = ref([]);
+			festHeadliners.value = [];
+			festBands.value = [];
 			festGenre.value = festGenreFromComp;
 		};
 
@@ -136,15 +93,6 @@ export default {
 
 		const submitImg = (festImgFromComp) => {
 			festImg.value = festImgFromComp;
-
-			previewData.value = {
-				name: festName.value,
-				place: festPlace.value,
-				date: festDate.value,
-				genre: festGenre.value,
-				headliners: festHeadliners.value,
-				bands: festBands.value,
-			};
 		};
 
 		watchEffect(() => {
@@ -153,19 +101,24 @@ export default {
 			}
 		});
 
-		const getImgUrl = (img) => require("@/assets/images/fests" + img);
-
-		const submitAll = () => {
-			const fest = {
+		const fest = computed(() => {
+			return {
 				name: festName.value,
 				place: festPlace.value,
-				date: festDate.value,
+				date: {
+					start: festDate.value[0],
+					end: festDate.value[1],
+				},
 				genre: festGenre.value,
 				headliners: festHeadliners.value,
 				bands: festBands.value,
+				img: festImg.value,
+				fromModal: true,
 			};
+		});
 
-			store.commit("addFest", fest);
+		const submitAll = () => {
+			store.commit("addFest", fest.value);
 			emit("close");
 		};
 
@@ -185,8 +138,7 @@ export default {
 			submitImg,
 			submitAll,
 			preview,
-			previewData,
-			getImgUrl,
+			fest,
 			FestDesc,
 		};
 	},
@@ -213,6 +165,8 @@ export default {
 		flex-wrap: wrap;
 		justify-content: space-between;
 
+		padding-left: 40px;
+
 		list-style: none;
 		counter-reset: counter;
 	}
@@ -222,7 +176,7 @@ export default {
 		counter-increment: counter;
 		width: 20%;
 		padding-left: 70px;
-		margin-bottom: 100px;
+		margin-bottom: 70px;
 
 		&--big {
 			width: 100%;
@@ -279,31 +233,6 @@ export default {
 		margin: 20px auto;
 		text-align: left;
 	}
-
-	&__item {
-		display: flex;
-		font-size: 24px;
-		margin-bottom: 7px;
-
-		&:last-child {
-			margin-bottom: 0;
-		}
-
-		&.not_full {
-			color: $error-color;
-		}
-	}
-
-	&__field {
-		white-space: nowrap;
-		font-family: $main-font-bold;
-	}
-
-	&__img {
-		width: auto;
-		height: 100px;
-		object-fit: contain;
-	}
 }
 
 .submit {
@@ -316,6 +245,10 @@ export default {
 			padding-left: 60px;
 			width: 45%;
 			margin-bottom: 50px;
+
+			&--big {
+				width: 100%;
+			}
 
 			&::before {
 				font-size: 54px;
@@ -338,7 +271,6 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'md')}) {
 	.forms {
 		&__item {
-			width: 43%;
 			padding-left: 50px;
 			margin-bottom: 30px;
 
@@ -370,12 +302,12 @@ export default {
 			padding-left: 24px;
 
 			&::before {
-				font-size: 34px;
+				font-size: 28px;
 			}
 
 			&::after {
-				width: 64px;
-				height: 64px;
+				width: 58px;
+				height: 58px;
 			}
 		}
 	}
