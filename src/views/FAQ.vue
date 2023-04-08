@@ -17,13 +17,13 @@
 					</p>
 					<p>
 						You can also create your own festival by&nbsp;choosing the name,
-						date and place, your favorite artists and even choose your cover
-						(or&nbsp;proposed by&nbsp;us)!
+						date and place, your favorite artists and even choose your cover!
 					</p>
 					<p>
-						You can add festivals to&nbsp;your list and on&nbsp;the page
-						&laquo;My&nbsp;fests&raquo; look only at&nbsp;them. Or&nbsp;you can
-						refresh all the data and start all over again!
+						Add festivals to&nbsp;your list and on&nbsp;the page
+						<router-link to="/my-fests" class="link">My fests</router-link>
+						look only at&nbsp;them. Or&nbsp;you can refresh all the data and
+						start all over again!
 					</p>
 				</div>
 				<div class="accordion__pic">

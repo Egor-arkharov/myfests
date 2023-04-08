@@ -29,7 +29,13 @@
 						<router-link to="/faq" class="nav__link">FAQ</router-link>
 					</li>
 					<li class="nav__item">
-						<a class="nav__link" href="#" @click.prevent="open">Contacts</a>
+						<a
+							class="nav__link"
+							:class="{ 'nav-sidebar': sidebar }"
+							href="#"
+							@click.prevent="open"
+							>Contacts</a
+						>
 					</li>
 				</ul>
 			</nav>
@@ -38,7 +44,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { debounce } from "vue-debounce";
 import InlineSvg from "vue-inline-svg";
 import { useStore } from "vuex";
@@ -53,6 +59,8 @@ export default {
 			document.body.classList.toggle("menu-open");
 		};
 
+		const sidebar = computed(() => store.state.sidebar);
+
 		window.addEventListener(
 			"resize",
 			debounce(() => {
@@ -64,8 +72,9 @@ export default {
 
 		return {
 			mobileView,
-			open: () => store.commit("openSidebar"),
+			open: () => (sidebar.value ? "" : store.commit("openSidebar")),
 			toggleMenu,
+			sidebar,
 		};
 	},
 	components: {
@@ -118,6 +127,11 @@ export default {
 
 		&.active {
 			color: $black-color;
+			cursor: default;
+		}
+
+		&.nav-sidebar {
+			color: $main-color;
 			cursor: default;
 		}
 	}

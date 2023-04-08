@@ -80,10 +80,19 @@ export default createStore({
 			state.warnModal = true;
 		},
 		openSidebar(state) {
-			state.sidebar = true
+			state.sidebar = true;
+			document.body.classList.add("body--sidebar");
 		},
 		closeSidebar(state) {
-			state.sidebar = false
+			state.sidebar = false;
+			document.body.classList.add("body--sidebar-close");
+			
+			setTimeout(() => {
+				document.body.classList.remove(
+					"body--sidebar", 
+					"body--sidebar-close"
+				)
+			}, 1000);
 		}
 	},
 	actions: {

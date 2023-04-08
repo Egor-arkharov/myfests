@@ -1,51 +1,59 @@
 <template>
-	<div class="sidebar" v-if="sidebar">
-		<button class="btn btn--icon sidebar-close" @click.prevent="close">
-			&times;
-		</button>
-		<div class="sidebar__content bio">
-			<div class="bio__general">
-				<div class="bio__pic"></div>
-				<p class="bio__first">
-					<span class="bio__name">Egor Arkharov</span>
-					<span class="bio__location">Tel Aviv, Israel</span>
-				</p>
-			</div>
-			<p>
-				<span class="greeting">Hi!,</span> I&nbsp;am a&nbsp;Frontend Web
-				Developer and this is&nbsp;my&nbsp;first pet-project on&nbsp;Vue.
-			</p>
-			<div>
-				I&nbsp;have more than 2&nbsp;years of&nbsp;commercial experience
-				in&nbsp;Web Development and in&nbsp;my&nbsp;work faced with different
-				modern and old technologies like:
-				<ul class="list">
-					<li class="list__item" v-for="(item, idx) in hardSkills" :key="idx">
-						{{ item }}
-					</li>
-				</ul>
-			</div>
-			<p>
-				I&nbsp;am from Moscow, but since March 2022&nbsp;I've lived
-				in&nbsp;Tbilisi and now in&nbsp;Tel-Aviv.
-			</p>
-			<div class="social">
-				<p>Here are my social links:</p>
-				<ul class="social__list">
-					<li class="social__item" v-for="(item, idx) in social" :key="idx">
-						<a class="social__link" :href="item.link" target="_blank">
-							<inline-svg
-								:src="require(`@/assets/icons/social/${item.name}.svg`)"
-								class="social__icon"
-								width="30"
-								height="30"
-							></inline-svg>
-						</a>
-					</li>
-				</ul>
+	<transition name="transition">
+		<div class="sidebar" v-if="sidebar">
+			<div class="sidebar__wrapper center">
+				<button class="btn btn--icon sidebar-close" @click.prevent="close">
+					&times;
+				</button>
+				<div class="sidebar__content bio">
+					<div class="bio__general">
+						<div class="bio__pic"></div>
+						<p class="bio__first">
+							<span class="bio__name">Egor Arkharov</span>
+							<span class="bio__location">Tel Aviv, Israel</span>
+						</p>
+					</div>
+					<p>
+						<span class="greeting">Hi!,</span> I&nbsp;am a&nbsp;Frontend Web
+						Developer and this is&nbsp;my&nbsp;first pet-project on&nbsp;Vue.
+					</p>
+					<div>
+						I&nbsp;have more than 2&nbsp;years of&nbsp;commercial experience
+						in&nbsp;Web Development and in&nbsp;my&nbsp;work faced with
+						different modern and old technologies like:
+						<ul class="list">
+							<li
+								class="list__item"
+								v-for="(item, idx) in hardSkills"
+								:key="idx"
+							>
+								{{ item }}
+							</li>
+						</ul>
+					</div>
+					<p>
+						I&nbsp;am from Moscow, but since March 2022&nbsp;I've lived
+						in&nbsp;Tbilisi and now in&nbsp;Tel-Aviv.
+					</p>
+					<div class="social">
+						<p>Here are my social links:</p>
+						<ul class="social__list">
+							<li class="social__item" v-for="(item, idx) in social" :key="idx">
+								<a class="social__link" :href="item.link" target="_blank">
+									<inline-svg
+										:src="require(`@/assets/icons/social/${item.name}.svg`)"
+										class="social__icon"
+										width="30"
+										height="30"
+									></inline-svg>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script>
@@ -111,14 +119,21 @@ export default {
 	right: 0;
 	top: 0;
 
-	width: 350px;
+	width: $sidebar-width;
 	height: 100%;
-	padding: 50px 10px 15px;
 
 	color: $black-color;
-	background: $white-color;
-	border-left: 2px solid $main-color;
-	z-index: 3;
+	z-index: 1;
+
+	&__wrapper {
+		position: relative;
+		height: 100%;
+
+		padding: 50px 10px 15px;
+
+		background-color: $white-color;
+		border-left: 2px solid $main-color;
+	}
 }
 
 .sidebar-close {
@@ -229,5 +244,55 @@ export default {
 
 p:not(:last-child) {
 	margin-bottom: 10px;
+}
+
+.transition-enter-active,
+.transition-leave-active {
+	transform: translateX(0);
+	transition: transform 1s ease-out;
+}
+
+.transition-enter-from,
+.transition-leave-to {
+	transform: translateX(999px);
+}
+
+@media screen and (min-width: 1601px) {
+	.center {
+		max-width: 100%;
+	}
+}
+
+@media screen and (max-width: 1600px) {
+	.sidebar {
+		right: 0;
+		top: 75px;
+		width: 100%;
+		height: auto;
+		z-index: 3;
+
+		&__wrapper {
+			border-radius: 10px;
+			border: 2px solid $main-color;
+		}
+	}
+}
+</style>
+
+<style lang="scss">
+@media screen and (min-width: 1601px) {
+	body {
+		transition: padding 1s ease;
+	}
+
+	.body {
+		&--sidebar {
+			padding-right: $sidebar-width;
+		}
+
+		&--sidebar-close {
+			padding-right: 0;
+		}
+	}
 }
 </style>

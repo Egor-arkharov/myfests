@@ -27,3 +27,22 @@
 .title {
 	font-family: $title-font;
 }
+
+.body {
+	&--sidebar {
+		.tools {
+			&__search {
+				align-items: flex-start;
+				flex-direction: column;
+
+				width: 250px;
+				max-width: 250px;
+			}
+
+			&__find {
+				margin-left: 0;
+				margin-top: 10px;
+			}
+		}
+	}
+}
