@@ -78,9 +78,7 @@ export default {
 			})
 		);
 
-		// const isFests = computed(() => store.getters["getFests"].length);
-
-		const isFests = false;
+		const isFests = computed(() => store.getters["getFests"].length);
 
 		return {
 			fests,

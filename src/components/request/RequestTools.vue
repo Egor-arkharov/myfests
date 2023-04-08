@@ -4,7 +4,7 @@
 		:style="!isFests ? 'opacity: 0.6;' : ''"
 		:class="{ find: searchedBands.length }"
 	>
-		<div class="tools__search">
+		<search class="tools__search">
 			<input
 				class="tools__input"
 				type="text"
@@ -14,7 +14,7 @@
 			<p v-if="searchedBands.length" class="tools__find">
 				You mean "{{ searchedBands.join(" / ") }}"?
 			</p>
-		</div>
+		</search>
 		<ul class="tools__button-list">
 			<li class="tools__button-item" v-if="desktopView">
 				<button

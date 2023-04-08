@@ -218,7 +218,7 @@
 				</div>
 				<div class="accordion__text">
 					<p>
-						The whole idea, design and code was written by&nbsp;me,
+						All idea, design and code belongs to&nbsp;me,
 						<span class="author">Egor Arkharov.</span>
 					</p>
 					<p>
@@ -364,6 +364,11 @@ p:not(:last-child) {
 			flex-direction: column;
 		}
 
+		&__title {
+			font-size: 22px;
+			line-height: 24px;
+		}
+
 		&__text,
 		&__pic {
 			width: 100%;
@@ -377,6 +382,15 @@ p:not(:last-child) {
 			&-img {
 				width: 100%;
 			}
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.accordion {
+		&__title {
+			font-size: 20px;
+			line-height: 22px;
 		}
 	}
 }

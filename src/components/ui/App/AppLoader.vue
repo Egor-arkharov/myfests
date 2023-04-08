@@ -1,10 +1,14 @@
 <template>
 	<div class="loader">
 		<div class="loader__icons">
-			<div class="loader__icon" v-for="(item, idx) in icons" :key="idx">
+			<div
+				class="loader__icon"
+				v-for="(item, idx) in icons"
+				:key="idx"
+				:class="item"
+			>
 				<inline-svg
 					:src="require(`@/assets/icons/loader/${item}.svg`)"
-					:class="item"
 					width="65"
 					height="65"
 				></inline-svg>
@@ -41,19 +45,14 @@ $spin-animation: 5s infinite linear;
 	position: relative;
 
 	width: 100%;
-	height: 400px;
+	height: 500px;
 
 	&__icons {
 		position: relative;
 
 		width: 300px;
 		height: 300px;
-	}
 
-	&__icon {
-		position: absolute;
-		width: 100%;
-		height: 100%;
 		animation: clockwise $spin-animation;
 
 		@keyframes clockwise {
@@ -64,45 +63,46 @@ $spin-animation: 5s infinite linear;
 				transform: rotate(1turn);
 			}
 		}
+	}
 
-		svg {
-			position: absolute;
-			animation: counterclockwise $spin-animation;
+	&__icon {
+		position: absolute;
 
-			&.guitar {
-				top: -15%;
-				left: 50%;
-				transform: translateX(-50%);
+		&.guitar {
+			top: -15%;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		&.dj {
+			top: 25%;
+			right: 0;
+			transform: translateX(50%);
+		}
+
+		&.keytar {
+			top: 25%;
+			left: 0;
+			transform: translateX(-50%);
+		}
+
+		&.mic {
+			top: 80%;
+			right: 0;
+		}
+
+		&.drums {
+			top: 80%;
+		}
+
+		animation: counterclockwise $spin-animation;
+
+		@keyframes counterclockwise {
+			from {
+				transform: rotate(0turn);
 			}
-
-			&.dj {
-				top: 25%;
-				right: 0;
-				transform: translateX(50%);
-			}
-
-			&.keytar {
-				top: 25%;
-				left: 0;
-				transform: translateX(-50%);
-			}
-
-			&.mic {
-				top: 80%;
-				right: 0;
-			}
-
-			&.drums {
-				top: 80%;
-			}
-
-			@keyframes counterclockwise {
-				from {
-					transform: rotate(0turn);
-				}
-				to {
-					transform: rotate(-1turn);
-				}
+			to {
+				transform: rotate(-1turn);
 			}
 		}
 	}
@@ -127,9 +127,41 @@ $spin-animation: 5s infinite linear;
 	}
 }
 
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.loader {
+		height: 450px;
+
+		&__icon svg {
+			max-width: 55px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	.loader {
+		height: 350px;
+
+		&__icons {
+			width: 250px;
+			height: 250px;
+		}
+
+		&__icon svg {
+			max-width: 50px;
+		}
+	}
+}
+
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
 	.loader {
-		display: flex;
+		&__icons {
+			width: 60%;
+			height: 60%;
+		}
+
+		&__icon svg {
+			max-width: 45px;
+		}
 	}
 }
 </style>
