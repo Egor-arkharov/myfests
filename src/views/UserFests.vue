@@ -220,7 +220,7 @@ export default {
 			height: 100%;
 
 			background-color: $white-color;
-			filter: blur(15px);
+			filter: blur(20px);
 			z-index: 2;
 		}
 

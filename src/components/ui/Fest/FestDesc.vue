@@ -53,9 +53,6 @@ import FestImg from "@/components/ui/Fest/FestImg.vue";
 
 export default {
 	props: ["fest"],
-	setup(props) {
-		console.log(props);
-	},
 	components: {
 		InlineSvg,
 		FestImg,

@@ -132,15 +132,22 @@
 	height: auto;
 }
 
-.main__wrapper * {
-	transition: transform 0.25s ease-in-out;
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.main__wrapper * {
+		transition: transform 0.5s ease-in-out;
+	}
 }
 
 .menu-open {
 	overflow: hidden;
 
-	.main__wrapper {
+	.main__wrapper,
+	.sidebar__wrapper {
 		height: calc(100vh - 75px - 20px);
+	}
+
+	.bio {
+		max-height: 100%;
 	}
 
 	.main__wrapper * {

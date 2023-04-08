@@ -13,42 +13,52 @@
 							<span class="bio__location">Tel Aviv, Israel</span>
 						</p>
 					</div>
-					<p>
-						<span class="greeting">Hi!,</span> I&nbsp;am a&nbsp;Frontend Web
-						Developer and this is&nbsp;my&nbsp;first pet-project on&nbsp;Vue.
+					<p class="bio__greeting">
+						<span>Hi!,</span> I&nbsp;am a&nbsp;Frontend Web Developer and this
+						is&nbsp;my&nbsp;first pet-project on&nbsp;Vue.
 					</p>
-					<div>
-						I&nbsp;have more than 2&nbsp;years of&nbsp;commercial experience
-						in&nbsp;Web Development and in&nbsp;my&nbsp;work faced with
-						different modern and old technologies like:
-						<ul class="list">
-							<li
-								class="list__item"
-								v-for="(item, idx) in hardSkills"
-								:key="idx"
-							>
-								{{ item }}
-							</li>
-						</ul>
-					</div>
-					<p>
-						I&nbsp;am from Moscow, but since March 2022&nbsp;I've lived
-						in&nbsp;Tbilisi and now in&nbsp;Tel-Aviv.
-					</p>
-					<div class="social">
-						<p>Here are my social links:</p>
-						<ul class="social__list">
-							<li class="social__item" v-for="(item, idx) in social" :key="idx">
-								<a class="social__link" :href="item.link" target="_blank">
-									<inline-svg
-										:src="require(`@/assets/icons/social/${item.name}.svg`)"
-										class="social__icon"
-										width="30"
-										height="30"
-									></inline-svg>
-								</a>
-							</li>
-						</ul>
+					<div class="bio__desc">
+						<div class="bio__block">
+							<div>
+								I&nbsp;have more than 2&nbsp;years of&nbsp;commercial experience
+								in&nbsp;Web Development and in&nbsp;my&nbsp;work faced with
+								different modern and old technologies like:
+								<ul class="list">
+									<li
+										class="list__item"
+										v-for="(item, idx) in hardSkills"
+										:key="idx"
+									>
+										{{ item }}
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="bio__block">
+							<p>
+								I&nbsp;am from Moscow, but since March 2022&nbsp;I've lived
+								in&nbsp;Tbilisi and now in&nbsp;Tel-Aviv.
+							</p>
+							<div class="social">
+								<p>Here are my social links:</p>
+								<ul class="social__list">
+									<li
+										class="social__item"
+										v-for="(item, idx) in social"
+										:key="idx"
+									>
+										<a class="social__link" :href="item.link" target="_blank">
+											<inline-svg
+												:src="require(`@/assets/icons/social/${item.name}.svg`)"
+												class="social__icon"
+												width="30"
+												height="30"
+											></inline-svg>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -151,10 +161,6 @@ export default {
 	}
 }
 
-.greeting {
-	display: block;
-}
-
 .bio {
 	overflow: auto;
 	max-height: 100%;
@@ -162,6 +168,10 @@ export default {
 
 	&::-webkit-scrollbar {
 		width: 5px;
+	}
+
+	&__greeting span {
+		display: block;
 	}
 
 	&__general {
@@ -242,8 +252,12 @@ export default {
 	margin: 10px 0;
 }
 
-p:not(:last-child) {
+p {
 	margin-bottom: 10px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .transition-enter-active,
@@ -275,6 +289,111 @@ p:not(:last-child) {
 			border-radius: 10px;
 			border: 2px solid $main-color;
 		}
+	}
+
+	.transition-enter-from,
+	.transition-leave-to {
+		transform: translateX(100%);
+	}
+
+	.bio {
+		max-height: 70vh;
+
+		&__greeting {
+			margin-bottom: 20px;
+		}
+
+		&__desc {
+			display: flex;
+			gap: 25px;
+		}
+
+		&__block {
+			width: 40%;
+		}
+	}
+
+	.list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding-left: 0;
+
+		&__item {
+			width: 40%;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.sidebar {
+		&__wrapper {
+			padding-top: 30px;
+		}
+	}
+
+	.bio {
+		&__greeting {
+			margin-bottom: 10px;
+		}
+
+		&__desc {
+			display: flex;
+			justify-content: space-between;
+			gap: 35px;
+		}
+
+		&__block {
+			width: 50%;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'sm')}) {
+	.bio {
+		&__desc {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		&__block {
+			width: 100%;
+		}
+
+		&__pic {
+			width: 110px;
+			height: 110px;
+		}
+	}
+
+	.social {
+		padding: 0;
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.bio {
+		&__pic {
+			width: 90px;
+			height: 90px;
+		}
+
+		&__name {
+			font-size: 22px;
+			line-height: 24px;
+		}
+	}
+
+	.transition-enter-active,
+	.transition-leave-active {
+		transform: translateY(0);
+		transition: transform 0.5s ease-in-out;
+	}
+
+	.transition-enter-from,
+	.transition-leave-to {
+		transform: translateY(999px);
 	}
 }
 </style>
