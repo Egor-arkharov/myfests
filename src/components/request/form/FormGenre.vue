@@ -74,6 +74,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$this-color: $color-6;
+
+// option {
+// 	&:hover {
+// 		box-shadow: 0 0 10px 100px $this-color inset !important;
+// 	}
+
+// 	&:checked {
+// 		background-color: red;
+// 	}
+// }
+
+// select option:checked,
+// select option:hover {
+// 	box-shadow: 0 0 10px 100px #000 inset;
+// }
+
+// select:focus > option:checked {
+// 	color: white;
+// 	background: $this-color !important;
+// }
+
 .option--hide {
 	display: none;
 }

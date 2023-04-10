@@ -435,6 +435,10 @@ export default {
 				flex-direction: column;
 			}
 		}
+
+		&__map {
+			height: 150px;
+		}
 	}
 
 	.lineup {

@@ -155,10 +155,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.visuallyhidden {
-	margin: 0;
-}
-
 .forms {
 	&__list {
 		display: flex;
@@ -237,6 +233,15 @@ export default {
 
 .submit {
 	text-align: center;
+}
+
+.visuallyhidden {
+	margin: 0;
+
+	&::before,
+	&::after {
+		content: none;
+	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'xl')}) {

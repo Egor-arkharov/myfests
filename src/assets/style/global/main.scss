@@ -16,7 +16,6 @@
 
 .center {
 	margin: 0 auto;
-	// padding: 1rem 2rem;
 	max-width: 85%;
 
 	@media (max-width: #{map-get($breakpoints, 'lg')}) {
