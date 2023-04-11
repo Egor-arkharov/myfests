@@ -11,13 +11,22 @@
 		:class="{ active: firstMove }"
 	>
 		<swiper-slide v-for="(img, idx) in images" :key="idx" :virtualIndex="idx">
-			<img
-				v-if="img.startsWith('/img-')"
-				class="img"
-				:src="getImgUrl(img)"
-				alt="img"
-			/>
-			<img v-else class="img" :src="img" alt="imgcustom" />
+			<div class="img-wrap">
+				<picture v-if="img.startsWith('/img-')">
+					<source type="image/webp" :srcset="getImgUrl(img, '.webp')" />
+					<v-lazy-image
+						class="img"
+						:src="getImgUrl(img, '.jpg')"
+						:alt="'Stock photo for the festival'"
+					/>
+				</picture>
+				<v-lazy-image
+					v-else
+					class="img"
+					:src="img + '.jpg'"
+					:alt="'Stock photo for the festival'"
+				/>
+			</div>
 		</swiper-slide>
 	</swiper>
 
@@ -53,6 +62,7 @@ import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper";
+import VLazyImage from "v-lazy-image";
 import "swiper/scss";
 import "swiper/scss/navigation";
 
@@ -125,7 +135,8 @@ export default {
 			isChange.value = false;
 		};
 
-		const getImgUrl = (img) => require("@/assets/images/fests" + img + ".jpg");
+		const getImgUrl = (img, type) =>
+			require("@/assets/images/fests" + img + type);
 
 		const submitImg = () => {
 			emit("submit", images[swiperDefault.value.activeIndex]);
@@ -167,6 +178,7 @@ export default {
 	components: {
 		Swiper,
 		SwiperSlide,
+		VLazyImage,
 	},
 };
 </script>
@@ -209,9 +221,13 @@ $this-color: $color-8;
 		transform: none;
 	}
 
+	.img-wrap {
+		width: 100%;
+	}
+
 	img {
 		object-fit: cover;
-		width: 60%;
+		width: 100%;
 		height: 100%;
 		transform: scale(1.5);
 	}

@@ -22,13 +22,18 @@
 								type="image/webp"
 								:srcset="getImgUrl(fest.img + '.webp')"
 							/>
-							<img
+							<v-lazy-image
 								class="swiper-top__img-img"
 								:src="getImgUrl(fest.img + '.jpg')"
 								:alt="'Photo of the ' + fest.name + ' festival'"
 							/>
 						</picture>
-						<img v-else class="swiper-top__img-img" :src="fest.img" alt="hi" />
+						<v-lazy-image
+							v-else
+							class="swiper-top__img-img"
+							:src="fest.img"
+							:alt="'Photo of the ' + fest.name + ' festival'"
+						/>
 						<p class="swiper-top__text">{{ fest.name }}</p>
 					</div>
 				</swiper-slide>
@@ -68,6 +73,7 @@ import { computed, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Controller, EffectFade } from "swiper";
+import VLazyImage from "v-lazy-image";
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/effect-fade";
@@ -114,6 +120,7 @@ export default {
 		SwiperSlide,
 		FestPage,
 		AppPage,
+		VLazyImage,
 	},
 };
 </script>

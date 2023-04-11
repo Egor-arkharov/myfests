@@ -26,18 +26,7 @@
 						start all over again!
 					</p>
 				</div>
-				<div class="accordion__pic">
-					<picture>
-						<source
-							type="image/webp"
-							srcset="../assets/images/fests/img-1.webp"
-						/>
-						<v-lazy-image
-							class="accordion__pic-img"
-							src="../assets/images/fests/img-1.jpg"
-						/>
-					</picture>
-				</div>
+				<div class="accordion__pic accordion__pic--1"></div>
 			</div>
 		</div>
 		<div class="accordion">
@@ -45,18 +34,7 @@
 				How was it&nbsp;developed?
 			</div>
 			<div class="accordion__body" v-if="isOpenHow">
-				<div class="accordion__pic">
-					<picture>
-						<source
-							type="image/webp"
-							srcset="../assets/images/fests/img-4.webp"
-						/>
-						<v-lazy-image
-							class="accordion__pic-img"
-							src="../assets/images/fests/img-4.jpg"
-						/>
-					</picture>
-				</div>
+				<div class="accordion__pic accordion__pic--4"></div>
 				<div class="accordion__text">
 					<ul class="list">
 						<li class="list__item">
@@ -185,18 +163,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class="accordion__pic">
-					<picture>
-						<source
-							type="image/webp"
-							srcset="../assets/images/fests/img-13.webp"
-						/>
-						<v-lazy-image
-							class="accordion__pic-img"
-							src="../assets/images/fests/img-13.jpg"
-						/>
-					</picture>
-				</div>
+				<div class="accordion__pic accordion__pic--13"></div>
 			</div>
 		</div>
 		<div class="accordion">
@@ -204,18 +171,7 @@
 				Who is&nbsp;author?
 			</div>
 			<div class="accordion__body" v-if="isOpenAuthor">
-				<div class="accordion__pic">
-					<picture>
-						<source
-							type="image/webp"
-							srcset="../assets/images/fests/img-3.webp"
-						/>
-						<v-lazy-image
-							class="accordion__pic-img"
-							src="../assets/images/fests/img-3.jpg"
-						/>
-					</picture>
-				</div>
+				<div class="accordion__pic accordion__pic--3"></div>
 				<div class="accordion__text">
 					<p>
 						All idea, design and code belongs to&nbsp;me,
@@ -243,7 +199,6 @@
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
-import VLazyImage from "v-lazy-image";
 import AppPage from "../components/ui/App/AppPage.vue";
 
 export default {
@@ -260,7 +215,6 @@ export default {
 	},
 	components: {
 		AppPage,
-		VLazyImage,
 	},
 };
 </script>
@@ -283,6 +237,11 @@ h1 {
 		margin-bottom: 0;
 	}
 
+	&__title,
+	&__body {
+		padding: 10px 20px;
+	}
+
 	&__title {
 		position: relative;
 		@include font-xl;
@@ -295,19 +254,12 @@ h1 {
 	}
 
 	&__body {
+		display: flex;
+		justify-content: space-between;
+
 		@include font-m;
 		font-family: $main-font;
 		margin-top: 25px;
-	}
-
-	&__title,
-	&__body {
-		padding: 10px 20px;
-	}
-
-	&__body {
-		display: flex;
-		justify-content: space-between;
 	}
 
 	&__text {
@@ -326,10 +278,24 @@ h1 {
 		width: 35%;
 		min-height: 250px;
 		background-color: lighten($grey-color, 20%);
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
 
-		&-img {
-			height: 100%;
-			object-fit: cover;
+		&--1 {
+			background-image: url("../assets/images/fests/img-1.jpg");
+		}
+
+		&--4 {
+			background-image: url("../assets/images/fests/img-4.jpg");
+		}
+
+		&--13 {
+			background-image: url("../assets/images/fests/img-13.jpg");
+		}
+
+		&--3 {
+			background-image: url("../assets/images/fests/img-3.jpg");
 		}
 	}
 }
@@ -361,6 +327,7 @@ p:not(:last-child) {
 		width: 100%;
 
 		&__body {
+			margin-top: 10px;
 			flex-direction: column;
 		}
 
@@ -378,10 +345,6 @@ p:not(:last-child) {
 			height: 200px;
 			margin-top: 35px;
 			order: 1;
-
-			&-img {
-				width: 100%;
-			}
 		}
 	}
 }
@@ -391,6 +354,12 @@ p:not(:last-child) {
 		&__title {
 			font-size: 20px;
 			line-height: 22px;
+		}
+
+		&__body {
+			font-size: 16px;
+			line-height: 18px;
+			margin-top: 5px;
 		}
 	}
 }
