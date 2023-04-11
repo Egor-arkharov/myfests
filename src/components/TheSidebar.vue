@@ -263,7 +263,7 @@ p {
 .transition-enter-active,
 .transition-leave-active {
 	transform: translateX(0);
-	transition: transform 1s ease-out;
+	transition: transform 0.5s ease-out;
 }
 
 .transition-enter-from,
@@ -271,13 +271,13 @@ p {
 	transform: translateX(999px);
 }
 
-@media screen and (min-width: 1601px) {
+@media screen and (min-width: 1600px) {
 	.center {
 		max-width: 100%;
 	}
 }
 
-@media screen and (max-width: 1600px) {
+@media (max-width: #{map-get($breakpoints, 'xxl')}) {
 	.sidebar {
 		right: 0;
 		top: 75px;
@@ -388,7 +388,7 @@ p {
 	.transition-enter-active,
 	.transition-leave-active {
 		transform: translateY(0);
-		transition: transform 0.5s ease-in-out;
+		transition: transform 0.3s ease-in-out;
 	}
 
 	.transition-enter-from,

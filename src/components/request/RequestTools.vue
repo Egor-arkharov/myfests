@@ -325,7 +325,7 @@ $tools-colors: $color-5, $color-6, $color-8, $color-2;
 	}
 }
 
-@media (max-width: #{map-get($breakpoints, 'xl')}) {
+@media (max-width: #{map-get($breakpoints, 'xxl')}) {
 	.tools {
 		&__search {
 			align-items: flex-start;

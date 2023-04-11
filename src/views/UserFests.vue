@@ -1,5 +1,5 @@
 <template>
-	<app-page title="My-fests">
+	<app-page title="My fests">
 		<div v-if="myFests.length">
 			<swiper
 				:slidesPerGroup="1"

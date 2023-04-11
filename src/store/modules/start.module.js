@@ -91,7 +91,10 @@ export default {
 						start: randomDate.dateStart,
 						end: randomDate.dateEnd,
 						fullDateStart: new Date(
-							randomDate.dateStart.replace(/(\d\d).(\d\d)/, "$2.$1")
+							randomDate.dateStart.replace(
+								/(\d\d).(\d\d).(\d\d\d\d)/,
+								"$3/$2/$1"
+							)
 						),
 					},
 					id: Math.random().toString(36).substr(2, 9),

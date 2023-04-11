@@ -1,5 +1,5 @@
 <template>
-	<app-page title="Home" v-if="fests">
+	<app-page title="My Fest: Home" v-if="fests">
 		<h1 class="main__title title" :class="{ animate: titleAnimate }">
 			<span>Find </span>
 			<span>or </span>

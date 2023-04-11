@@ -27,13 +27,21 @@ html {
 	}
 }
 
+:root {
+	--swiper-theme-color: #7140EB;
+
+	@media (max-width: #{map-get($breakpoints, 'xs')}) {
+		--swiper-navigation-size: 30px;
+	}
+}
+
 body {
 	margin: 0;
 	padding: 0;
 
 	padding-bottom: 50px;
 
-	min-width: $mobile-width;
+	min-width: 320px;
 	font-family: $main-font;
 
 	color: $white-color;

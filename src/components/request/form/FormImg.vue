@@ -241,7 +241,8 @@ $this-color: $color-8;
 			color: transparent;
 			cursor: pointer;
 
-			&::-webkit-file-upload-button {
+			&::-webkit-file-upload-button,
+			&::file-selector-button {
 				visibility: hidden;
 			}
 		}

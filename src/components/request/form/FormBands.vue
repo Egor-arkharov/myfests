@@ -1,26 +1,32 @@
 <template>
 	<h4 class="form__title">Choose bands</h4>
 	<p class="lead">
-		Pick up 9 bands
-		<span
-			>(
-			<inline-svg
-				:src="require('@/assets/icons/sub.svg')"
-				width="30"
-				height="30"
-			></inline-svg>
-			)
-		</span>
-		and 3 headliners
-		<span
-			>(
-			<inline-svg
-				:src="require('@/assets/icons/head.svg')"
-				width="30"
-				height="30"
-			></inline-svg>
-			)
-		</span>
+		Pick up
+		<span class="no-wrap"
+			>9 bands&nbsp;
+			<span
+				>(
+				<inline-svg
+					:src="require('@/assets/icons/sub.svg')"
+					width="30"
+					height="30"
+				></inline-svg>
+				)
+			</span></span
+		>
+		and
+		<span class="no-wrap"
+			>3 headliners&nbsp;
+			<span
+				>(
+				<inline-svg
+					:src="require('@/assets/icons/head.svg')"
+					width="30"
+					height="30"
+				></inline-svg>
+				)
+			</span></span
+		>
 	</p>
 
 	<form @submit.prevent="submitBands" class="form">
@@ -253,6 +259,7 @@ ul {
 	margin-bottom: 10px;
 
 	span {
+		white-space: nowrap;
 		display: inline-flex;
 	}
 
@@ -314,7 +321,7 @@ ul {
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		height: 100%;
+		height: 110%;
 		transition: right 1s, left 1s;
 
 		span {
@@ -328,12 +335,14 @@ ul {
 		}
 
 		&-sub {
-			left: 0;
+			left: -10px;
+			padding-left: 10px;
 			border-right: 2px solid $this-color;
 		}
 
 		&-head {
-			right: 0;
+			right: -10px;
+			padding-right: 10px;
 			border-left: 2px solid $this-color;
 		}
 
