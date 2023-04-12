@@ -1,6 +1,6 @@
 <template>
 	<main class="main">
-		<div class="main__wrapper center">
+		<div class="main__wrapper center" :class="{ userFests: userFests }">
 			<slot />
 		</div>
 	</main>
@@ -12,6 +12,10 @@ export default {
 		title: {
 			type: String,
 			required: true,
+		},
+		userFests: {
+			type: Boolean,
+			required: false,
 		},
 	},
 	setup(props) {
@@ -35,6 +39,12 @@ export default {
 		&__wrapper {
 			padding: 1rem;
 		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'xs')}) {
+	.userFests {
+		padding: 1rem 0 0;
 	}
 }
 </style>

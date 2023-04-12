@@ -1,23 +1,36 @@
 <template>
 	<div
-		class="img_wrap"
+		class="wrap"
 		:class="{
-			img_wrap_main: mainPage,
-			img_wrap_fest: festPage,
-			img_wrap_modal: modal,
+			wrap_main: mainPage,
+			wrap_fest: festPage,
+			wrap_modal: modal,
+			wrap_myfests: myFests,
 		}"
 	>
 		<picture v-if="fest.img.startsWith('/img-')">
 			<source type="image/webp" :srcset="getImgUrl(fest.img + '.webp')" />
 			<v-lazy-image
-				class="img"
+				class="wrap__img"
+				:class="{
+					wrap_main__img: mainPage,
+					wrap_fest__img: festPage,
+					wrap_modal__img: modal,
+					wrap_myfests__img: myFests,
+				}"
 				:src="getImgUrl(fest.img + '.jpg')"
 				:alt="'Photo of the ' + fest.name + ' festival'"
 			/>
 		</picture>
 		<v-lazy-image
 			v-else
-			class="img"
+			class="wrap__img"
+			:class="{
+				wrap_main__img: mainPage,
+				wrap_fest__img: festPage,
+				wrap_modal__img: modal,
+				wrap_myfests__img: myFests,
+			}"
 			:src="fest.img"
 			:alt="'Photo of the ' + fest.name + ' festival'"
 		/>
@@ -28,7 +41,7 @@
 import VLazyImage from "v-lazy-image";
 
 export default {
-	props: ["fest", "mainPage", "festPage", "modal"],
+	props: ["fest", "mainPage", "festPage", "modal", "myFests"],
 	setup() {
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
 
@@ -43,21 +56,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.img_wrap {
+.wrap {
 	background-color: lighten($grey-color, 20%);
 
 	&_main {
 		width: 350px;
 		margin-bottom: 40px;
 
-		.img {
+		&__img {
 			width: 100%;
 			height: 200px;
 		}
 	}
 
 	&_fest {
-		.img {
+		&__img {
 			width: 100%;
 			height: 400px;
 
@@ -66,61 +79,84 @@ export default {
 	}
 
 	&_modal {
-		.img {
+		&__img {
 			max-height: 100px;
 		}
 	}
-}
 
-.img {
-	display: block;
-	object-fit: cover;
-}
+	&_myfests {
+		border-radius: 50%;
 
-@media (max-width: #{map-get($breakpoints, 'xl')}) {
-	.img_wrap {
-		&_fest {
-			.img {
-				height: 300px;
-			}
+		&__img {
+			width: 150px;
+			height: 150px;
+			object-fit: cover;
+			border-radius: 50%;
 		}
+	}
+
+	&__img {
+		display: block;
+		object-fit: cover;
 	}
 }
 
-@media (max-width: #{map-get($breakpoints, 'md')}) {
-	.img_wrap {
-		&_main {
-			width: 300px;
+@media (max-width: #{map-get($breakpoints, 'xl')}) {
+	.wrap {
+		&_fest__img {
+			height: 300px;
 		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'lg')}) {
-	.img_wrap {
-		&_fest {
-			.img {
-				height: 250px;
-			}
+	.wrap {
+		&_fest__img {
+			height: 250px;
+		}
+
+		&_myfests__img {
+			width: 120px;
+			height: 120px;
+		}
+	}
+}
+
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.wrap {
+		&_main {
+			width: 300px;
+		}
+
+		&_myfests__img {
+			width: 120px;
+			height: 120px;
 		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'sm')}) {
-	.img_wrap {
-		&_fest {
-			.img {
-				height: 220px;
-			}
+	.wrap {
+		&_fest__img {
+			height: 220px;
+		}
+
+		&_myfests__img {
+			width: 100px;
+			height: 100px;
 		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'xxs')}) {
 	.img_wrap {
-		&_fest {
-			.img {
-				height: 180px;
-			}
+		&_fest__img {
+			height: 180px;
+		}
+
+		&_myfests__img {
+			width: 80px;
+			height: 80px;
 		}
 	}
 }

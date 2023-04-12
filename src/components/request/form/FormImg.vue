@@ -23,7 +23,7 @@
 				<v-lazy-image
 					v-else
 					class="img"
-					:src="img + '.jpg'"
+					:src="img"
 					:alt="'Stock photo for the festival'"
 				/>
 			</div>

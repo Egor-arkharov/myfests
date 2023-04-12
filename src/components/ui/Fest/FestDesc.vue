@@ -28,18 +28,22 @@
 		:class="{ text_error: !fest.headliners.length }"
 	>
 		<span class="text__field">Headliners: </span>
-		<span class="text__value" v-if="fest.headliners.length">{{
-			fest.headliners.join(", ")
-		}}</span>
+		<span class="text__value" v-if="fest.headliners.length">
+			<span v-for="(h, idx) in fest.headliners" :key="idx"
+				>{{ h }}<span v-if="idx !== fest.headliners.length - 1">,&nbsp;</span>
+			</span>
+		</span>
 	</p>
 	<p
 		class="text__block text__block--big other-bands"
 		:class="{ text_error: !fest.bands.length }"
 	>
 		<span class="text__field">Other bands: </span>
-		<span class="text__value" v-if="fest.headliners.length">{{
-			fest.bands.filter((el) => !fest.headliners.includes(el)).join(", ")
-		}}</span>
+		<span class="text__value" v-if="fest.bands.length">
+			<span v-for="(b, idx) in fest.bands" :key="idx"
+				>{{ b }}<span v-if="idx !== fest.bands.length - 1">,&nbsp;</span>
+			</span>
+		</span>
 	</p>
 	<p class="text__block" v-if="fest.fromModal">
 		<span class="text__field">Img:&nbsp; </span>
@@ -85,6 +89,11 @@ export default {
 	&__field {
 		font-family: $main-font-bold;
 		margin-right: 5px;
+		white-space: nowrap;
+	}
+
+	&__value > span {
+		display: inline-block;
 		white-space: nowrap;
 	}
 

@@ -1,5 +1,5 @@
 <template>
-	<app-page title="My fests">
+	<app-page title="My fests" :userFests="true">
 		<div v-if="myFests.length">
 			<swiper
 				:slidesPerGroup="1"
@@ -17,23 +17,7 @@
 					class="swiper-top__slide"
 				>
 					<div class="swiper-top__img">
-						<picture v-if="fest.img.startsWith('/img-')">
-							<source
-								type="image/webp"
-								:srcset="getImgUrl(fest.img + '.webp')"
-							/>
-							<v-lazy-image
-								class="swiper-top__img-img"
-								:src="getImgUrl(fest.img + '.jpg')"
-								:alt="'Photo of the ' + fest.name + ' festival'"
-							/>
-						</picture>
-						<v-lazy-image
-							v-else
-							class="swiper-top__img-img"
-							:src="fest.img"
-							:alt="'Photo of the ' + fest.name + ' festival'"
-						/>
+						<fest-img :fest="fest" :myFests="true"></fest-img>
 						<p class="swiper-top__text">{{ fest.name }}</p>
 					</div>
 				</swiper-slide>
@@ -73,7 +57,7 @@ import { computed, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Controller, EffectFade } from "swiper";
-import VLazyImage from "v-lazy-image";
+import FestImg from "@/components/ui/Fest/FestImg.vue";
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/effect-fade";
@@ -119,8 +103,8 @@ export default {
 		Swiper,
 		SwiperSlide,
 		FestPage,
+		FestImg,
 		AppPage,
-		VLazyImage,
 	},
 };
 </script>
@@ -148,13 +132,6 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-
-		&-img {
-			width: 150px;
-			height: 150px;
-			object-fit: cover;
-			border-radius: 50%;
-		}
 	}
 
 	&__text {
@@ -173,22 +150,12 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'lg')}) {
 	.swiper-top {
 		margin-bottom: 30px;
-
-		&__img-img {
-			width: 120px;
-			height: 120px;
-		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'md')}) {
 	.swiper-top {
 		margin-bottom: 25px;
-
-		&__img-img {
-			width: 120px;
-			height: 120px;
-		}
 
 		&__text {
 			margin-top: 10px;
@@ -200,11 +167,6 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'sm')}) {
 	.swiper-top {
 		margin-bottom: 20px;
-
-		&__img-img {
-			width: 100px;
-			height: 100px;
-		}
 
 		&__text {
 			margin-top: 7px;

@@ -86,15 +86,30 @@
 				class="form__text"
 				:class="{ full: festHeadliners.length === AMOUNT_HEADLINERS }"
 			>
-				Headliners ({{ festHeadliners.length + "/" + AMOUNT_HEADLINERS }}):
-				{{ festHeadliners.join(", ") }}
+				<span class="form__text-field"
+					>Headliners ({{
+						festHeadliners.length + "/" + AMOUNT_HEADLINERS
+					}}):&nbsp;
+				</span>
+				<span class="form__text-value">
+					<span v-for="(h, idx) in festHeadliners" :key="idx"
+						>{{ h
+						}}<span v-if="idx !== festHeadliners.length - 1">,&nbsp;</span>
+					</span>
+				</span>
 			</p>
 			<p
 				class="form__text"
 				:class="{ full: festSubBands.length === maxSubBands }"
 			>
-				Other bands ({{ festSubBands.length + "/" + maxSubBands }}):
-				{{ festSubBands.join(", ") }}
+				<span class="form__text-field"
+					>Other bands ({{ festSubBands.length + "/" + maxSubBands }}):&nbsp;
+				</span>
+				<span class="form__text-value">
+					<span v-for="(b, idx) in festSubBands" :key="idx"
+						>{{ b }}<span v-if="idx !== festSubBands.length - 1">,&nbsp;</span>
+					</span>
+				</span>
 			</p>
 			<button
 				class="form__button btn btn--form"
@@ -282,7 +297,8 @@ ul {
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		max-width: 200px;
+		width: 250px;
+		flex-shrink: 0;
 	}
 
 	&__item {
@@ -291,12 +307,27 @@ ul {
 	}
 
 	&__text {
-		text-indent: -20px;
 		margin-bottom: 10px;
 
+		&-field {
+			font-family: $main-font-bold;
+		}
+
+		&-value span {
+			display: inline-block;
+			white-space: nowrap;
+		}
+
 		&.full {
-			color: green;
-			font-weight: 600;
+			color: $this-color;
+
+			.form__text-field {
+				font-family: $main-font-bold-ex;
+			}
+
+			.form__text-value {
+				font-family: $main-font-semibold;
+			}
 		}
 	}
 
@@ -355,6 +386,10 @@ ul {
 		}
 	}
 
+	.text {
+		white-space: nowrap;
+	}
+
 	&.hover-sub,
 	&.addedSub {
 		.text {
@@ -395,6 +430,14 @@ ul {
 	}
 }
 
+@media (max-width: #{map-get($breakpoints, 'lg')}) {
+	.form {
+		&__settings {
+			width: 170px;
+		}
+	}
+}
+
 @media (max-width: #{map-get($breakpoints, 'md')}) {
 	.form {
 		flex-direction: column;
@@ -406,7 +449,7 @@ ul {
 		&__settings {
 			align-items: flex-start;
 			justify-content: flex-start;
-			max-width: 100%;
+			width: 100%;
 		}
 
 		&__text {
