@@ -21,7 +21,7 @@
 	background-color: $white-color;
 
 	font-family: $main-font-bold;
-	@include font-s;
+	@include font-xs;
 
 	&::before {
 		content: '';
@@ -123,7 +123,7 @@
 	justify-content: center;
 
 	font-family: $main-font-bold;
-	@include font-s;
+	@include font-xs;
 }
 
 .btn--view-table {
@@ -148,23 +148,24 @@
 	align-items: center;
 	padding: 1px;
 
-	&::before {
-		content: none;
-		position: absolute;
+	border: 1px solid transparent;
+	border-radius: 50%;
 
-		width: 25px;
-		height: 25px;
+	&.rotate {
+		border-color: $main-color;
 
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+		&::before {
+			content: '';
+		}
 
-		border-radius: 50%;
-		border: 1px solid $main-color;
+		svg {
+			fill: $main-color;
+		}
 	}
+	
+	@include hover {
+		border-color: $main-color;
 
-	&.rotate,
-	&:hover {
 		&::before {
 			content: '';
 		}

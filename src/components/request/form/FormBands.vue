@@ -270,7 +270,7 @@ ul {
 }
 
 .lead {
-	font-size: 24px;
+	@include font-xxl;
 	margin-bottom: 10px;
 
 	span {
@@ -462,7 +462,7 @@ ul {
 	}
 
 	.lead {
-		font-size: 20px;
+		@include font-xxl;
 	}
 }
 
@@ -476,16 +476,16 @@ ul {
 		}
 
 		&__text {
-			@include font-s;
+			@include font-xs;
 		}
 	}
 
 	.lead {
-		font-size: 16px;
+		@include font-m;
 	}
 
 	.band {
-		font-size: 14px;
+		@include font-xs;
 		padding: 10px 35px;
 
 		&__button svg {

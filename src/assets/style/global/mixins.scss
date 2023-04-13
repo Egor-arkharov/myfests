@@ -1,16 +1,21 @@
+@mixin font-xs {
+	font-size: $font-size-xs;
+	line-height: $line-height-xs;
+}
+
 @mixin font-s {
 	font-size: $font-size-s;
 	line-height: $line-height-s;
 }
 
-@mixin font-l {
-	font-size: $font-size-l;
-	line-height: $line-height-l;
-}
-
 @mixin font-m {
 	font-size: $font-size-m;
 	line-height: $line-height-m;
+}
+
+@mixin font-l {
+	font-size: $font-size-l;
+	line-height: $line-height-l;
 }
 
 @mixin font-xl {
@@ -19,9 +24,10 @@
 }
 
 @mixin font-xxl {
-	font-size: $font-size-xxl;
-	line-height: $line-height-xxl;
+	font-size: $font-size-xl;
+	line-height: $line-height-xl;
 }
+
 
 @mixin hover {
 	@media (hover: hover) {
@@ -30,16 +36,3 @@
 		}
 	}
 }
-
-// @mixin hover-active {
-// 	@include hover {
-// 	  .no-touch & {
-// 		@content;
-// 	  }
-// 	}
-// 	&:active {
-// 	  .touch & {
-// 		@content;
-// 	  }
-// 	}
-// }

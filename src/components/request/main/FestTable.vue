@@ -197,11 +197,11 @@ export default {
 
 	th {
 		font-family: $main-font-bold-ex;
-		@include font-l;
+		@include font-m;
 	}
 
 	td {
-		@include font-l;
+		@include font-m;
 	}
 
 	&__name {

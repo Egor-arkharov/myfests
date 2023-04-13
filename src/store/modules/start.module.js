@@ -49,17 +49,22 @@ export default {
 		},
 		setFests(state) {
 			function getRandomDate() {
-				const randomDateStart = new Date().setDate(getRandomInt(300));
+				const options = { day: "2-digit", month: "2-digit", year: "numeric" };
 
-				let copyDateStart = new Date(randomDateStart);
-				copyDateStart.setDate(copyDateStart.getDate() + 2);
+				const startUnix = new Date().setDate(getRandomInt(300));
+				const startDate = new Date(startUnix);
+				const startDateString = startDate.toLocaleDateString("ru-RU", options);
 
-				const dateStart = new Date(randomDateStart).toLocaleDateString();
-				const dateEnd = copyDateStart.toLocaleDateString();
+				const copyDateStart = new Date(startUnix);
+
+				const endUnix = startDate.setDate(startDate.getDate() + 2);
+				const endDate = new Date(endUnix);
+				const endDateString = endDate.toLocaleDateString("ru-RU", options);
 
 				return {
-					dateStart,
-					dateEnd,
+					startDateString,
+					endDateString,
+					copyDateStart,
 				};
 			}
 
@@ -88,14 +93,9 @@ export default {
 							? state.genre[i]
 							: state.genre[getRandomInt(state.genre.length)],
 					date: {
-						start: randomDate.dateStart,
-						end: randomDate.dateEnd,
-						fullDateStart: new Date(
-							randomDate.dateStart.replace(
-								/(\d\d).(\d\d).(\d\d\d\d)/,
-								"$3/$2/$1"
-							)
-						),
+						start: randomDate.startDateString,
+						end: randomDate.endDateString,
+						fullDateStart: randomDate.copyDateStart,
 					},
 					id: Math.random().toString(36).substr(2, 9),
 					img: state.img[i].slice(1),

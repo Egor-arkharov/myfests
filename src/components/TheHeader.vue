@@ -117,7 +117,7 @@ export default {
 	}
 
 	&__link {
-		@include font-l;
+		@include font-m;
 		font-family: $main-font-bold;
 		color: $white-color;
 

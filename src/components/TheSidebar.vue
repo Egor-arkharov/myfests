@@ -157,7 +157,7 @@ export default {
 	cursor: pointer;
 
 	@include hover {
-		color: $main-color;
+		border-color: $black-color;
 	}
 }
 
@@ -220,7 +220,7 @@ export default {
 		display: block;
 		margin-bottom: 5px;
 
-		@include font-xl;
+		@include font-xxl;
 		font-family: $main-font-bold;
 	}
 
@@ -380,8 +380,7 @@ p {
 		}
 
 		&__name {
-			font-size: 22px;
-			line-height: 24px;
+			@include font-xl;
 		}
 	}
 

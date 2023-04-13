@@ -222,6 +222,7 @@ $this-color: $color-8;
 	}
 
 	.img-wrap {
+		user-select: none;
 		width: 100%;
 	}
 

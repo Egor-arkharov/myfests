@@ -204,7 +204,7 @@ export default {
 }
 
 .search-no {
-	@include font-m;
+	@include font-s;
 	font-family: $main-font-semibold;
 	margin: 30px 0;
 }

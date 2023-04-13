@@ -10,13 +10,12 @@
 		color: $black-color;
 		outline: 0;
 
-		font-size: 20px;
-		line-height: 20px;
+		@include font-xxl;
 
 		background-color: $white-color;
 
 		&::placeholder {
-			font-size: 14px;
+			@include font-xs;
 		}
 
 		&:hover,
@@ -30,7 +29,7 @@
 	}
 
 	&__title {
-		font-size: 24px;
+		@include font-xxl;
 		margin-bottom: 10px;
 	}
 
@@ -63,23 +62,19 @@
 @media (max-width: #{map-get($breakpoints, 'md')}) {
 	.form {
 		&__input {
-			font-size: 18px;
+			@include font-s;
 		}
 
 		&__title {
-			font-size: 22px;
+			@include font-xl;
 		}
 	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
 	.form {
-		&__input {
-			font-size: 18px;
-		}
-
 		&__title {
-			font-size: 20px;
+			@include font-xxl;
 		}
 	}
 }

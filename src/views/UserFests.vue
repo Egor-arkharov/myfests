@@ -132,11 +132,12 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		user-select: none;
 	}
 
 	&__text {
 		margin-top: 15px;
-		font-size: 22px;
+		@include font-xl;
 		font-weight: normal;
 	}
 }
@@ -159,7 +160,7 @@ export default {
 
 		&__text {
 			margin-top: 10px;
-			font-size: 20px;
+			@include font-xxl;
 		}
 	}
 }
@@ -170,7 +171,7 @@ export default {
 
 		&__text {
 			margin-top: 7px;
-			font-size: 16px;
+			@include font-m;
 		}
 	}
 }
@@ -208,7 +209,7 @@ export default {
 
 		&__text {
 			margin-top: 5px;
-			font-size: 14px;
+			@include font-xs;
 		}
 	}
 }

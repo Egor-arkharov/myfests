@@ -112,7 +112,7 @@ $spin-animation: 5s infinite linear;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		font-size: 24px;
+		@include font-xxl;
 
 		animation: text 1s infinite ease-in-out alternate;
 

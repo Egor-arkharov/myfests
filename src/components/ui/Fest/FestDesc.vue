@@ -69,7 +69,7 @@ export default {
 	&__block {
 		display: flex;
 
-		@include font-xl;
+		@include font-xxl;
 		color: $black-color;
 		margin-bottom: 15px;
 
@@ -105,8 +105,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'xl')}) {
 	.text {
 		&__block {
-			font-size: 22px;
-			line-height: 24px;
+			@include font-xl;
 		}
 	}
 }
@@ -114,8 +113,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'lg')}) {
 	.text {
 		&__block {
-			font-size: 20px;
-			line-height: 22px;
+			@include font-xxl;
 		}
 	}
 }
@@ -123,8 +121,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'md')}) {
 	.text {
 		&__block {
-			font-size: 18px;
-			line-height: 20px;
+			@include font-m;
 			width: 50%;
 
 			&--big {

@@ -61,33 +61,29 @@ export default {
 		});
 
 		const makeDate = () => {
-			const date1Str = props.fest.date.start;
-			const date1Date = new Date(
-				date1Str.replace(/(\d\d).(\d\d).(\d\d\d\d)/, "$3-$2-$1")
-			);
+			const dateStartString = props.fest.date.fullDateStart;
 
-			const copyDay1 = new Date(date1Date);
-			const date2 = copyDay1.setDate(copyDay1.getDate() + 1);
-			const date2Date = new Date(date2);
+			const date = new Date(dateStartString);
+			const monthOptions = { month: "short" };
 
-			const date3Str = props.fest.date.end;
-			const date3Date = new Date(
-				date3Str.replace(/(\d\d).(\d\d).(\d\d\d\d)/, "$3-$2-$1")
-			);
+			const day1 = date.getDate();
+			const month1 = date.toLocaleString("en-US", monthOptions);
+			const formattedDate1 = `${day1} ${month1}`;
 
-			const day1 = date1Str.slice(0, 2);
-			const month1 = date1Date.toLocaleString("en", { month: "short" });
+			date.setDate(date.getDate() + 1);
+			const day2 = date.getDate();
+			const month2 = date.toLocaleString("en-US", monthOptions);
+			const formattedDate2 = `${day2} ${month2}`;
 
-			const day2 = date2Date.toLocaleString().slice(0, 2);
-			const month2 = date2Date.toLocaleString("en", { month: "short" });
-
-			const day3 = date3Str.slice(0, 2);
-			const month3 = date3Date.toLocaleString("en", { month: "short" });
+			date.setDate(date.getDate() + 1);
+			const day3 = date.getDate();
+			const month3 = date.toLocaleString("en-US", monthOptions);
+			const formattedDate3 = `${day3} ${month3}`;
 
 			return {
-				day1: day1 + " " + month1,
-				day2: day2 + " " + month2,
-				day3: day3 + " " + month3,
+				day1: formattedDate1,
+				day2: formattedDate2,
+				day3: formattedDate3,
 			};
 		};
 
@@ -338,7 +334,7 @@ export default {
 		}
 
 		&__sub-band {
-			font-size: 24px;
+			@include font-xxl;
 		}
 	}
 }
@@ -380,11 +376,11 @@ export default {
 		}
 
 		&__head {
-			font-size: 24px;
+			@include font-xxl;
 		}
 
 		&__sub-band {
-			font-size: 22px;
+			@include font-xl;
 		}
 	}
 }
@@ -473,7 +469,7 @@ export default {
 		}
 
 		&__sub-band {
-			font-size: 24px;
+			@include font-xxl;
 		}
 	}
 }

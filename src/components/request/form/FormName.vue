@@ -81,7 +81,7 @@ export default {
 <style lang="scss" scoped>
 .form {
 	&__error {
-		@include font-s;
+		@include font-xs;
 		margin-top: 10px;
 		color: $color-1;
 	}
