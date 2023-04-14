@@ -6,7 +6,8 @@
 			range
 			auto-range="2"
 			:enable-time-picker="false"
-			model-type="dd.MM.yyyy"
+			:format="format"
+			:preview-format="format"
 			@update:modelValue="handleDate"
 			:min-date="new Date()"
 			required
@@ -33,6 +34,7 @@ import { watch } from "@vue/runtime-core";
 export default {
 	emits: ["submit"],
 	setup(_, { emit }) {
+		const options = { day: "2-digit", month: "2-digit", year: "numeric" };
 		const festDate = ref(null);
 		const isChange = ref(false);
 		const isAdded = ref(false);
@@ -48,10 +50,27 @@ export default {
 		});
 
 		const submitDate = () => {
-			emit("submit", festDate.value);
+			emit("submit", getDates(festDate.value));
 			isChange.value = true;
 			isAdded.value = true;
 		};
+
+		const getDates = (dates) => {
+			const startDateString = getDateString(dates[0]);
+			const endDateString = getDateString(dates[1]);
+			const fullDateStart = dates[0];
+
+			return [startDateString, endDateString, fullDateStart];
+		};
+
+		const format = (festDate) => {
+			const startDateString = getDateString(festDate[0]);
+			const endDateString = getDateString(festDate[1]);
+
+			return startDateString + " - " + endDateString;
+		};
+
+		const getDateString = (date) => date.toLocaleDateString("ru-RU", options);
 
 		const getButtonText = () => {
 			let btnText = "Add Date";
@@ -73,6 +92,7 @@ export default {
 			getButtonText,
 			handleDate,
 			submitDate,
+			format,
 		};
 	},
 	components: { Datepicker },

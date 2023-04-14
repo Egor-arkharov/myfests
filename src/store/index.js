@@ -43,10 +43,6 @@ export default createStore({
 				lineup: getLineup(data.bands, data.headliners, state.bands),
 			};
 
-			fest.date.fullDateStart = new Date(
-				data.date.start.replace(/(\d\d).(\d\d)/, "$2.$1")
-			);
-
 			state.fests.push(fest);
 			localStorage["fests"] = JSON.stringify(state.fests);
 		},

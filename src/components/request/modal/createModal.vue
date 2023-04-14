@@ -108,6 +108,7 @@ export default {
 				date: {
 					start: festDate.value[0],
 					end: festDate.value[1],
+					fullDateStart: festDate.value[2],
 				},
 				genre: festGenre.value,
 				headliners: festHeadliners.value,
