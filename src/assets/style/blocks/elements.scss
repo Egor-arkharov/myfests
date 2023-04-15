@@ -82,7 +82,7 @@
 }
 
 .no-fests {
-	@include font-s;
+	@include font-m;
 	font-family: $main-font-semibold;
 	margin: 30px 0;
 	text-align: center;
@@ -121,37 +121,10 @@
 	}
 }
 
-.forms__item--big {
-	.swiper-button-prev, 
-	.swiper-button-next {
-		color: $color-8;
 
-		&::before {
-			content: "";
-			position: absolute;
-	
-			left: -10px;
-			top: -55px;
-			width: 50px;
-			height: 160px;
-	
-			background-color: $white-color;
-			filter: blur(20px);
-	
-			z-index: -1;
-	
-			@media (max-width: #{map-get($breakpoints, 'xs')}) {
-				width: 40px;
-			}
-		}
-	}
-
-	.swiper-button-prev::before {	
-		left: -10px;
-	}
-
-	.swiper-button-next::before {
-		right: -10px;
+@each $name, $font in $band-fonts {
+	.font-#{$name} {
+		font-family: $font;
 	}
 }
 

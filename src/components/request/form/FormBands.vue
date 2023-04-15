@@ -464,6 +464,10 @@ ul {
 	.lead {
 		@include font-xxl;
 	}
+
+	.band {
+		@include font-xs;
+	}
 }
 
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
@@ -485,7 +489,6 @@ ul {
 	}
 
 	.band {
-		@include font-xs;
 		padding: 10px 35px;
 
 		&__button svg {

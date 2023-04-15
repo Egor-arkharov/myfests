@@ -161,6 +161,8 @@ export default {
 		});
 
 		const refresh = () => {
+			console.log(store.getters["getWarnModal"]);
+
 			if (!store.getters["getWarnModal"]) {
 				modal.value = true;
 				modalView.value = "warn";

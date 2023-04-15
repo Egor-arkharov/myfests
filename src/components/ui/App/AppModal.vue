@@ -1,7 +1,7 @@
 <template>
 	<div class="modal-backdrop" @click="$emit('close')"></div>
 	<div class="modal" :class="className">
-		<h3 v-if="title">{{ title }}</h3>
+		<h3 class="title" v-if="title">{{ title }}</h3>
 		<slot />
 	</div>
 </template>
@@ -58,7 +58,6 @@ export default {
 
 		h3 {
 			margin-bottom: 20px;
-			font-family: $title-font;
 		}
 	}
 }

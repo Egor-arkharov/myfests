@@ -1,6 +1,6 @@
 <template>
 	<div class="fest" :class="{ fest_slide: slide }">
-		<p class="fest__title">{{ fest.name }}</p>
+		<p class="fest__title title">{{ fest.name }}</p>
 		<fest-img :fest="fest" :festPage="true"></fest-img>
 		<div class="fest__desc">
 			<div class="fest__desc-left">
@@ -48,7 +48,6 @@ export default {
 	padding: 20px 0 30px;
 
 	&__title {
-		font-family: $title-font;
 		text-align: center;
 		font-size: 64px;
 		line-height: 1;

@@ -2,7 +2,7 @@
 	<app-page title="F.A.Q.">
 		<h1>FAQ</h1>
 		<div class="accordion">
-			<div class="accordion__title" @click="isOpenAbout = !isOpenAbout">
+			<div class="accordion__title title" @click="isOpenAbout = !isOpenAbout">
 				What is&nbsp;this site about?
 			</div>
 			<div class="accordion__body" v-if="isOpenAbout">
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div class="accordion">
-			<div class="accordion__title" @click="isOpenCatch = !isOpenCatch">
+			<div class="accordion__title title" @click="isOpenCatch = !isOpenCatch">
 				What&rsquo;s the catch of&nbsp;this website?
 			</div>
 			<div class="accordion__body" v-if="isOpenCatch">
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 		<div class="accordion">
-			<div class="accordion__title" @click="isOpenHow = !isOpenHow">
+			<div class="accordion__title title" @click="isOpenHow = !isOpenHow">
 				How was it&nbsp;developed?
 			</div>
 			<div class="accordion__body" v-if="isOpenHow">
@@ -142,7 +142,7 @@
 			</div>
 		</div>
 		<div class="accordion">
-			<div class="accordion__title" @click="isOpenAuthor = !isOpenAuthor">
+			<div class="accordion__title title" @click="isOpenAuthor = !isOpenAuthor">
 				Who is&nbsp;author?
 			</div>
 			<div class="accordion__body" v-if="isOpenAuthor">
@@ -220,7 +220,6 @@ h1 {
 	&__title {
 		position: relative;
 		@include font-xxl;
-		font-family: $title-font;
 		cursor: pointer;
 
 		@include hover {

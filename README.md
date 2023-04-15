@@ -1,5 +1,3 @@
-TODO's:
-
 # myfest
 
 ## Project setup

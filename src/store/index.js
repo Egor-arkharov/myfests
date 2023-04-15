@@ -15,8 +15,8 @@ export default createStore({
 		return {
 			fests: JSON.parse(localStorage.getItem("fests")) ?? [],
 			bands: JSON.parse(localStorage.getItem("bands")) ?? [],
-			titleAnimate: true,
-			warnModal: false,
+			titleAnimate: JSON.parse(sessionStorage.getItem("titleAnimate")) ?? true,
+			warnModal: JSON.parse(sessionStorage.getItem("warnModal")) ?? false,
 			sidebar: false,
 			breakpoints: {
 				xs: 600,
@@ -71,9 +71,12 @@ export default createStore({
 			setTimeout(() => {
 				state.titleAnimate = false;
 			}, 0);
+
+			sessionStorage.setItem("titleAnimate", false);
 		},
 		removeWarnModal(state) {
 			state.warnModal = true;
+			sessionStorage.setItem("warnModal", true);
 		},
 		openSidebar(state) {
 			state.sidebar = true;

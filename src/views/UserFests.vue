@@ -132,13 +132,13 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		user-select: none;
 	}
 
 	&__text {
 		margin-top: 15px;
 		@include font-xl;
 		font-weight: normal;
+		user-select: none;
 	}
 }
 

@@ -27,7 +27,7 @@ $breakpoints: (
 	"md": 1080px - 1,
 	"lg": 1280px - 1,
 	"xl": 1500px - 1,
-	"xxl": 1600px - 1,
+	"xxl": 1600px,
 );
 
 $sidebar-width: 350px;
@@ -78,9 +78,3 @@ $band-fonts: (
 	"electronic-4": "Righteous", 
 	"electronic-5": "Titan One"
 );
-
-@each $name, $font in $band-fonts {
-	.font-#{$name} {
-		font-family: $font;
-	}
-}

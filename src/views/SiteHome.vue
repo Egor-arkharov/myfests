@@ -101,7 +101,6 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-	font-family: $title-font;
 	font-size: 48px;
 	text-align: center;
 

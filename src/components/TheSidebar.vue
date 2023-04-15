@@ -271,7 +271,7 @@ p {
 	transform: translateX(999px);
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1601px) {
 	.center {
 		max-width: 100%;
 	}

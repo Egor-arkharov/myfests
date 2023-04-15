@@ -1,6 +1,6 @@
 <template>
 	<div class="fest__lineup lineup">
-		<p class="lineup__title">Lineup</p>
+		<p class="lineup__title title">Lineup</p>
 		<div class="lineup__wrapper">
 			<div
 				class="lineup__day"
@@ -76,7 +76,6 @@ export default {
 	transform: translateX(-2rem);
 
 	&__title {
-		font-family: $title-font;
 		text-align: center;
 		font-size: 48px;
 		margin-bottom: 30px;

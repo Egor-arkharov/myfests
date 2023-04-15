@@ -85,6 +85,7 @@ export default {
 	}
 
 	&_myfests {
+		user-select: none;
 		border-radius: 50%;
 
 		&__img {

@@ -13,8 +13,6 @@ import {
 	shuffle,
 } from "@/use/utils";
 
-// localStorage.clear();
-
 export default {
 	namespaced: true,
 	state() {
