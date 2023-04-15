@@ -18,7 +18,7 @@
 		<ul class="tools__button-list">
 			<li class="tools__button-item" v-if="desktopView">
 				<button
-					class="btn btn--with-icon btn--view-table"
+					class="btn btn--with-icon btn--view-table active"
 					@click="$emit('changeView', 'table')"
 				>
 					<inline-svg
@@ -161,8 +161,6 @@ export default {
 		});
 
 		const refresh = () => {
-			console.log(store.getters["getWarnModal"]);
-
 			if (!store.getters["getWarnModal"]) {
 				modal.value = true;
 				modalView.value = "warn";
@@ -303,6 +301,16 @@ $tools-colors: $color-5, $color-6, $color-8, $color-2;
 			}
 
 			@include hover {
+				background-color: nth($tools-colors, $i);
+				color: $white-color;
+
+				svg {
+					fill: $white-color;
+				}
+			}
+
+			&.active {
+				cursor: auto;
 				background-color: nth($tools-colors, $i);
 				color: $white-color;
 

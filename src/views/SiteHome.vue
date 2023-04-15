@@ -54,7 +54,15 @@ export default {
 				: ref("table");
 
 		const changeView = (viewType) => {
-			view.value = viewType;
+			const buttonTable = document.querySelector(".btn--view-table");
+			const buttonList = document.querySelector(".btn--view-list");
+
+			if (view.value !== viewType) {
+				buttonTable.classList.toggle("active");
+				buttonList.classList.toggle("active");
+
+				view.value = viewType;
+			}
 		};
 
 		window.addEventListener(
