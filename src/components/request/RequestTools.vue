@@ -111,7 +111,7 @@ import InlineSvg from "vue-inline-svg";
 import AppModal from "@/components/ui/App/AppModal.vue";
 import { debounce } from "vue-debounce";
 import { ref } from "@vue/reactivity";
-import { watch, computed } from "@vue/runtime-core";
+import { watch, computed, onUpdated } from "@vue/runtime-core";
 import { useStore } from "vuex";
 
 import createModal from "./modal/createModal.vue";
@@ -169,6 +169,8 @@ export default {
 
 				store.commit("removeWarnModal");
 			} else {
+				bandName.value = "";
+
 				store.dispatch("clearAllData");
 			}
 		};
@@ -179,6 +181,12 @@ export default {
 			modalClass.value = "modal--create";
 			modalTitle.value = "Create own festival";
 		};
+
+		onUpdated(() => {
+			modal.value
+				? document.body.classList.add("body--modal")
+				: document.body.classList.remove("body--modal");
+		});
 
 		const sortFests = (sortType, isSorted) => {
 			store.commit("sortFests", {

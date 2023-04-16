@@ -40,7 +40,11 @@
 	>
 		<span class="text__field">Other bands: </span>
 		<span class="text__value" v-if="fest.bands.length">
-			<span v-for="(b, idx) in fest.bands" :key="idx"
+			<span
+				v-for="(b, idx) in fest.bands.filter(
+					(el) => !fest.headliners.includes(el)
+				)"
+				:key="idx"
 				>{{ b }}<span v-if="idx !== fest.bands.length - 1">,&nbsp;</span>
 			</span>
 		</span>

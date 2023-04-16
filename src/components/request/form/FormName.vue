@@ -2,12 +2,15 @@
 	<h4 class="form__title">Choose name</h4>
 	<form @submit.prevent="submitName" class="form">
 		<input
-			class="form__input"
+			class="form__input form__input-name"
 			type="text"
 			id="name"
 			v-model="festName"
 			maxlength="20"
 			placeholder="Min 3, Max 20 symbols"
+			@keyup="validateInput"
+			autocomplete="off"
+			ref="festInput"
 		/>
 		<p v-if="similarName" class="form__error">
 			Sorry, we&nbsp;already have festival with this name, please write another.
@@ -16,7 +19,7 @@
 			class="form__button btn btn--form"
 			:class="{ added: isChange }"
 			type="submit"
-			:disabled="festName.length < 3 || festName.length > 20 || similarName"
+			:disabled="!isDisabled"
 		>
 			{{ getButtonText() }}
 		</button>
@@ -26,7 +29,6 @@
 <script>
 import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
 
 export default {
 	emits: ["submit"],
@@ -36,16 +38,30 @@ export default {
 		const isChange = ref(false);
 		const isAdded = ref(false);
 		const similarName = ref(false);
+		const isDisabled = ref(false);
 
-		watch(festName, () => {
+		const festInput = ref(null);
+
+		const validateInput = () => {
+			isChange.value = false;
+			const inputValue = festInput.value.value;
+
+			// Костыль для моб
+			if (isAdded.value && festName.value === inputValue) {
+				isChange.value = true;
+				return;
+			}
+
+			const isValidLength = inputValue.length >= 3 && inputValue.length <= 20;
+
 			const similarFest = store.getters["getFests"].find(
-				(el) => el.name.toLowerCase() === festName.value.toLowerCase()
+				(el) => el.name.toLowerCase() === inputValue.toLowerCase()
 			);
 
-			similarFest ? (similarName.value = true) : (similarName.value = false);
+			similarName.value = Boolean(similarFest);
 
-			isChange.value = false;
-		});
+			isDisabled.value = Boolean(isValidLength && !similarFest);
+		};
 
 		const submitName = () => {
 			emit("submit", festName.value[0].toUpperCase() + festName.value.slice(1));
@@ -60,7 +76,11 @@ export default {
 				btnText = "Name Added";
 			}
 
-			if (isAdded.value && !isChange.value) {
+			if (
+				isAdded.value &&
+				!isChange.value &&
+				festName.value !== festInput.value.value
+			) {
 				btnText = "Update Name";
 			}
 
@@ -73,6 +93,9 @@ export default {
 			submitName,
 			isChange,
 			getButtonText,
+			validateInput,
+			isDisabled,
+			festInput,
 		};
 	},
 };
