@@ -44,9 +44,10 @@
 					<button
 						type="button"
 						class="btn band__button band__button-sub"
-						@mouseover="hoverSub(idx, true)"
-						@mouseleave="hoverSub(idx, false)"
-						@click="submitSub(band, idx)"
+						@mouseover="hoverBand('sub', idx, true)"
+						@mouseleave="hoverBand('sub', idx, false)"
+						@touchstart="hoverBand('sub', idx, false)"
+						@click="submitBand('sub', band, idx)"
 						:disabled="
 							festSubBands.length === maxSubBands &&
 							!festSubBands.includes(band)
@@ -62,9 +63,10 @@
 					<button
 						type="button"
 						class="btn band__button band__button-head"
-						@mouseover="hoverHead(idx, true)"
-						@mouseleave="hoverHead(idx, false)"
-						@click="submitHead(band, idx)"
+						@mouseover="hoverBand('head', idx, true)"
+						@mouseleave="hoverBand('head', idx, false)"
+						@touchstart="hoverBand('head', idx, false)"
+						@click="submitBand('head', band, idx)"
 						:disabled="
 							festHeadliners.length === maxHeadliners &&
 							!festHeadliners.includes(band)
@@ -94,7 +96,7 @@
 				<span class="form__text-value">
 					<span v-for="(h, idx) in festHeadliners" :key="idx"
 						>{{ h
-						}}<span v-if="idx !== festHeadliners.length - 1">,&nbsp;</span>
+						}}<span v-show="idx !== festHeadliners.length - 1">,&nbsp;</span>
 					</span>
 				</span>
 			</p>
@@ -107,7 +109,8 @@
 				</span>
 				<span class="form__text-value">
 					<span v-for="(b, idx) in festSubBands" :key="idx"
-						>{{ b }}<span v-if="idx !== festSubBands.length - 1">,&nbsp;</span>
+						>{{ b
+						}}<span v-show="idx !== festSubBands.length - 1">,&nbsp;</span>
 					</span>
 				</span>
 			</p>
@@ -130,7 +133,7 @@
 import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
 import InlineSvg from "vue-inline-svg";
-import { onUpdated, watch } from "@vue/runtime-core";
+import { onUpdated, watchEffect } from "@vue/runtime-core";
 import { AMOUNT_HEADLINERS, AMOUNT_BANDS } from "@/use/utils";
 
 export default {
@@ -143,24 +146,21 @@ export default {
 		const isChange = ref(false);
 		const isAdded = ref(false);
 
+		const btnSub = ref(null);
+
 		const festSubBands = ref([]);
 		const festHeadliners = ref([]);
 		const bandEls = ref([]);
 		const maxHeadliners = AMOUNT_HEADLINERS;
 		const maxSubBands = AMOUNT_BANDS - AMOUNT_HEADLINERS;
 
-		watch(props, () => {
+		watchEffect(() => {
 			festSubBands.value = [];
 			festHeadliners.value = [];
 			bandsFromGenre.value = store.getters.getBandsByGenre(props.genre);
 
 			bandEls.value.forEach((item) =>
-				item.classList.remove(
-					"hover-sub",
-					"hover-head",
-					"addedSub",
-					"addedHead"
-				)
+				item.classList.remove("hoverSub", "hoverHead", "addedSub", "addedHead")
 			);
 		});
 
@@ -173,48 +173,66 @@ export default {
 			}
 		});
 
-		const hoverSub = (bandIdx, isHover) => {
-			if (festSubBands.value.length === maxSubBands) {
+		const hoverBand = (type, bandIdx, isHover) => {
+			let typeBands = null;
+			let maxBands = null;
+			let hoverClass = null;
+
+			/* eslint-disable prettier/prettier */
+			switch (type) {
+			case "sub":
+				typeBands = festSubBands.value;
+				maxBands = maxSubBands;
+				hoverClass = "hoverSub";
+
+				break;
+			case "head":
+				typeBands = festHeadliners.value;
+				maxBands = AMOUNT_HEADLINERS;
+				hoverClass = "hoverHead";
+
+				break;
+			}
+
+			if (typeBands.length === maxBands) {
 				return;
 			}
 
 			isHover
-				? bandEls.value[bandIdx].classList.add("hover-sub")
-				: bandEls.value[bandIdx].classList.remove("hover-sub");
-		};
+				? bandEls.value[bandIdx].classList.add(hoverClass)
+				: bandEls.value[bandIdx].classList.remove(hoverClass);
+		}
 
-		const hoverHead = (bandIdx, isHover) => {
-			if (festHeadliners.value.length === AMOUNT_HEADLINERS) {
-				return;
+		const submitBand = (type, evt, bandIdx) => {
+			let typeBands = null;
+			let addClss = null;
+			let hoverClass = null;
+
+			/* eslint-disable prettier/prettier */
+			switch (type) {
+			case "sub":
+				typeBands = festSubBands.value;
+				addClss = "addedSub";
+				hoverClass = "hoverSub";
+
+				break;
+			case "head":
+				typeBands = festHeadliners.value;
+				addClss = "addedHead";
+				hoverClass = "hoverHead";
+
+				break;
 			}
 
-			isHover
-				? bandEls.value[bandIdx].classList.add("hover-head")
-				: bandEls.value[bandIdx].classList.remove("hover-head");
-		};
-
-		const submitHead = (evt, bandIdx) => {
-			if (festHeadliners.value.includes(evt)) {
-				festHeadliners.value = festHeadliners.value.filter(
-					(item) => item !== evt
-				);
-				bandEls.value[bandIdx].classList.remove("addedHead");
+			if (typeBands.includes(evt)) {
+				typeBands = typeBands.filter((item) => item !== evt);
+				bandEls.value[bandIdx].classList.remove(addClss, hoverClass);
 			} else {
-				festHeadliners.value.push(evt);
-				bandEls.value[bandIdx].classList.add("addedHead");
+				typeBands.push(evt);
+				bandEls.value[bandIdx].classList.add(addClss);
 			}
 		};
-
-		const submitSub = (evt, bandIdx) => {
-			if (festSubBands.value.includes(evt)) {
-				festSubBands.value = festSubBands.value.filter((item) => item !== evt);
-				bandEls.value[bandIdx].classList.remove("addedSub");
-			} else {
-				festSubBands.value.push(evt);
-				bandEls.value[bandIdx].classList.add("addedSub");
-			}
-		};
-
+		
 		const submitBands = () => {
 			emit("submit", {
 				bands: festSubBands.value,
@@ -246,14 +264,13 @@ export default {
 			festSubBands,
 			festHeadliners,
 			AMOUNT_HEADLINERS,
+			hoverBand,
+			submitBand,
 			submitBands,
-			submitHead,
-			submitSub,
-			hoverSub,
-			hoverHead,
 			bandEls,
 			maxHeadliners,
 			maxSubBands,
+			btnSub,
 		};
 	},
 	components: {
@@ -377,11 +394,13 @@ ul {
 			border-left: 2px solid $this-color;
 		}
 
-		&:hover:not(:disabled) {
-			background-color: $this-color;
+		@include hover {
+			&:not(:disabled) {
+				background-color: $this-color;
 
-			svg {
-				fill: $white-color;
+				svg {
+					fill: $white-color;
+				}
 			}
 		}
 	}
@@ -390,7 +409,7 @@ ul {
 		white-space: nowrap;
 	}
 
-	&.hover-sub,
+	&.hoverSub,
 	&.addedSub {
 		.text {
 			display: block;
@@ -402,7 +421,7 @@ ul {
 		}
 	}
 
-	&.hover-head,
+	&.hoverHead,
 	&.addedHead {
 		.text {
 			display: block;

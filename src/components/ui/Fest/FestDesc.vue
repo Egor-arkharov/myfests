@@ -30,7 +30,7 @@
 		<span class="text__field">Headliners: </span>
 		<span class="text__value" v-if="fest.headliners.length">
 			<span v-for="(h, idx) in fest.headliners" :key="idx"
-				>{{ h }}<span v-if="idx !== fest.headliners.length - 1">,&nbsp;</span>
+				>{{ h }}<span v-show="idx !== fest.headliners.length - 1">,&nbsp;</span>
 			</span>
 		</span>
 	</p>
@@ -45,7 +45,7 @@
 					(el) => !fest.headliners.includes(el)
 				)"
 				:key="idx"
-				>{{ b }}<span v-if="idx !== fest.bands.length - 1">,&nbsp;</span>
+				>{{ b }}<span v-show="idx !== fest.bands.length - 1">,&nbsp;</span>
 			</span>
 		</span>
 	</p>

@@ -51,6 +51,8 @@ export default {
 		text-align: center;
 		font-size: 64px;
 		line-height: 1;
+		padding: 0 5px;
+		word-wrap: break-word;
 		width: 100%;
 		border-bottom: 1px solid #000;
 	}
@@ -142,7 +144,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
 	.fest {
 		&__title {
-			font-size: 32px;
+			font-size: 34px;
 		}
 
 		&__desc {
@@ -154,14 +156,6 @@ export default {
 
 		&__map {
 			height: 150px;
-		}
-	}
-}
-
-@media (max-width: #{map-get($breakpoints, 'xxs')}) {
-	.fest {
-		&__title {
-			font-size: 26px;
 		}
 	}
 }
