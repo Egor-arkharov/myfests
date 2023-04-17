@@ -1,5 +1,8 @@
 # myfest
 
+Кнопки в группах для моб
+Ключи в env
+
 
 ## Project setup
 ```

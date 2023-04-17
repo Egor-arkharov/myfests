@@ -21,14 +21,13 @@
 				We&nbsp;don&rsquo;t have festivals with this artist yet. Try again!
 			</p>
 
-			<component :is="'fest-' + view" v-else :fests="fests" />
+			<component v-else :is="'fest-' + view" :fests="fests" ref="examp" />
 		</div>
 	</app-page>
 </template>
 
 <script>
-import { ref } from "@vue/runtime-core";
-import { computed } from "@vue/runtime-core";
+import { computed, ref, watch } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
@@ -42,25 +41,43 @@ export default {
 		const store = useStore();
 		const search = ref();
 		const titleAnimate = store.getters["getTitleAnimate"];
+		const view = ref("table");
 
 		const breakpointLG = store.state.breakpoints.lg;
 		const breakpointSM = store.state.breakpoints.sm;
 
 		store.commit("animateTitle");
 
-		const view =
+		view.value =
 			breakpointSM <= window.innerWidth && window.innerWidth < breakpointLG
-				? ref("list")
-				: ref("table");
+				? "list"
+				: "table";
 
-		const changeView = (viewType) => {
+		watch(view, () => {
 			const buttonTable = document.querySelector(".btn--view-table");
 			const buttonList = document.querySelector(".btn--view-list");
 
-			if (view.value !== viewType) {
-				buttonTable.classList.toggle("active");
-				buttonList.classList.toggle("active");
+			if (buttonTable && buttonList) {
+			/* eslint-disable prettier/prettier */
+				switch (view.value) {
+				case "list":
+					buttonTable.classList.remove("active");
+					buttonList.classList.add("active");
+					break;
 
+				case "table":
+					buttonList.classList.remove("active");
+					buttonTable.classList.add("active");
+					break;
+
+				default:
+					break;
+				}
+			}
+		});
+
+		const changeView = (viewType) => {
+			if (view.value !== viewType) {
 				view.value = viewType;
 			}
 		};

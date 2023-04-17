@@ -73,8 +73,8 @@
 				<td data-header="Headliners">
 					<div class="headliners">
 						<span v-for="(h, idx) in f.headliners" :key="idx"
-							>{{ h
-							}}<span v-if="idx !== f.headliners.length - 1">,&nbsp;</span>
+							><span v-if="idx !== 0">&nbsp;</span>{{ h
+							}}<span v-if="idx !== f.headliners.length - 1">,</span>
 						</span>
 					</div>
 				</td>

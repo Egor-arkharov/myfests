@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyCyEZjsdUb-DgCvs7u0qY-jYXpX6Jl3Qbc",
+	apiKey: process.env.FIREBASE_APIKEY,
 	authDomain: "my-fests.firebaseapp.com",
 	projectId: "my-fests",
 	storageBucket: "my-fests.appspot.com",
 	messagingSenderId: "995285414250",
-	appId: "1:995285414250:web:a02ca157bbc8c64c92b513",
+	appId: process.env.FIREBASE_APIID,
 };
 
 initializeApp(firebaseConfig);

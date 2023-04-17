@@ -9,7 +9,7 @@
 		}"
 	>
 		<picture v-if="fest.img.startsWith('/img-')">
-			<source type="image/webp" :srcset="getImgUrl(fest.img + '.webp')" />
+			<!-- <source type="image/webp" :srcset="getImgUrl(fest.img + '.webp')" /> -->
 			<v-lazy-image
 				class="wrap__img"
 				:class="{
