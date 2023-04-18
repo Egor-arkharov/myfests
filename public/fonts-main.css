@@ -8,8 +8,7 @@
 	src: url('/fonts/Main/Lora/lora-600.eot?#iefix') format('embedded-opentype'),
 			url('/fonts/Main/Lora/lora-600.woff2') format('woff2'),
 			url('/fonts/Main/Lora/lora-600.woff') format('woff'),
-			url('/fonts/Main/Lora/lora-600.ttf') format('truetype'),
-			url('/fonts/Main/Lora/lora-600.svg#Lora') format('svg');
+			url('/fonts/Main/Lora/lora-600.ttf') format('truetype');
 }
 
 /* nunito-regular */
@@ -22,8 +21,7 @@
 	src: url('/fonts/Main/Nunito/nunito-regular.eot?#iefix') format('embedded-opentype'),
 			url('/fonts/Main/Nunito/nunito-regular.woff2') format('woff2'),
 			url('/fonts/Main/Nunito/nunito-regular.woff') format('woff'),
-			url('/fonts/Main/Nunito/nunito-regular.ttf') format('truetype'),
-			url('/fonts/Main/Nunito/nunito-regular.svg#Nunito') format('svg');
+			url('/fonts/Main/Nunito/nunito-regular.ttf') format('truetype');
 }
 /* nunito-italic */
 @font-face {
@@ -35,8 +33,7 @@
 	src: url('/fonts/Main/Nunito/nunito-italic.eot?#iefix') format('embedded-opentype'),
 			url('/fonts/Main/Nunito/nunito-italic.woff2') format('woff2'),
 			url('/fonts/Main/Nunito/nunito-italic.woff') format('woff'),
-			url('/fonts/Main/Nunito/nunito-italic.ttf') format('truetype'),
-			url('/fonts/Main/Nunito/nunito-italic.svg#Nunito') format('svg');
+			url('/fonts/Main/Nunito/nunito-italic.ttf') format('truetype');
 }
 
 /* nunito-600 */
@@ -49,8 +46,7 @@
 	src: url('/fonts/Main/Nunito/nunito-600.eot?#iefix') format('embedded-opentype'),
 			url('/fonts/Main/Nunito/nunito-600.woff2') format('woff2'),
 			url('/fonts/Main/Nunito/nunito-600.woff') format('woff'),
-			url('/fonts/Main/Nunito/nunito-600.ttf') format('truetype'),
-			url('/fonts/Main/Nunito/nunito-600.svg#Nunito') format('svg');
+			url('/fonts/Main/Nunito/nunito-600.ttf') format('truetype');
 }
 
 /* nunito-700 */
@@ -63,8 +59,7 @@
 	src: url('/fonts/Main/Nunito/nunito-700.eot?#iefix') format('embedded-opentype'),
 			url('/fonts/Main/Nunito/nunito-700.woff2') format('woff2'),
 			url('/fonts/Main/Nunito/nunito-700.woff') format('woff'),
-			url('/fonts/Main/Nunito/nunito-700.ttf') format('truetype'),
-			url('/fonts/Main/Nunito/nunito-700.svg#Nunito') format('svg');
+			url('/fonts/Main/Nunito/nunito-700.ttf') format('truetype');
 }
 
 /* nunito-800 */
@@ -77,6 +72,5 @@
 	src: url('/fonts/Main/Nunito/nunito-800.eot?#iefix') format('embedded-opentype'),
 			url('/fonts/Main/Nunito/nunito-800.woff2') format('woff2'),
 			url('/fonts/Main/Nunito/nunito-800.woff') format('woff'),
-			url('/fonts/Main/Nunito/nunito-800.ttf') format('truetype'),
-			url('/fonts/Main/Nunito/nunito-800.svg#Nunito') format('svg');
+			url('/fonts/Main/Nunito/nunito-800.ttf') format('truetype');
 }

@@ -18,8 +18,9 @@
 		<ul class="tools__button-list">
 			<li class="tools__button-item" v-if="desktopView">
 				<button
-					class="btn btn--with-icon btn--view-table active"
+					class="btn btn--with-icon btn--view-table"
 					@click="$emit('changeView', 'table')"
+					:class="{ active: view === 'table' }"
 				>
 					<inline-svg
 						:src="require(`@/assets/icons/tools/table.svg`)"
@@ -33,6 +34,7 @@
 				<button
 					class="btn btn--with-icon btn--view-list"
 					@click="$emit('changeView', 'list')"
+					:class="{ active: view === 'list' }"
 				>
 					<inline-svg
 						:src="require(`@/assets/icons/tools/list.svg`)"
@@ -119,7 +121,7 @@ import warnModal from "./modal/warnModal.vue";
 
 export default {
 	emits: ["update:modelValue", "changeView"],
-	props: ["modelValue"],
+	props: ["modelValue", "view"],
 	setup(_, { emit }) {
 		const store = useStore();
 		const bandName = ref();

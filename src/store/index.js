@@ -25,6 +25,7 @@ export default createStore({
 				lg: 1280,
 				xl: 1500,
 			},
+			mainView: "table",
 		};
 	},
 	mutations: {
@@ -92,6 +93,9 @@ export default createStore({
 					"body--sidebar-close"
 				)
 			}, 1000);
+		},
+		changeMainView(state, type) {
+			state.mainView = type;
 		}
 	},
 	actions: {
@@ -167,6 +171,9 @@ export default createStore({
 		},
 		getDesktopView(state) {
 			return window.innerWidth >= state.breakpoints.xl
+		},
+		getMainView(state) {
+			return state.mainView
 		}
 	},
 	modules: {

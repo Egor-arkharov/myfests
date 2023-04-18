@@ -353,7 +353,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
 	.lineup {
 		&__title {
-			font-size: 36px;
+			font-size: 32px;
 		}
 
 		&__head {
@@ -369,7 +369,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'xxs')}) {
 	.lineup {
 		&__title {
-			font-size: 34px;
+			font-size: 28px;
 		}
 
 		&__head {

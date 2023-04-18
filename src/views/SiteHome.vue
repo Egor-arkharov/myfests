@@ -14,7 +14,11 @@
 		</h1>
 
 		<div class="main__body" :class="{ 'loader-backdrop': !isFests }">
-			<request-tools v-model="search" @changeView="changeView"></request-tools>
+			<request-tools
+				v-model="search"
+				@changeView="changeView"
+				:view="view"
+			></request-tools>
 
 			<app-loader v-if="!isFests"></app-loader>
 			<p v-else-if="fests.length === 0" class="search-no">
@@ -27,7 +31,7 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "@vue/runtime-core";
+import { computed, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
@@ -41,54 +45,38 @@ export default {
 		const store = useStore();
 		const search = ref();
 		const titleAnimate = store.getters["getTitleAnimate"];
-		const view = ref("table");
+
+		const view = computed(() => store.getters["getMainView"]);
 
 		const breakpointLG = store.state.breakpoints.lg;
 		const breakpointSM = store.state.breakpoints.sm;
 
 		store.commit("animateTitle");
 
-		view.value =
-			breakpointSM <= window.innerWidth && window.innerWidth < breakpointLG
-				? "list"
-				: "table";
+		if (window.innerWidth < breakpointLG) {
+			store.commit("changeMainView", "list");
+		}
 
-		watch(view, () => {
-			const buttonTable = document.querySelector(".btn--view-table");
-			const buttonList = document.querySelector(".btn--view-list");
-
-			if (buttonTable && buttonList) {
-			/* eslint-disable prettier/prettier */
-				switch (view.value) {
-				case "list":
-					buttonTable.classList.remove("active");
-					buttonList.classList.add("active");
-					break;
-
-				case "table":
-					buttonList.classList.remove("active");
-					buttonTable.classList.add("active");
-					break;
-
-				default:
-					break;
-				}
-			}
-		});
+		if (window.innerWidth < breakpointSM) {
+			store.commit("changeMainView", "table");
+		}
 
 		const changeView = (viewType) => {
 			if (view.value !== viewType) {
-				view.value = viewType;
+				store.commit("changeMainView", viewType);
 			}
 		};
 
 		window.addEventListener(
 			"resize",
 			debounce(() => {
-				view.value =
-					breakpointSM <= window.innerWidth && window.innerWidth < breakpointLG
-						? "list"
-						: "table";
+				if (window.innerWidth < breakpointLG) {
+					store.commit("changeMainView", "list");
+				}
+
+				if (window.innerWidth < breakpointSM) {
+					store.commit("changeMainView", "table");
+				}
 			}, 100)
 		);
 

@@ -208,6 +208,7 @@ export default {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		word-break: break-all;
 
 		svg {
 			margin-left: 3px;
@@ -300,6 +301,12 @@ export default {
 		width: 60%;
 		margin-left: auto;
 		justify-content: flex-end;
+	}
+
+	.table {
+		td {
+			padding-left: 25%;
+		}
 	}
 }
 </style>

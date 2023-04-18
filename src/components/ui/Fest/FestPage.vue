@@ -100,7 +100,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'lg')}) {
 	.fest {
 		&__title {
-			font-size: 44px;
+			font-size: 50px;
 		}
 	}
 }
@@ -108,7 +108,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'md')}) {
 	.fest {
 		&__title {
-			font-size: 42px;
+			font-size: 48px;
 		}
 
 		&__desc {
@@ -136,7 +136,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'sm')}) {
 	.fest {
 		&__title {
-			font-size: 36px;
+			font-size: 44px;
 		}
 	}
 }
@@ -144,7 +144,7 @@ export default {
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
 	.fest {
 		&__title {
-			font-size: 34px;
+			font-size: 36px;
 		}
 
 		&__desc {

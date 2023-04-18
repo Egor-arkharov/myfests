@@ -225,7 +225,9 @@ export default {
 			}
 
 			if (typeBands.includes(evt)) {
-				typeBands = typeBands.filter((item) => item !== evt);
+				const index = typeBands.indexOf(evt);
+
+				index !== -1 ? typeBands.splice(index, 1) : "";
 				bandEls.value[bandIdx].classList.remove(addClss, hoverClass);
 			} else {
 				typeBands.push(evt);
