@@ -16,12 +16,14 @@
 			<li
 				class="forms__item forms__item--big"
 				:class="{ visuallyhidden: !festGenre }"
+				ref="formBands"
 			>
 				<form-bands @submit="submitBands" :genre="festGenre"></form-bands>
 			</li>
 			<li
 				class="forms__item forms__item--big"
 				:class="{ visuallyhidden: !festBands.length && !festImg }"
+				ref="formImg"
 			>
 				<form-img @submit="submitImg"></form-img>
 			</li>
@@ -70,6 +72,8 @@ export default {
 		const festImg = ref("");
 
 		const preview = ref(null);
+		const formBands = ref(null);
+		const formImg = ref(null);
 
 		const submitName = (festNamefromComp) =>
 			(festName.value = festNamefromComp);
@@ -96,6 +100,16 @@ export default {
 		};
 
 		watchEffect(() => {
+			// if (festGenre.value) {
+			// 	console.log(formBands.value);
+			// 	formBands.value.scrollIntoView();
+			// console.log()
+			// }
+
+			// if (festBands.value.length) {
+			// 	formImg.value.scrollIntoView();
+			// }
+
 			if (preview.value) {
 				preview.value.scrollIntoView({ behavior: "smooth" });
 			}
@@ -139,6 +153,8 @@ export default {
 			submitImg,
 			submitAll,
 			preview,
+			formBands,
+			formImg,
 			fest,
 			FestDesc,
 		};

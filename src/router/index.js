@@ -42,10 +42,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	next();
-	window.scrollTo(0, 0);
-	setTimeout(() => {
-		document.body.classList.remove("menu-open");
-	}, 100);
+	if (window.innerWidth < 600) {
+		setTimeout(() => {
+			document.body.classList.remove("menu-open");
+		}, 100);
+	}
 });
 
 export default router;

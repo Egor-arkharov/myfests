@@ -25,7 +25,7 @@ export default createStore({
 				lg: 1280,
 				xl: 1500,
 			},
-			mainView: "table",
+			mainView: JSON.parse(localStorage.getItem("mainView")) ?? "table",
 		};
 	},
 	mutations: {
@@ -96,6 +96,7 @@ export default createStore({
 		},
 		changeMainView(state, type) {
 			state.mainView = type;
+			localStorage.setItem("mainView", JSON.stringify(type));
 		}
 	},
 	actions: {

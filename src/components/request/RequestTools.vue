@@ -10,6 +10,8 @@
 				type="text"
 				placeholder="Search for band (min 2 symbols)"
 				v-model="bandName"
+				ref="input"
+				@keyup="validateInput"
 			/>
 			<p v-if="searchedBands.length" class="tools__find">
 				You mean "{{ searchedBands.join(" / ") }}"?
@@ -113,7 +115,7 @@ import InlineSvg from "vue-inline-svg";
 import AppModal from "@/components/ui/App/AppModal.vue";
 import { debounce } from "vue-debounce";
 import { ref } from "@vue/reactivity";
-import { watch, computed, onUpdated } from "@vue/runtime-core";
+import { computed, onUpdated } from "@vue/runtime-core";
 import { useStore } from "vuex";
 
 import createModal from "./modal/createModal.vue";
@@ -127,6 +129,8 @@ export default {
 		const bandName = ref();
 		const searchedBands = ref([]);
 
+		const input = ref(null);
+
 		const sortByDate = ref(false);
 		const sortByGenre = ref(false);
 		const rotateDateIcon = ref(false);
@@ -137,7 +141,9 @@ export default {
 		const modalClass = ref("");
 		const modalTitle = ref("");
 
-		watch(bandName, () => {
+		const validateInput = () => {
+			bandName.value = input.value.value;
+
 			if (bandName.value.length >= 2) {
 				const fests = store.getters["getFests"];
 				searchedBands.value = [];
@@ -160,7 +166,7 @@ export default {
 			}
 
 			emit("update:modelValue", bandName.value);
-		});
+		};
 
 		const refresh = () => {
 			if (!store.getters["getWarnModal"]) {
@@ -227,6 +233,7 @@ export default {
 
 		return {
 			bandName,
+			input,
 			modalView,
 			searchedBands,
 			modal,
@@ -241,6 +248,7 @@ export default {
 			refresh,
 			openModalCreate,
 			sortFests,
+			validateInput,
 		};
 	},
 	components: {

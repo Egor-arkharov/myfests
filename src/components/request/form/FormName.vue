@@ -6,7 +6,7 @@
 			type="text"
 			id="name"
 			v-model="festName"
-			maxlength="20"
+			:maxlength="maxLength"
 			placeholder="Min 3, Max 20 symbols"
 			@keyup="validateInput"
 			autocomplete="off"
@@ -34,6 +34,7 @@ export default {
 	emits: ["submit"],
 	setup(_, { emit }) {
 		const store = useStore();
+		const maxLength = 20;
 		const festName = ref("");
 		const isChange = ref(false);
 		const isAdded = ref(false);
@@ -45,6 +46,10 @@ export default {
 		const validateInput = () => {
 			isChange.value = false;
 			const inputValue = festInput.value.value;
+
+			if (inputValue.length >= 20) {
+				festInput.value.value = inputValue.slice(0, 20);
+			}
 
 			// Костыль для моб
 			if (isAdded.value && festName.value === inputValue) {
@@ -96,6 +101,7 @@ export default {
 			validateInput,
 			isDisabled,
 			festInput,
+			maxLength,
 		};
 	},
 };

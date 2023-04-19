@@ -28,6 +28,8 @@ export default {
 		const route = useRoute();
 		const id = route.params.id;
 
+		window.scrollTo(0, 0);
+
 		fest.value = store.getters.getFestsById(id);
 
 		return {
