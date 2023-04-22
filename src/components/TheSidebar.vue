@@ -3,7 +3,11 @@
 		<div class="sidebar" v-if="sidebar">
 			<div class="sidebar__wrapper center">
 				<button class="btn btn--icon sidebar-close" @click.prevent="close">
-					&times;
+					<inline-svg
+						:src="require(`@/assets/icons/cross.svg`)"
+						width="22"
+						height="22"
+					></inline-svg>
 				</button>
 				<div class="sidebar__content bio">
 					<div class="bio__general">
@@ -154,11 +158,6 @@ export default {
 	font-size: 30px;
 	width: 30px;
 	height: 30px;
-	cursor: pointer;
-
-	@include hover {
-		border-color: $black-color;
-	}
 }
 
 .bio {
@@ -328,7 +327,7 @@ p {
 @media (max-width: #{map-get($breakpoints, 'md')}) {
 	.sidebar {
 		&__wrapper {
-			padding-top: 30px;
+			padding-top: 35px;
 		}
 	}
 

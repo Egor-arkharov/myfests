@@ -138,10 +138,6 @@
 	&.rotate {
 		border-color: $main-color;
 
-		&::before {
-			content: '';
-		}
-
 		svg {
 			fill: $main-color;
 		}
@@ -150,12 +146,24 @@
 	@include hover {
 		border-color: $main-color;
 
-		&::before {
-			content: '';
-		}
-
 		svg {
 			fill: $main-color;
+		}
+	}
+
+	&-place {
+		@include hover {
+			path {
+				stroke: $color-4;
+			}
+		}
+	}
+
+	&.sidebar-close {
+		@include hover {
+			path {
+				stroke: $main-color;
+			}
 		}
 	}
 }

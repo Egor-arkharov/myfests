@@ -1,7 +1,7 @@
 <template>
 	<button
 		class="btn btn--up"
-		@click="scrollUp"
+		@click.prevent="scrollUp"
 		:disabled="disabled"
 		ref="scrollBtn"
 	>

@@ -17,6 +17,17 @@
 					:key="item.isoCode"
 				></option>
 			</datalist>
+			<button
+				v-if="festCountry"
+				class="btn btn--icon btn--icon-place"
+				@click.prevent="clearCountries"
+			>
+				<inline-svg
+					:src="require(`@/assets/icons/cross.svg`)"
+					width="22"
+					height="22"
+				></inline-svg>
+			</button>
 		</div>
 
 		<div class="form__block" v-if="citiesByCode">
@@ -35,6 +46,17 @@
 					:key="item.isoCode"
 				></option>
 			</datalist>
+			<button
+				v-if="festPlace"
+				class="btn btn--icon btn--icon-place"
+				@click.prevent="clearCities"
+			>
+				<inline-svg
+					:src="require(`@/assets/icons/cross.svg`)"
+					width="22"
+					height="22"
+				></inline-svg>
+			</button>
 		</div>
 
 		<button
@@ -52,6 +74,7 @@
 import { ref } from "@vue/reactivity";
 import { Country, City } from "country-state-city";
 import { watch } from "@vue/runtime-core";
+import InlineSvg from "vue-inline-svg";
 
 export default {
 	emits: ["submit"],
@@ -99,6 +122,22 @@ export default {
 			}
 		};
 
+		const clearCountries = () => {
+			festCountry.value = "";
+			countryInput.value.value = "";
+			festPlace.value = "";
+			cityInput.value.value = "";
+			countryInput.value.focus();
+			countryInput.value.click();
+		};
+
+		const clearCities = () => {
+			festPlace.value = "";
+			cityInput.value.value = "";
+			cityInput.value.focus();
+			cityInput.value.click();
+		};
+
 		watch(festPlace, () => {
 			isChange.value = false;
 		});
@@ -126,15 +165,21 @@ export default {
 		return {
 			countriesWithCities,
 			citiesByCode,
+			festCountry,
 			festPlace,
 			isChange,
 			countryInput,
 			cityInput,
+			clearCountries,
+			clearCities,
 			getButtonText,
 			selectCountry,
 			selectCity,
 			submitPlace,
 		};
+	},
+	components: {
+		InlineSvg,
 	},
 };
 </script>
@@ -143,8 +188,28 @@ export default {
 $this-color: $color-4;
 .form__input {
 	&::-webkit-calendar-picker-indicator {
-		transform: rotate(-90deg);
-		color: $this-color;
+		// transform: rotate(-90deg);
+		// color: $this-color;
+		display: none !important;
+	}
+}
+
+.form__block {
+	position: relative;
+}
+
+.form__input {
+	padding-right: 40px;
+}
+
+.btn--icon {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+
+	@include hover {
+		border-color: $this-color;
 	}
 }
 </style>

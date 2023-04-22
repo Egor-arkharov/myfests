@@ -2,7 +2,7 @@
 
 Description и фото в meta
 
-formPlace разобраться с фокусом
+убрать vue-dataset из пэкэджей
 
 ## Project setup
 ```
