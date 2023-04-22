@@ -14,17 +14,12 @@
 				<form-genre @submit="submitGenre"></form-genre>
 			</li>
 			<li
-				class="forms__item forms__item--big"
-				:class="{ visuallyhidden: !festGenre }"
-				ref="formBands"
+				class="forms__item forms__item--big visuallyhidden"
+				ref="formBandsDom"
 			>
 				<form-bands @submit="submitBands" :genre="festGenre"></form-bands>
 			</li>
-			<li
-				class="forms__item forms__item--big"
-				:class="{ visuallyhidden: !festBands.length && !festImg }"
-				ref="formImg"
-			>
+			<li class="forms__item forms__item--big visuallyhidden" ref="formImgDom">
 				<form-img @submit="submitImg"></form-img>
 			</li>
 		</ol>
@@ -72,8 +67,9 @@ export default {
 		const festImg = ref("");
 
 		const preview = ref(null);
-		const formBands = ref(null);
-		const formImg = ref(null);
+		const formBandsDom = ref(null);
+		const formImgDom = ref(null);
+		const onceScroll = ref(false);
 
 		const submitName = (festNamefromComp) =>
 			(festName.value = festNamefromComp);
@@ -100,18 +96,21 @@ export default {
 		};
 
 		watchEffect(() => {
-			// if (festGenre.value) {
-			// 	console.log(formBands.value);
-			// 	formBands.value.scrollIntoView();
-			// console.log()
-			// }
+			if (!onceScroll.value) {
+				if (festGenre.value) {
+					formBandsDom.value.classList.remove("visuallyhidden");
+					formBandsDom.value.scrollIntoView({ behavior: "smooth" });
+				}
 
-			// if (festBands.value.length) {
-			// 	formImg.value.scrollIntoView();
-			// }
+				if (festBands.value.length) {
+					formImgDom.value.classList.remove("visuallyhidden");
+					formImgDom.value.scrollIntoView({ behavior: "smooth" });
+				}
 
-			if (preview.value) {
-				preview.value.scrollIntoView({ behavior: "smooth" });
+				if (preview.value) {
+					preview.value.scrollIntoView({ behavior: "smooth" });
+					onceScroll.value = true;
+				}
 			}
 		});
 
@@ -153,8 +152,8 @@ export default {
 			submitImg,
 			submitAll,
 			preview,
-			formBands,
-			formImg,
+			formBandsDom,
+			formImgDom,
 			fest,
 			FestDesc,
 		};

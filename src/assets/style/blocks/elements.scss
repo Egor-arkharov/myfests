@@ -69,7 +69,7 @@
 
 	.main__wrapper,
 	.sidebar__wrapper {
-		height: 80vh;
+		height: 75vh;
 	}
 
 	.bio {
@@ -130,6 +130,17 @@
 
 	&--modal {
 		overflow: hidden;
+	}
+}
+
+.swiper-wrap {
+	.swiper-wrapper {
+		z-index: -1;
+	}
+
+	.swiper-button-next,
+	.swiper-button-prev {
+		color: $color-8;
 	}
 }
 

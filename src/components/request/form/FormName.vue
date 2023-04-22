@@ -51,12 +51,6 @@ export default {
 				festInput.value.value = inputValue.slice(0, 20);
 			}
 
-			// Костыль для моб
-			if (isAdded.value && festName.value === inputValue) {
-				isChange.value = true;
-				return;
-			}
-
 			const isValidLength = inputValue.length >= 3 && inputValue.length <= 20;
 
 			const similarFest = store.getters["getFests"].find(
@@ -72,6 +66,7 @@ export default {
 			emit("submit", festName.value[0].toUpperCase() + festName.value.slice(1));
 			isChange.value = true;
 			isAdded.value = true;
+			festInput.value.blur();
 		};
 
 		const getButtonText = () => {
@@ -81,11 +76,7 @@ export default {
 				btnText = "Name Added";
 			}
 
-			if (
-				isAdded.value &&
-				!isChange.value &&
-				festName.value !== festInput.value.value
-			) {
+			if (isAdded.value && !isChange.value) {
 				btnText = "Update Name";
 			}
 

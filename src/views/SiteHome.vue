@@ -67,9 +67,19 @@ export default {
 			}
 		};
 
+		let currentWidth = window.innerWidth;
+
 		window.addEventListener(
 			"resize",
 			debounce(() => {
+				const newWidth = window.innerWidth;
+
+				if (newWidth === currentWidth) {
+					return;
+				}
+
+				currentWidth = newWidth;
+
 				if (window.innerWidth < breakpointLG) {
 					store.commit("changeMainView", "list");
 				}

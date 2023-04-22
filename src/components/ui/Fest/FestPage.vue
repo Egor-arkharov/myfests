@@ -123,6 +123,7 @@ export default {
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: space-between;
+				align-items: flex-start;
 				margin-bottom: 25px;
 			}
 		}

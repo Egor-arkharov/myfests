@@ -158,7 +158,7 @@ export default createStore({
 
 			return (genre !== "Mix") ? state.bands[genre] : getMixedBands(allGenres, state.bands, AMOUNT_BANDS_MAX);
 		},
-		getMyFests(state, getters) {
+		getMyFests(_, getters) {
 			return getters.getFests.filter((f) => f.added === true);
 		},
 		getTitleAnimate(state) {

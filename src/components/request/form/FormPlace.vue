@@ -8,6 +8,7 @@
 				placeholder="Select a Country"
 				data-role="picker"
 				@input="selectCountry"
+				ref="countryInput"
 			/>
 			<datalist id="countryList">
 				<option
@@ -25,6 +26,7 @@
 				placeholder="Select a City"
 				data-role="picker"
 				@input="selectCity"
+				ref="cityInput"
 			/>
 			<datalist id="cityList">
 				<option
@@ -57,6 +59,9 @@ export default {
 		const isChange = ref(false);
 		const isAdded = ref(false);
 
+		const countryInput = ref(null);
+		const cityInput = ref(null);
+
 		const allCountries = Country.getAllCountries();
 		const countriesWithCities = allCountries.filter(
 			(country) => City.getCitiesOfCountry(country.isoCode).length
@@ -74,6 +79,7 @@ export default {
 			if (selectedCountry) {
 				citiesByCode.value = City.getCitiesOfCountry(selectedCountry.isoCode);
 				festCountry.value = selectedCountry;
+				countryInput.value.blur();
 			} else {
 				citiesByCode.value = "";
 			}
@@ -87,6 +93,7 @@ export default {
 			if (selectedCity) {
 				selectedCity.countryName = festCountry.value.name;
 				festPlace.value = selectedCity;
+				cityInput.value.blur();
 			} else {
 				festPlace.value = "";
 			}
@@ -121,6 +128,8 @@ export default {
 			citiesByCode,
 			festPlace,
 			isChange,
+			countryInput,
+			cityInput,
 			getButtonText,
 			selectCountry,
 			selectCity,

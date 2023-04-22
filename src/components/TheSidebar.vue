@@ -283,7 +283,7 @@ p {
 		top: 75px;
 		width: 100%;
 		height: auto;
-		z-index: 3;
+		z-index: 4;
 
 		&__wrapper {
 			border-radius: 10px;

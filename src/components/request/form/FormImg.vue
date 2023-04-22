@@ -1,34 +1,35 @@
 <template>
 	<h4 class="form__title">Choose photo</h4>
-	<swiper
-		:centeredSlides="true"
-		:grabCursor="true"
-		:navigation="true"
-		:modules="modules"
-		@swiper="onSwiper"
-		@slidesLengthChange="slidesLengthChange"
-		@slideChange="slideChange"
-		:class="{ active: firstMove }"
-	>
-		<swiper-slide v-for="(img, idx) in images" :key="idx" :virtualIndex="idx">
-			<div class="img-wrap">
-				<picture v-if="img.startsWith('/img-')">
-					<source type="image/webp" :srcset="getImgUrl(img, '.webp')" />
+	<div class="swiper-wrap" :class="{ active: firstMove }">
+		<swiper
+			:centeredSlides="true"
+			:grabCursor="true"
+			:navigation="true"
+			:modules="modules"
+			@swiper="onSwiper"
+			@slidesLengthChange="slidesLengthChange"
+			@slideChange="slideChange"
+		>
+			<swiper-slide v-for="(img, idx) in images" :key="idx" :virtualIndex="idx">
+				<div class="img-wrap">
+					<picture v-if="img.startsWith('/img-')">
+						<source type="image/webp" :srcset="getImgUrl(img, '.webp')" />
+						<v-lazy-image
+							class="img"
+							:src="getImgUrl(img, '.jpg')"
+							:alt="'Stock photo for the festival'"
+						/>
+					</picture>
 					<v-lazy-image
+						v-else
 						class="img"
-						:src="getImgUrl(img, '.jpg')"
+						:src="img"
 						:alt="'Stock photo for the festival'"
 					/>
-				</picture>
-				<v-lazy-image
-					v-else
-					class="img"
-					:src="img"
-					:alt="'Stock photo for the festival'"
-				/>
-			</div>
-		</swiper-slide>
-	</swiper>
+				</div>
+			</swiper-slide>
+		</swiper>
+	</div>
 
 	<form class="form form-file" @submit.prevent="submitImg">
 		<label
@@ -186,10 +187,8 @@ export default {
 <style lang="scss" scoped>
 $this-color: $color-8;
 
-.swiper {
-	height: 200px;
-	margin-bottom: 10px;
-	padding: 20px 0;
+.swiper-wrap {
+	position: relative;
 
 	&::before {
 		content: "";
@@ -208,6 +207,34 @@ $this-color: $color-8;
 		&::before {
 			border: 2px solid $this-color;
 		}
+	}
+}
+
+.swiper {
+	height: 200px;
+	margin-bottom: 10px;
+	padding: 20px 0;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+
+		top: 0;
+		width: 50px;
+		height: 100%;
+
+		background-color: $white-color;
+		filter: blur(20px);
+		z-index: 2;
+	}
+
+	&::before {
+		left: 0;
+	}
+
+	&:after {
+		right: 0;
 	}
 }
 
@@ -323,17 +350,19 @@ $this-color: $color-8;
 }
 
 @media (max-width: #{map-get($breakpoints, 'xs')}) {
-	.swiper,
+	.swiper-wrap,
 	.form {
 		margin-top: 30px;
 		margin-left: -64px;
 		margin-right: -5px;
 	}
 
-	.swiper {
-		&:before {
-			width: 75%;
-		}
+	.swiper-wrap::before {
+		width: 75%;
+	}
+
+	.swiper::before {
+		width: 40px;
 	}
 
 	.form-file {

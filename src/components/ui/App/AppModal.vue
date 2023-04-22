@@ -35,7 +35,7 @@ export default {
 	border-radius: 10px;
 	overflow-y: auto;
 
-	z-index: 2;
+	z-index: 3;
 
 	color: $black-color;
 
