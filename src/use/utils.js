@@ -1,5 +1,6 @@
 export const AMOUNT_HEADLINERS = 3;
 export const AMOUNT_BANDS = 12;
+export const AMOUNT_SUB_BANDS = AMOUNT_BANDS - AMOUNT_HEADLINERS;
 export const AMOUNT_BANDS_MAX = 20;
 export const AMOUNT_FONTS = 6;
 

@@ -1,8 +1,9 @@
-# myfest
+# My Fest
 
-Description и фото в meta
+**Hosting:** https://my-fests.web.app/
 
-убрать vue-dataset из пэкэджей
+This is my first pet-project with vue.
+All about this project you can see on this [page](https://my-fests.web.app/faq).
 
 ## Project setup
 ```
@@ -23,6 +24,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

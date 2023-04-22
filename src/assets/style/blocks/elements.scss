@@ -2,7 +2,7 @@
 	border: 2px solid $color-5;
 }
 
-.dp__range_end, .dp__range_start, .dp__active_date {
+.dp__range_end, .dp__range_start, .dp__active_date, .dp__overlay_cell_active {
 	background: $color-5;
 }
 
@@ -79,6 +79,10 @@
 	.main__wrapper * {
 		transform: translateX(999px);
 	}
+
+	.btn--up {
+		display: none;
+	}
 }
 
 .no-fests {
@@ -104,20 +108,24 @@
 
 .body {
 	&--sidebar {
-		.tools {
-			&__search {
-				align-items: flex-start;
-				flex-direction: column;
 
-				width: 250px;
-				max-width: 250px;
-			}
-
-			&__find {
-				margin-left: 0;
-				margin-top: 10px;
+		@media (min-width: #{map-get($breakpoints, 'xxl')}) {
+			.tools {
+				&__search {
+					align-items: flex-start;
+					flex-direction: column;
+	
+					width: 250px;
+					max-width: 250px;
+				}
+	
+				&__find {
+					margin-left: 0;
+					margin-top: 10px;
+				}
 			}
 		}
+
 
 		@media (max-width: #{map-get($breakpoints, 'xs')}) {
 			overflow: hidden;
@@ -141,6 +149,12 @@
 	.swiper-button-next,
 	.swiper-button-prev {
 		color: $color-8;
+	}
+}
+
+.fests {
+	.text__block {
+		width: 100%;
 	}
 }
 

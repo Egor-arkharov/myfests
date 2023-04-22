@@ -97,12 +97,18 @@ export default {
 
 		watchEffect(() => {
 			if (!onceScroll.value) {
-				if (festGenre.value) {
+				if (
+					festGenre.value &&
+					formBandsDom.value.classList.contains("visuallyhidden")
+				) {
 					formBandsDom.value.classList.remove("visuallyhidden");
 					formBandsDom.value.scrollIntoView({ behavior: "smooth" });
 				}
 
-				if (festBands.value.length) {
+				if (
+					festBands.value.length &&
+					formImgDom.value.classList.contains("visuallyhidden")
+				) {
 					formImgDom.value.classList.remove("visuallyhidden");
 					formImgDom.value.scrollIntoView({ behavior: "smooth" });
 				}

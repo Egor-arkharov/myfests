@@ -30,7 +30,7 @@
 		<span class="text__field">Headliners: </span>
 		<span class="text__value" v-if="fest.headliners.length">
 			<span v-for="(h, idx) in fest.headliners" :key="idx"
-				>{{ h }}<span v-show="idx !== fest.headliners.length - 1">,&nbsp;</span>
+				>{{ h }}<span v-show="idx !== AMOUNT_HEADLINERS - 1">,&nbsp;</span>
 			</span>
 		</span>
 	</p>
@@ -45,7 +45,7 @@
 					(el) => !fest.headliners.includes(el)
 				)"
 				:key="idx"
-				>{{ b }}<span v-show="idx !== fest.bands.length - 1">,&nbsp;</span>
+				>{{ b }}<span v-show="idx !== AMOUNT_SUB_BANDS - 1">,&nbsp;</span>
 			</span>
 		</span>
 	</p>
@@ -58,9 +58,16 @@
 <script>
 import InlineSvg from "vue-inline-svg";
 import FestImg from "@/components/ui/Fest/FestImg.vue";
+import { AMOUNT_HEADLINERS, AMOUNT_SUB_BANDS } from "@/use/utils";
 
 export default {
 	props: ["fest"],
+	setup() {
+		return {
+			AMOUNT_HEADLINERS,
+			AMOUNT_SUB_BANDS,
+		};
+	},
 	components: {
 		InlineSvg,
 		FestImg,

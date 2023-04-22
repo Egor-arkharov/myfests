@@ -49,7 +49,7 @@
 						@touchstart="hoverBand('sub', idx, false)"
 						@click="submitBand('sub', band, idx)"
 						:disabled="
-							festSubBands.length === maxSubBands &&
+							festSubBands.length === AMOUNT_SUB_BANDS &&
 							!festSubBands.includes(band)
 						"
 					>
@@ -68,7 +68,7 @@
 						@touchstart="hoverBand('head', idx, false)"
 						@click="submitBand('head', band, idx)"
 						:disabled="
-							festHeadliners.length === maxHeadliners &&
+							festHeadliners.length === AMOUNT_HEADLINERS &&
 							!festHeadliners.includes(band)
 						"
 					>
@@ -102,10 +102,12 @@
 			</p>
 			<p
 				class="form__text"
-				:class="{ full: festSubBands.length === maxSubBands }"
+				:class="{ full: festSubBands.length === AMOUNT_SUB_BANDS }"
 			>
 				<span class="form__text-field"
-					>Other bands ({{ festSubBands.length + "/" + maxSubBands }}):&nbsp;
+					>Other bands ({{
+						festSubBands.length + "/" + AMOUNT_SUB_BANDS
+					}}):&nbsp;
 				</span>
 				<span class="form__text-value">
 					<span v-for="(b, idx) in festSubBands" :key="idx"
@@ -119,8 +121,8 @@
 				:class="{ added: isChange }"
 				type="submit"
 				:disabled="
-					festHeadliners.length !== maxHeadliners ||
-					festSubBands.length < maxSubBands
+					festHeadliners.length !== AMOUNT_HEADLINERS ||
+					festSubBands.length < AMOUNT_SUB_BANDS
 				"
 			>
 				{{ getButtonText() }}
@@ -134,7 +136,7 @@ import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
 import InlineSvg from "vue-inline-svg";
 import { onUpdated, watchEffect } from "@vue/runtime-core";
-import { AMOUNT_HEADLINERS, AMOUNT_BANDS } from "@/use/utils";
+import { AMOUNT_HEADLINERS, AMOUNT_SUB_BANDS } from "@/use/utils";
 
 export default {
 	emits: ["submit"],
@@ -151,8 +153,6 @@ export default {
 		const festSubBands = ref([]);
 		const festHeadliners = ref([]);
 		const bandEls = ref([]);
-		const maxHeadliners = AMOUNT_HEADLINERS;
-		const maxSubBands = AMOUNT_BANDS - AMOUNT_HEADLINERS;
 
 		watchEffect(() => {
 			festSubBands.value = [];
@@ -166,8 +166,8 @@ export default {
 
 		onUpdated(() => {
 			if (
-				festHeadliners.value.length !== maxHeadliners ||
-				festSubBands.value.length !== maxSubBands
+				festHeadliners.value.length !== AMOUNT_HEADLINERS ||
+				festSubBands.value.length !== AMOUNT_SUB_BANDS
 			) {
 				isChange.value = false;
 			}
@@ -182,7 +182,7 @@ export default {
 			switch (type) {
 			case "sub":
 				typeBands = festSubBands.value;
-				maxBands = maxSubBands;
+				maxBands = AMOUNT_SUB_BANDS;
 				hoverClass = "hoverSub";
 
 				break;
@@ -270,8 +270,7 @@ export default {
 			submitBand,
 			submitBands,
 			bandEls,
-			maxHeadliners,
-			maxSubBands,
+			AMOUNT_SUB_BANDS,
 			btnSub,
 		};
 	},
@@ -471,10 +470,6 @@ ul {
 			align-items: flex-start;
 			justify-content: flex-start;
 			width: 100%;
-		}
-
-		&__text {
-			padding-left: 20px;
 		}
 
 		&__button {
