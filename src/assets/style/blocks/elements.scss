@@ -158,6 +158,12 @@
 	}
 }
 
+.preview {
+	.wrap {
+		height: 100px;
+	}
+}
+
 
 @each $name, $font in $band-fonts {
 	.font-#{$name} {

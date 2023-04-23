@@ -322,6 +322,14 @@ export default {
 	}
 }
 
+@media (max-width: #{map-get($breakpoints, 'md')}) {
+	.lineup {
+		&__head {
+			font-size: 26px;
+		}
+	}
+}
+
 @media (max-width: #{map-get($breakpoints, 'sm')}) {
 	.lineup {
 		&__title {
@@ -330,7 +338,7 @@ export default {
 
 		&__wrapper {
 			flex-direction: column;
-			padding: 0 30px;
+			padding: 0 35px;
 		}
 
 		&__day {

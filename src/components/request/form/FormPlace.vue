@@ -188,8 +188,6 @@ export default {
 $this-color: $color-4;
 .form__input {
 	&::-webkit-calendar-picker-indicator {
-		// transform: rotate(-90deg);
-		// color: $this-color;
 		display: none !important;
 	}
 }

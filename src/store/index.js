@@ -35,7 +35,7 @@ export default createStore({
 				place: data.place,
 				genre: data.genre,
 				headliners: data.headliners,
-				bands: data.bands,
+				bands: data.bands.concat(data.headliners),
 				date: data.date,
 				id: Math.random().toString(36).substr(2, 9),
 				added: false,
