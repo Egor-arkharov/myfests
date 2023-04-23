@@ -5,7 +5,7 @@
 This is my first pet-project with vue.
 All about this project you can see on this [page](https://my-fests.web.app/faq).
 
-```
+
 
 ### Project setup
 ```
