@@ -25,7 +25,7 @@
 				We&nbsp;don&rsquo;t have festivals with this artist yet. Try again!
 			</p>
 
-			<component v-else :is="'fest-' + view" :fests="fests" ref="examp" />
+			<component v-else :is="'fest-' + view" :fests="fests" />
 		</div>
 	</app-page>
 </template>
@@ -44,26 +44,26 @@ export default {
 	setup() {
 		const store = useStore();
 		const search = ref();
-		const titleAnimate = store.getters["getTitleAnimate"];
+		const titleAnimate = store.getters["settings/getTitleAnimate"];
 
-		const view = computed(() => store.getters["getMainView"]);
+		const view = computed(() => store.getters["settings/getMainView"]);
 
-		const breakpointLG = store.state.breakpoints.lg;
-		const breakpointSM = store.state.breakpoints.sm;
+		const breakpointLG = store.state.settings.breakpoints.lg;
+		const breakpointSM = store.state.settings.breakpoints.sm;
 
-		store.commit("animateTitle");
+		store.commit("settings/animateTitle");
 
 		if (window.innerWidth < breakpointLG) {
-			store.commit("changeMainView", "list");
+			store.commit("settings/changeMainView", "list");
 		}
 
 		if (window.innerWidth < breakpointSM) {
-			store.commit("changeMainView", "table");
+			store.commit("settings/changeMainView", "table");
 		}
 
 		const changeView = (viewType) => {
 			if (view.value !== viewType) {
-				store.commit("changeMainView", viewType);
+				store.commit("settings/changeMainView", viewType);
 			}
 		};
 
@@ -81,11 +81,11 @@ export default {
 				currentWidth = newWidth;
 
 				if (window.innerWidth < breakpointLG) {
-					store.commit("changeMainView", "list");
+					store.commit("settings/openSidebar", "list");
 				}
 
 				if (window.innerWidth < breakpointSM) {
-					store.commit("changeMainView", "table");
+					store.commit("settings/openSidebar", "table");
 				}
 			}, 100)
 		);

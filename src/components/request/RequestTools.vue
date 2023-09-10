@@ -169,17 +169,17 @@ export default {
 		};
 
 		const refresh = () => {
-			if (!store.getters["getWarnModal"]) {
+			if (!store.getters["settings/getWarnModal"]) {
 				modal.value = true;
 				modalView.value = "warn";
 				modalClass.value = "modal--warn";
 				modalTitle.value = "Note";
 
-				store.commit("removeWarnModal");
+				store.commit("settings/removeWarnModal");
 			} else {
 				bandName.value = "";
 
-				store.dispatch("clearAllData");
+				store.dispatch("reInit");
 			}
 		};
 
@@ -221,7 +221,7 @@ export default {
 
 		const isFests = computed(() => store.getters["getFests"].length);
 
-		const breakpointLG = store.state.breakpoints.lg;
+		const breakpointLG = store.state.settings.breakpoints.lg;
 		const desktopView = ref(window.innerWidth >= breakpointLG);
 
 		window.addEventListener(

@@ -185,7 +185,7 @@ export default {
 			isOpenCatch: ref(false),
 			isOpenHow: ref(false),
 			isOpenAuthor: ref(false),
-			open: () => store.commit("openSidebar"),
+			open: () => store.commit("settings/openSidebar"),
 		};
 	},
 	components: {

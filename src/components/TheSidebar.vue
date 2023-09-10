@@ -78,7 +78,7 @@ import InlineSvg from "vue-inline-svg";
 export default {
 	setup() {
 		const store = useStore();
-		const sidebar = computed(() => store.state.sidebar);
+		const sidebar = computed(() => store.getters["settings/getSideBar"]);
 
 		const social = [
 			{
@@ -118,7 +118,7 @@ export default {
 			social,
 			hardSkills,
 			sidebar,
-			close: () => store.commit("closeSidebar"),
+			close: () => store.commit("settings/closeSidebar"),
 		};
 	},
 	components: {
@@ -405,10 +405,6 @@ p {
 	.body {
 		&--sidebar {
 			padding-right: $sidebar-width;
-		}
-
-		&--sidebar-close {
-			padding-right: 0;
 		}
 	}
 }

@@ -52,8 +52,8 @@ import { useStore } from "vuex";
 export default {
 	setup() {
 		const store = useStore();
-		const mobileView = ref(store.getters["getMobileView"]);
-		const breakpointXS = store.state.breakpoints.xs;
+		const mobileView = ref(store.getters["settings/getMobileView"]);
+		const breakpointXS = store.state.settings.breakpoints.xs;
 
 		const toggleMenu = () => {
 			document.body.classList.toggle("menu-open");
@@ -72,7 +72,7 @@ export default {
 
 		return {
 			mobileView,
-			open: () => (sidebar.value ? "" : store.commit("openSidebar")),
+			open: () => (sidebar.value ? "" : store.commit("settings/openSidebar")),
 			toggleMenu,
 			sidebar,
 		};
