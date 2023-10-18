@@ -67,7 +67,7 @@ export default {
 		const controlledSwiper = ref(null);
 		const store = useStore();
 
-		const myFests = computed(() => store.getters["getMyFests"]);
+		const myFests = computed(() => store.getters["fest/getMyFests"]);
 
 		const setControlledSwiper = (swiper) => {
 			controlledSwiper.value = swiper;

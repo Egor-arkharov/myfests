@@ -29,7 +29,7 @@ export default {
 			);
 		});
 
-		if (!store.getters["getFests"].length) {
+		if (!store.getters["fest/getFests"].length) {
 			onMounted(async () => {
 				await store.dispatch("init");
 			});

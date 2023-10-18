@@ -91,7 +91,7 @@ export default {
 		);
 
 		const fests = computed(() =>
-			store.getters["getFests"].filter((fest) => {
+			store.getters["fest/getFests"].filter((fest) => {
 				if (search.value && search.value.length >= 2) {
 					return fest.bands.find((item) =>
 						item.toLowerCase().includes(search.value.toLowerCase())
@@ -101,7 +101,7 @@ export default {
 			})
 		);
 
-		const isFests = computed(() => store.getters["getFests"].length);
+		const isFests = computed(() => store.getters["fest/getFests"].length);
 
 		return {
 			fests,

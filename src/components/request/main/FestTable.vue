@@ -120,10 +120,10 @@ export default {
 		const rotateDateIcon = ref(false);
 		const rotateGenreIcon = ref(false);
 
-		const changeMyFests = (fest) => store.commit("changeMyFests", fest);
+		const changeMyFests = (fest) => store.commit("fest/changeMyFests", fest);
 
 		const sortFests = (sortType, isSorted) => {
-			store.commit("sortFests", {
+			store.commit("fest/sortFests", {
 				sortType,
 				isSorted,
 			});

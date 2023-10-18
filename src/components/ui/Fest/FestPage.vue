@@ -28,7 +28,7 @@ export default {
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
 
 		onMounted(async () => {
-			await store.dispatch("loadFestMap", props.fest);
+			await store.dispatch("fest/loadFestMap", props.fest);
 		});
 
 		return {

@@ -24,7 +24,3 @@ npm run build
 ```
 npm run lint
 ```
-
-TODO:
-
-# Заменить в FireBase имена массивов на мн. числа. (genres, names)

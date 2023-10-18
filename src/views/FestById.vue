@@ -30,7 +30,7 @@ export default {
 
 		window.scrollTo(0, 0);
 
-		fest.value = store.getters.getFestsById(id);
+		fest.value = store.getters["fest/getFestsById"](id);
 
 		return {
 			fest,

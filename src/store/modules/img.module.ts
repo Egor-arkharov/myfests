@@ -11,8 +11,7 @@ export default {
 	namespaced: true,
 	state: {
 		reservedImg: [],
-		freeImg:
-			JSON.parse(localStorage.getItem("store") || "[]")?.img?.freeImg ?? [],
+		freeImg: JSON.parse(localStorage.getItem("img") || "[]")?.freeImg ?? [],
 	},
 	mutations: {
 		setImages(state: imgInt): void {

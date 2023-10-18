@@ -145,7 +145,7 @@ export default {
 			bandName.value = input.value.value;
 
 			if (bandName.value.length >= 2) {
-				const fests = store.getters["getFests"];
+				const fests = store.getters["fest/getFests"];
 				searchedBands.value = [];
 
 				fests.forEach((fest) => {
@@ -197,7 +197,7 @@ export default {
 		});
 
 		const sortFests = (sortType, isSorted) => {
-			store.commit("sortFests", {
+			store.commit("fest/sortFests", {
 				sortType,
 				isSorted,
 			});
@@ -219,7 +219,7 @@ export default {
 			}
 		};
 
-		const isFests = computed(() => store.getters["getFests"].length);
+		const isFests = computed(() => store.getters["fest/getFests"].length);
 
 		const breakpointLG = store.state.settings.breakpoints.lg;
 		const desktopView = ref(window.innerWidth >= breakpointLG);

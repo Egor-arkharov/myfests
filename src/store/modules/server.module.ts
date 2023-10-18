@@ -7,12 +7,10 @@ import { shuffle, AMOUNT_BANDS_MAX, getMixedBands } from "@/use/utils";
 import { ServerData } from "@/assets/types/fest.type";
 
 const state: ServerData = {
-	names: JSON.parse(localStorage.getItem("store") || "[]")?.server?.names ?? [],
-	genres:
-		JSON.parse(localStorage.getItem("store") || "[]")?.server?.genres ?? [],
-	bands: JSON.parse(localStorage.getItem("store") || "{}")?.server?.bands ?? {},
-	cities:
-		JSON.parse(localStorage.getItem("store") || "[]")?.server?.cities ?? [],
+	names: JSON.parse(localStorage.getItem("server") || "[]")?.names ?? [],
+	genres: JSON.parse(localStorage.getItem("server") || "[]")?.genres ?? [],
+	bands: JSON.parse(localStorage.getItem("server") || "{}")?.bands ?? {},
+	cities: JSON.parse(localStorage.getItem("server") || "[]")?.cities ?? [],
 };
 
 const mutations = {

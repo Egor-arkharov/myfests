@@ -5,8 +5,7 @@ const state: siteSettings = {
 	warnModal: Boolean(sessionStorage.getItem("warnModal") ?? "false"),
 	sidebar: false,
 	mainView:
-		JSON.parse(localStorage.getItem("store") || "[]")?.settings?.mainView ??
-		"table",
+		JSON.parse(localStorage.getItem("settings") || "[]")?.mainView ?? "table",
 	breakpoints: {
 		xs: 600,
 		sm: 798,
@@ -38,7 +37,7 @@ const mutations = {
 	},
 	changeMainView(state: siteSettings, type: string) {
 		state.mainView = type;
-		localStorage.setItem("mainView", type);
+		localStorage["settings"] = JSON.stringify(state);
 	},
 };
 
@@ -67,6 +66,5 @@ export default {
 	namespaced: true,
 	state,
 	mutations,
-	// actions,
 	getters,
 };

@@ -53,7 +53,7 @@ export default {
 
 			const isValidLength = inputValue.length >= 3 && inputValue.length <= 20;
 
-			const similarFest = store.getters["getFests"].find(
+			const similarFest = store.getters["fest/getFests"].find(
 				(el) => el.name.toLowerCase() === inputValue.toLowerCase()
 			);
 
