@@ -36,13 +36,12 @@ export default createStore({
 		async reInit({ state, dispatch }) {
 			localStorage.clear();
 
-			fest.state.fests = [];
-			server.state.bands = {};
-			server.state.names = [];
-			server.state.genres = [];
-			server.state.cities = [];
-			img.state.freeImg = [];
-			settings.state.mainView = "table";
+			state.fest.fests = [];
+			state.server.bands = {};
+			state.server.names = [];
+			state.server.genres = [];
+			state.server.cities = [];
+			state.img.freeImg = [];
 
 			await dispatch("init");
 		},

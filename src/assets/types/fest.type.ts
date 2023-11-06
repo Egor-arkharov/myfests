@@ -4,18 +4,22 @@ export interface DateRange {
 	fullDateStart: Date;
 }
 
-export interface Fest {
+export interface FestData {
 	name: string;
 	place: string;
-	genre: string;
 	date: DateRange;
+	genre: string;
+	bands: string[];
+	headliners: string[];
+	lineup: object;
+	img: string;
 	id: string;
 	added: boolean;
 	own: boolean;
-	img: string;
-	headliners?: string[];
-	bands?: string[];
-	lineup?: object;
+}
+
+export interface festState {
+	fests: FestData[];
 }
 
 export interface ServerData {
@@ -25,7 +29,7 @@ export interface ServerData {
 	bands: { [key: string]: string[] };
 }
 
-export interface imgInt {
+export interface imgData {
 	reservedImg: string[];
 	freeImg: any[];
 }
@@ -36,8 +40,4 @@ export interface siteSettings {
 	sidebar: Boolean;
 	mainView: string;
 	breakpoints: { [key: string]: number };
-}
-
-export interface festState {
-	fests: Fest[];
 }

@@ -1,11 +1,6 @@
 import store from "../index";
 import { getRandomInt } from "@/use/utils";
-// import { imgInt } from "@/assets/types/fest.type";
-
-interface imgInt {
-	reservedImg: string[];
-	freeImg: any[];
-}
+import { imgData } from "@/assets/types/fest.type";
 
 export default {
 	namespaced: true,
@@ -14,7 +9,7 @@ export default {
 		freeImg: JSON.parse(localStorage.getItem("img") || "[]")?.freeImg ?? [],
 	},
 	mutations: {
-		setImages(state: imgInt): void {
+		setImages(state: imgData): void {
 			const IMG_AMOUNT = require
 				.context("@/assets/images/fests/", true, /^.*\.jpg$/)
 				.keys();
@@ -38,10 +33,10 @@ export default {
 		},
 	},
 	getters: {
-		getFreeImg(state: imgInt) {
+		getFreeImg(state: imgData) {
 			return state.freeImg;
 		},
-		getReservedImg(state: imgInt) {
+		getReservedImg(state: imgData) {
 			return state.reservedImg;
 		},
 	},

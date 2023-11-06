@@ -1,7 +1,8 @@
+import store from "../index";
 import server from "./server.module";
 import img from "./img.module";
 import loader from "@/use/googleMapsStore";
-import { Fest, festState, DateRange } from "@/assets/types/fest.type";
+import { FestData, festState, DateRange } from "@/assets/types/fest.type";
 import {
 	AMOUNT_HEADLINERS,
 	AMOUNT_BANDS,
@@ -18,28 +19,27 @@ export default {
 	},
 	mutations: {
 		addFest(state: festState, data: any) {
-			const allBands = server.getters.getBands;
-			console.log(allBands);
+			const allBands = store.getters["server/getBands"];
 
-			const fest: Fest = {
+			const newFest: FestData = {
 				name: data.name,
 				place: data.place,
-				genre: data.genre,
-				headliners: data.headliners,
-				bands: data.bands.concat(data.headliners),
 				date: data.date,
+				genre: data.genre,
+				bands: data.bands.concat(data.headliners),
+				headliners: data.headliners,
+				lineup: getLineup(data.bands, data.headliners, allBands),
+				img: data.img,
 				id: Math.random().toString(36).substr(2, 9),
 				added: false,
 				own: true,
-				img: data.img,
-				lineup: getLineup(data.bands, data.headliners, allBands),
 			};
 
-			state.fests.push(fest);
+			state.fests.push(newFest);
 			localStorage["fest"] = JSON.stringify(state);
 		},
-		changeMyFests(state: festState, data: Fest) {
-			const fest = state.fests.find((el: Fest) => el === data);
+		changeMyFests(state: festState, data: FestData) {
+			const fest = state.fests.find((el: FestData) => el === data);
 
 			if (fest) {
 				fest.added = !fest.added;
@@ -108,22 +108,25 @@ export default {
 			function getRandomFest(i: number) {
 				const randomDate = getRandomDate();
 
-				const fest: Fest = {
+				const fest: FestData = {
 					name: server.getters.getNames(server.state)[i],
 					place: server.getters.getCities(server.state)[i],
+					date: {
+						start: randomDate.start,
+						end: randomDate.end,
+						fullDateStart: randomDate.fullDateStart,
+					},
 					genre:
 						i < server.getters.getGenres(server.state).length
 							? server.getters.getGenres(server.state)[i]
 							: server.getters.getGenres(server.state)[
 									getRandomInt(server.getters.getGenres(server.state).length)
 							  ],
-					date: {
-						start: randomDate.start,
-						end: randomDate.end,
-						fullDateStart: randomDate.fullDateStart,
-					},
-					id: Math.random().toString(36).substr(2, 9),
+					bands: [],
+					headliners: [],
+					lineup: {},
 					img: img.getters.getReservedImg(img.state)[i].slice(1),
+					id: Math.random().toString(36).substr(2, 9),
 					added: false,
 					own: false,
 				};
@@ -137,7 +140,7 @@ export default {
 								AMOUNT_BANDS
 						  );
 
-				let headliners: Fest["headliners"] = [];
+				let headliners: FestData["headliners"] = [];
 
 				while (headliners.length !== AMOUNT_HEADLINERS) {
 					headliners.push(fest.bands[getRandomInt(fest.bands.length)]);
@@ -198,10 +201,10 @@ export default {
 			return state.fests;
 		},
 		getFestsById: (_: any, getters: any) => (id: string) => {
-			return getters.getFests.find((f: Fest) => f.id === id);
+			return getters.getFests.find((f: FestData) => f.id === id);
 		},
 		getMyFests(_: any, getters: any) {
-			return getters.getFests.filter((f: Fest) => f.added === true);
+			return getters.getFests.filter((f: FestData) => f.added === true);
 		},
 	},
 };
