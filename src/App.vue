@@ -1,5 +1,5 @@
 <template>
-	<the-header />
+	<the-header v-if="!$route.path.includes('/sandbox')" />
 	<the-sidebar />
 	<the-up-btn v-if="mobileView" />
 	<router-view />
@@ -19,6 +19,8 @@ export default {
 		const store = useStore();
 		const mobileView = ref(store.getters["settings/getMobileView"]);
 		const breakpointXS = store.state.settings.breakpoints.xs;
+
+		store.commit("auth/setAuthState");
 
 		onMounted(() => {
 			window.addEventListener(

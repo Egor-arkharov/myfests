@@ -3,6 +3,7 @@ import server from "./modules/server.module";
 import img from "./modules/img.module";
 import settings from "./modules/settings.module";
 import fest from "./modules/fest.module";
+import auth from "./modules/auth.module";
 
 const plugins = [];
 
@@ -27,6 +28,7 @@ export default createStore({
 
 			commit("img/setImages");
 			commit("fest/setFests");
+			commit("auth/setAuthState");
 
 			localStorage.setItem("fest", JSON.stringify(state.fest));
 			localStorage.setItem("img", JSON.stringify(state.img));
@@ -51,5 +53,6 @@ export default createStore({
 		img,
 		settings,
 		fest,
+		auth,
 	},
 });

@@ -41,3 +41,8 @@ export interface siteSettings {
 	mainView: string;
 	breakpoints: { [key: string]: number };
 }
+
+export interface auth {
+	isLoggedIn: any;
+	nick: string | null;
+}

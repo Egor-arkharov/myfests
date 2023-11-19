@@ -21,6 +21,7 @@
 			></request-tools>
 
 			<app-loader v-if="!isFests"></app-loader>
+			<!-- <app-loader v-if="isFests"></app-loader> -->
 			<p v-else-if="fests.length === 0" class="search-no">
 				We&nbsp;don&rsquo;t have festivals with this artist yet. Try again!
 			</p>
