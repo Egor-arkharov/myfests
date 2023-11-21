@@ -7,6 +7,7 @@ const state: auth = {
 	isLoggedIn:
 		JSON.parse(localStorage.getItem("user") || "false")?.isLoggedIn ?? false,
 	nick: JSON.parse(localStorage.getItem("user") || "")?.nick ?? "",
+	user: JSON.parse(localStorage.getItem("user") || "")?.user ?? "",
 };
 
 export default {
@@ -18,6 +19,7 @@ export default {
 
 			auth.onAuthStateChanged((user) => {
 				state.isLoggedIn = !!user;
+				state.user = user;
 
 				if (user) {
 					const userUID = user.uid;
@@ -34,9 +36,12 @@ export default {
 						}
 					});
 				} else {
+					state.nick = "";
 					localStorage.setItem("user", JSON.stringify(state));
 				}
 			});
+
+			console.log("setAuthState", state);
 		},
 		setNickName(state: auth, nick: string) {
 			state.nick = nick;
@@ -48,6 +53,9 @@ export default {
 		},
 		getUserNick(state: auth) {
 			return state.nick;
+		},
+		getUser(state: auth) {
+			return state.user;
 		},
 	},
 };

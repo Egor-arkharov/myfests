@@ -62,8 +62,8 @@ export default {
 	}
 
 	&--auth {
-		width: 50%;
-		height: 95%;
+		width: 40%;
+		height: 90%;
 	}
 }
 .modal-backdrop {

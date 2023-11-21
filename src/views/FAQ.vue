@@ -259,19 +259,19 @@ h1 {
 		background-size: cover;
 
 		&--1 {
-			background-image: url("../assets/images/fests/img-1.jpg");
+			background-image: url("@/assets/images/fests/img-1.jpg");
 		}
 
 		&--4 {
-			background-image: url("../assets/images/fests/img-4.jpg");
+			background-image: url("@/assets/images/fests/img-4.jpg");
 		}
 
 		&--13 {
-			background-image: url("../assets/images/fests/img-13.jpg");
+			background-image: url("@/assets/images/fests/img-13.jpg");
 		}
 
 		&--3 {
-			background-image: url("../assets/images/fests/img-3.jpg");
+			background-image: url("@/assets/images/fests/img-3.jpg");
 		}
 	}
 }

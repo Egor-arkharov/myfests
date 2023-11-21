@@ -47,7 +47,7 @@
 					<span class="auth__logo">
 						<inline-svg
 							v-bind:src="
-								isLoggedIn
+								isLoggedIn && userNick
 									? require('@/assets/icons/user_auth.svg')
 									: require('@/assets/icons/user_no-auth.svg')
 							"

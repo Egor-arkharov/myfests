@@ -45,4 +45,5 @@ export interface siteSettings {
 export interface auth {
 	isLoggedIn: any;
 	nick: string | null;
+	user: any;
 }
