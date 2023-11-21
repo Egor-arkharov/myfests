@@ -107,7 +107,7 @@ export default {
 			}
 		};
 
-		const images = store.getters["start/getFreeImg"];
+		const images = store.getters["img/getFreeImg"];
 
 		const onSwiper = (swiper) => {
 			swiperDefault.value = swiper;

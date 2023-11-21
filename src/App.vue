@@ -1,5 +1,5 @@
 <template>
-	<the-header />
+	<the-header v-if="!$route.path.includes('/sandbox')" />
 	<the-sidebar />
 	<the-up-btn v-if="mobileView" />
 	<router-view />
@@ -17,9 +17,10 @@ import TheUpBtn from "./components/TheUpBtn";
 export default {
 	setup() {
 		const store = useStore();
+		const mobileView = ref(store.getters["settings/getMobileView"]);
+		const breakpointXS = store.state.settings.breakpoints.xs;
 
-		const mobileView = ref(store.getters["getMobileView"]);
-		const breakpointXS = store.state.breakpoints.xs;
+		store.commit("auth/setAuthState");
 
 		onMounted(() => {
 			window.addEventListener(
@@ -30,9 +31,9 @@ export default {
 			);
 		});
 
-		if (!store.getters["getFests"].length) {
+		if (!store.getters["fest/getFests"].length) {
 			onMounted(async () => {
-				await store.dispatch("start/loadData");
+				await store.dispatch("init");
 			});
 		}
 

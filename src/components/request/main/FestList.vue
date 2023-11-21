@@ -45,7 +45,7 @@ export default {
 		const store = useStore();
 
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
-		const changeMyFests = (fest) => store.commit("changeMyFests", fest);
+		const changeMyFests = (fest) => store.commit("fest/changeMyFests", fest);
 
 		return {
 			getImgUrl,

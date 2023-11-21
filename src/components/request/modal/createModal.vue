@@ -138,7 +138,7 @@ export default {
 		});
 
 		const submitAll = () => {
-			store.commit("addFest", fest.value);
+			store.commit("fest/addFest", fest.value);
 			emit("close");
 		};
 

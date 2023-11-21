@@ -157,7 +157,9 @@ export default {
 		watchEffect(() => {
 			festSubBands.value = [];
 			festHeadliners.value = [];
-			bandsFromGenre.value = store.getters.getBandsByGenre(props.genre);
+			bandsFromGenre.value = store.getters["server/getBandsByGenre"](
+				props.genre
+			);
 
 			bandEls.value.forEach((item) =>
 				item.classList.remove("hoverSub", "hoverHead", "addedSub", "addedHead")

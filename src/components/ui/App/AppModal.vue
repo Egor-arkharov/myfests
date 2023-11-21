@@ -60,6 +60,11 @@ export default {
 			margin-bottom: 20px;
 		}
 	}
+
+	&--auth {
+		width: 40%;
+		height: 90%;
+	}
 }
 .modal-backdrop {
 	position: fixed;
@@ -69,7 +74,7 @@ export default {
 	bottom: 0;
 	background: rgba(0, 0, 0, 0.35);
 	height: 100vh;
-	z-index: 1;
+	z-index: 2;
 }
 
 h3 {

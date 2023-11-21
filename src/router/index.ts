@@ -4,6 +4,7 @@ import FAQ from "../views/FAQ.vue";
 import UserFests from "../views/UserFests.vue";
 import FestById from "../views/FestById.vue";
 import NotFound from "../views/NotFound.vue";
+import SandBox from "../views/SandBox.vue";
 
 const routes = [
 	{
@@ -25,6 +26,11 @@ const routes = [
 		path: "/faq",
 		name: "F.A.Q.",
 		component: FAQ,
+	},
+	{
+		path: "/sandbox",
+		name: "SandBox",
+		component: SandBox,
 	},
 	{
 		path: "/:catchAll(.*)",

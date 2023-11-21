@@ -4,18 +4,18 @@ export const AMOUNT_SUB_BANDS = AMOUNT_BANDS - AMOUNT_HEADLINERS;
 export const AMOUNT_BANDS_MAX = 20;
 export const AMOUNT_FONTS = 6;
 
-export const getRandomInt = (max) => Math.floor(Math.random() * max);
+export const getRandomInt = (max: number) => Math.floor(Math.random() * max);
 
-export function getMixedBands(genres, bands, amount) {
+export function getMixedBands(genres: any, bands: any, amount: any) {
 	let mixedBands = [];
-	const genresWithoutMix = genres.filter((el) => el !== "Mix");
+	const genresWithoutMix = genres.filter((el: any) => el !== "Mix");
 
 	while (mixedBands.length !== amount) {
-		let randomGenre = genresWithoutMix[getRandomInt(genresWithoutMix.length)];
+		const randomGenre = genresWithoutMix[getRandomInt(genresWithoutMix.length)];
 
-		let bandsFromRandomGenre = bands[randomGenre];
+		const bandsFromRandomGenre = bands[randomGenre];
 
-		let randomBand =
+		const randomBand =
 			bandsFromRandomGenre[getRandomInt(bandsFromRandomGenre.length)];
 
 		mixedBands.push(randomBand);
@@ -26,19 +26,19 @@ export function getMixedBands(genres, bands, amount) {
 	return mixedBands;
 }
 
-export const shuffle = (array) => {
+export const shuffle = (array: any[]) => {
 	for (let i = array.length - 1; i > 0; i--) {
-		let j = Math.floor(Math.random() * (i + 1));
+		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];
 	}
 
 	return array;
 };
 
-export function getLineup(bands, headliners, allBands) {
-	const subBands = bands.filter((el) => !headliners.includes(el));
+export function getLineup(bands: any, headliners: any, allBands: any) {
+	const subBands = bands.filter((el: any) => !headliners.includes(el));
 
-	let helpNums = [];
+	let helpNums: any = [];
 
 	for (let i = 0; i < AMOUNT_FONTS; i++) {
 		helpNums.push(i);
@@ -47,10 +47,10 @@ export function getLineup(bands, headliners, allBands) {
 	helpNums = shuffle(helpNums);
 	helpNums = helpNums.concat(helpNums);
 
-	const getHeadlinerFont = (arr, index) => {
-		let headlinerObj = {};
+	const getHeadlinerFont = (arr: any, index: any) => {
+		const headlinerObj: any = {};
 
-		for (let value of Object.keys(allBands)) {
+		for (const value of Object.keys(allBands)) {
 			if (allBands[value].includes(arr[index])) {
 				headlinerObj["name"] = arr[index];
 				headlinerObj["font"] = `font-${value.toLowerCase()}-${helpNums[0]}`;
@@ -63,11 +63,11 @@ export function getLineup(bands, headliners, allBands) {
 		return headlinerObj;
 	};
 
-	const getSubBandFont = (arr) => {
-		let newArr = [];
+	const getSubBandFont = (arr: any) => {
+		const newArr: any = [];
 
-		arr.forEach((el, i) => {
-			for (let value of Object.keys(allBands)) {
+		arr.forEach((el: any, i: any) => {
+			for (const value of Object.keys(allBands)) {
 				if (allBands[value].includes(el)) {
 					newArr.push({
 						name: arr[i],

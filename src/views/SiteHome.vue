@@ -21,11 +21,12 @@
 			></request-tools>
 
 			<app-loader v-if="!isFests"></app-loader>
+			<!-- <app-loader v-if="isFests"></app-loader> -->
 			<p v-else-if="fests.length === 0" class="search-no">
 				We&nbsp;don&rsquo;t have festivals with this artist yet. Try again!
 			</p>
 
-			<component v-else :is="'fest-' + view" :fests="fests" ref="examp" />
+			<component v-else :is="'fest-' + view" :fests="fests" />
 		</div>
 	</app-page>
 </template>
@@ -44,26 +45,26 @@ export default {
 	setup() {
 		const store = useStore();
 		const search = ref();
-		const titleAnimate = store.getters["getTitleAnimate"];
+		const titleAnimate = store.getters["settings/getTitleAnimate"];
 
-		const view = computed(() => store.getters["getMainView"]);
+		const view = computed(() => store.getters["settings/getMainView"]);
 
-		const breakpointLG = store.state.breakpoints.lg;
-		const breakpointSM = store.state.breakpoints.sm;
+		const breakpointLG = store.state.settings.breakpoints.lg;
+		const breakpointSM = store.state.settings.breakpoints.sm;
 
-		store.commit("animateTitle");
+		store.commit("settings/animateTitle");
 
 		if (window.innerWidth < breakpointLG) {
-			store.commit("changeMainView", "list");
+			store.commit("settings/changeMainView", "list");
 		}
 
 		if (window.innerWidth < breakpointSM) {
-			store.commit("changeMainView", "table");
+			store.commit("settings/changeMainView", "table");
 		}
 
 		const changeView = (viewType) => {
 			if (view.value !== viewType) {
-				store.commit("changeMainView", viewType);
+				store.commit("settings/changeMainView", viewType);
 			}
 		};
 
@@ -81,17 +82,17 @@ export default {
 				currentWidth = newWidth;
 
 				if (window.innerWidth < breakpointLG) {
-					store.commit("changeMainView", "list");
+					store.commit("settings/openSidebar", "list");
 				}
 
 				if (window.innerWidth < breakpointSM) {
-					store.commit("changeMainView", "table");
+					store.commit("settings/openSidebar", "table");
 				}
 			}, 100)
 		);
 
 		const fests = computed(() =>
-			store.getters["getFests"].filter((fest) => {
+			store.getters["fest/getFests"].filter((fest) => {
 				if (search.value && search.value.length >= 2) {
 					return fest.bands.find((item) =>
 						item.toLowerCase().includes(search.value.toLowerCase())
@@ -101,7 +102,7 @@ export default {
 			})
 		);
 
-		const isFests = computed(() => store.getters["getFests"].length);
+		const isFests = computed(() => store.getters["fest/getFests"].length);
 
 		return {
 			fests,

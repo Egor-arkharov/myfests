@@ -145,7 +145,7 @@ export default {
 			bandName.value = input.value.value;
 
 			if (bandName.value.length >= 2) {
-				const fests = store.getters["getFests"];
+				const fests = store.getters["fest/getFests"];
 				searchedBands.value = [];
 
 				fests.forEach((fest) => {
@@ -169,17 +169,17 @@ export default {
 		};
 
 		const refresh = () => {
-			if (!store.getters["getWarnModal"]) {
+			if (!store.getters["settings/getWarnModal"]) {
 				modal.value = true;
 				modalView.value = "warn";
 				modalClass.value = "modal--warn";
 				modalTitle.value = "Note";
 
-				store.commit("removeWarnModal");
+				store.commit("settings/removeWarnModal");
 			} else {
 				bandName.value = "";
 
-				store.dispatch("clearAllData");
+				store.dispatch("reInit");
 			}
 		};
 
@@ -197,7 +197,7 @@ export default {
 		});
 
 		const sortFests = (sortType, isSorted) => {
-			store.commit("sortFests", {
+			store.commit("fest/sortFests", {
 				sortType,
 				isSorted,
 			});
@@ -219,9 +219,9 @@ export default {
 			}
 		};
 
-		const isFests = computed(() => store.getters["getFests"].length);
+		const isFests = computed(() => store.getters["fest/getFests"].length);
 
-		const breakpointLG = store.state.breakpoints.lg;
+		const breakpointLG = store.state.settings.breakpoints.lg;
 		const desktopView = ref(window.innerWidth >= breakpointLG);
 
 		window.addEventListener(

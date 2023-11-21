@@ -23,7 +23,7 @@ export default {
 		const store = useStore();
 
 		const refresh = () => {
-			store.dispatch("clearAllData");
+			store.dispatch("reInit");
 			emit("close");
 		};
 
