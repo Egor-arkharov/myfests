@@ -18,31 +18,39 @@ export default createStore({
 			state,
 			commit,
 			dispatch,
+			getters,
 		}: {
 			state: any;
 			commit: Function;
 			dispatch: Function;
+			getters: any;
 		}) {
 			await dispatch("server/loadFireBaseData");
-			await dispatch("server/loadGeoData");
 
 			commit("img/setImages");
-			commit("fest/setFests");
-			commit("auth/setAuthState");
+
+			await dispatch("server/loadCountries");
+
+			await dispatch("fest/loadFests");
 
 			localStorage.setItem("fest", JSON.stringify(state.fest));
 			localStorage.setItem("img", JSON.stringify(state.img));
 			localStorage.setItem("settings", JSON.stringify(state.settings));
 			localStorage.setItem("server", JSON.stringify(state.server));
 		},
-		async reInit({ state, dispatch }) {
+		async reInit({ state, dispatch }: { state: any; dispatch: Function }) {
 			localStorage.clear();
+			console.log("local cleared: ", localStorage);
+			// localStorage.removeItem("fest");
+			// localStorage.removeItem("img");
+			// localStorage.removeItem("server");
+			// localStorage.removeItem("settings");
+			// localStorage.removeItem("auth");
 
 			state.fest.fests = [];
 			state.server.bands = {};
 			state.server.names = [];
 			state.server.genres = [];
-			state.server.cities = [];
 			state.img.freeImg = [];
 
 			await dispatch("init");

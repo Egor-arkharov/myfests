@@ -1,12 +1,12 @@
 export interface DateRange {
 	start: string;
 	end: string;
-	fullDateStart: Date;
+	fullDateStart: string;
 }
 
 export interface FestData {
 	name: string;
-	place: string;
+	place: any;
 	date: DateRange;
 	genre: string;
 	bands: string[];
@@ -20,11 +20,14 @@ export interface FestData {
 
 export interface festState {
 	fests: FestData[];
+	generatingFests: Boolean;
+	generatedFestsCount: number;
+	generatingFestsTotal: number;
 }
 
 export interface ServerData {
 	names: string[];
-	cities: string[];
+	countries: string;
 	genres: string[];
 	bands: { [key: string]: string[] };
 }
@@ -44,6 +47,7 @@ export interface siteSettings {
 
 export interface auth {
 	isLoggedIn: any;
+	firstTimeAuth: Boolean;
 	nick: string | null;
 	user: any;
 }

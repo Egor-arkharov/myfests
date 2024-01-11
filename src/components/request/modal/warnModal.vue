@@ -22,9 +22,9 @@ export default {
 	setup(_, { emit }) {
 		const store = useStore();
 
-		const refresh = () => {
-			store.dispatch("reInit");
+		const refresh = async () => {
 			emit("close");
+			await store.dispatch("reInit");
 		};
 
 		const close = () => {

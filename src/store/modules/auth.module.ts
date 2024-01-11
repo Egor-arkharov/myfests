@@ -1,61 +1,111 @@
 import store from "../index";
-import { auth } from "@/assets/types/fest.type";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref as dbRef, set, onValue } from "firebase/database";
+import { auth as AuthState } from "@/assets/types/fest.type";
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref as dbRef, get } from "firebase/database";
+import { ActionContext } from "vuex";
+import { User as FirebaseUser } from "firebase/auth";
 
-const state: auth = {
-	isLoggedIn:
-		JSON.parse(localStorage.getItem("user") || "false")?.isLoggedIn ?? false,
-	nick: JSON.parse(localStorage.getItem("user") || "")?.nick ?? "",
-	user: JSON.parse(localStorage.getItem("user") || "")?.user ?? "",
+const storedUser = JSON.parse(localStorage.getItem("auth") || "{}");
+
+const state: AuthState = {
+	isLoggedIn: storedUser.isLoggedIn ?? false,
+	firstTimeAuth: storedUser.firstTimeAuth ?? true,
+	nick: storedUser.nick ?? "",
+	user: storedUser.user ?? "",
+};
+
+const mutations = {
+	setAuthState(state: AuthState, payload: AuthState) {
+		console.log("mutate setAuthState", payload);
+
+		state.isLoggedIn = payload.isLoggedIn;
+		state.user = payload.user;
+		state.nick = payload.nick;
+		localStorage.setItem("auth", JSON.stringify(state));
+
+		console.log("End of setting state", state);
+	},
+	setNickName(state: AuthState, nick: string) {
+		console.log("Set nick");
+
+		state.nick = nick;
+
+		localStorage.setItem("auth", JSON.stringify(state));
+	},
+	setFirstTimeAuth(state: AuthState, value: Boolean) {
+		state.firstTimeAuth = value;
+	},
+};
+
+const actions = {
+	async initAuth(context: ActionContext<AuthState, {}>) {
+		const auth = getAuth();
+
+		console.log("initAuth", context.state);
+
+		auth.onAuthStateChanged(async (user: FirebaseUser | null) => {
+			console.log("Auth start changing", context.state);
+
+			let nick = "";
+
+			if (user) {
+				console.log("Database has User");
+
+				const userUID = user.uid;
+				const userNickRef = dbRef(getDatabase(), `users/${userUID}/nick`);
+
+				try {
+					const snapshot = await get(userNickRef);
+
+					if (snapshot.exists()) {
+						console.log("Database has nick:", snapshot.val());
+						nick = snapshot.val()._value;
+					} else {
+						console.log("No nick in DataBase");
+						nick = "";
+					}
+				} catch (error) {
+					console.error("Error fetching nick:", error);
+				}
+			} else {
+				console.log("No user in DataBase");
+			}
+
+			console.log("auth before setting", context.state);
+
+			context.commit("setAuthState", {
+				isLoggedIn: !!user,
+				user,
+				nick,
+			});
+
+			await store.dispatch("server/loadCountries");
+			await store.dispatch("fest/loadFests");
+
+			console.log("Auth ends", context.state);
+		});
+	},
+};
+
+const getters = {
+	getLoggedIn(state: AuthState) {
+		return state.isLoggedIn;
+	},
+	getUserNick(state: AuthState) {
+		return state.nick;
+	},
+	getUser(state: AuthState) {
+		return state.user;
+	},
+	getfirstTimeAuth(state: AuthState) {
+		return state.firstTimeAuth;
+	},
 };
 
 export default {
 	namespaced: true,
 	state,
-	mutations: {
-		setAuthState(state: auth) {
-			const auth = getAuth();
-
-			auth.onAuthStateChanged((user) => {
-				state.isLoggedIn = !!user;
-				state.user = user;
-
-				if (user) {
-					const userUID = user.uid;
-					const userNickRef = dbRef(getDatabase(), `users/${userUID}/nick`);
-
-					onValue(userNickRef, (snapshot) => {
-						if (snapshot.exists()) {
-							const nick = snapshot.val()._value;
-							store.commit("auth/setNickName", nick);
-
-							localStorage.setItem("user", JSON.stringify(state));
-						} else {
-							console.log("Ник пользователя не найден в базе данных");
-						}
-					});
-				} else {
-					state.nick = "";
-					localStorage.setItem("user", JSON.stringify(state));
-				}
-			});
-
-			console.log("setAuthState", state);
-		},
-		setNickName(state: auth, nick: string) {
-			state.nick = nick;
-		},
-	},
-	getters: {
-		getLoggedIn(state: auth) {
-			return state.isLoggedIn;
-		},
-		getUserNick(state: auth) {
-			return state.nick;
-		},
-		getUser(state: auth) {
-			return state.user;
-		},
-	},
+	mutations,
+	getters,
+	actions,
 };

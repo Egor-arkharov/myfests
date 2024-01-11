@@ -1,9 +1,5 @@
 <template>
 	<div class="auth">
-		<p v-if="isLoggedIn && userNick" class="auth__greeting">
-			Hi, {{ userNick }}
-		</p>
-
 		<div class="auth__log" v-if="!isLoggedIn">
 			<div class="auth__user user">
 				<div class="user__type">
@@ -35,11 +31,13 @@
 				<div class="auth__block auth__block--login">
 					<form @submit.prevent="oldRegister" class="form">
 						<div class="form__group">
-							<label class="form__label" for="oldEmail">Login</label>
+							<label class="form__label visuallyhidden" for="oldEmail"
+								>Login</label
+							>
 							<input
 								type="text"
 								placeholder="Email"
-								class="form__input form__input-name"
+								class="form__input"
 								id="oldEmail"
 								name="oldEmail"
 								autocomplete="username"
@@ -47,16 +45,43 @@
 							/>
 						</div>
 						<div class="form__group">
-							<label class="form__label" for="oldPassword">Password</label>
-							<input
-								type="password"
-								placeholder="Password"
-								class="form__input form__input-name"
-								id="oldPassword"
-								name="oldPassword"
-								autocomplete="current-password"
-								v-model="oldPassword"
-							/>
+							<div class="form__group-password">
+								<label class="form__label visuallyhidden" for="oldPassword"
+									>Password</label
+								>
+								<input
+									type="password"
+									v-if="!showOldPassword"
+									placeholder="Password"
+									class="form__input"
+									id="oldPassword"
+									name="oldPassword"
+									autocomplete="current-password"
+									v-model="oldPassword"
+								/>
+								<input
+									type="text"
+									v-if="showOldPassword"
+									placeholder="Password"
+									class="form__input"
+									id="oldPassword"
+									name="oldPassword"
+									autocomplete="current-password"
+									v-model="oldPassword"
+								/>
+							</div>
+							<div class="form__group-checkbox checkbox-pass">
+								<label
+									class="checkbox-pass__label"
+									for="showOldPassword"
+								></label>
+								<input
+									class="checkbox-pass__linput visuallyhidden"
+									type="checkbox"
+									id="showOldPassword"
+									v-model="showOldPassword"
+								/>
+							</div>
 						</div>
 						<button
 							type="submit"
@@ -71,11 +96,13 @@
 				<div class="auth__block auth__block--signup">
 					<form @submit.prevent="newRegister" class="form">
 						<div class="form__group">
-							<label class="form__label" for="newEmail">Login</label>
+							<label class="form__label visuallyhidden" for="newEmail"
+								>Login</label
+							>
 							<input
 								type="text"
 								placeholder="Email"
-								class="form__input form__input-name"
+								class="form__input"
 								id="newEmail"
 								name="newEmail"
 								autocomplete="username"
@@ -83,23 +110,50 @@
 							/>
 						</div>
 						<div class="form__group">
-							<label class="form__label" for="newPassword">Password</label>
-							<input
-								type="password"
-								placeholder="Password"
-								class="form__input form__input-name"
-								id="newPassword"
-								name="newPassword"
-								autocomplete="current-password"
-								v-model="newPassword"
-							/>
+							<div class="form__group-password">
+								<label class="form__label visuallyhidden" for="newPassword"
+									>Password</label
+								>
+								<input
+									type="password"
+									v-if="!showNewPassword"
+									placeholder="Password"
+									class="form__input"
+									id="newPassword"
+									name="newPassword"
+									autocomplete="current-password"
+									v-model="newPassword"
+								/>
+								<input
+									type="text"
+									v-if="showNewPassword"
+									placeholder="Password"
+									class="form__input"
+									id="newPassword"
+									name="newPassword"
+									autocomplete="current-password"
+									v-model="newPassword"
+								/>
+							</div>
+							<div class="form__group-checkbox checkbox-pass">
+								<label
+									class="checkbox-pass__label"
+									for="showNewPassword"
+								></label>
+								<input
+									class="checkbox-pass__linput visuallyhidden"
+									type="checkbox"
+									id="showNewPassword"
+									v-model="showNewPassword"
+								/>
+							</div>
 						</div>
 						<div class="form__group">
-							<label class="form__label" for="nick">Name</label>
+							<label class="form__label visuallyhidden" for="nick">Name</label>
 							<input
 								type="text"
 								placeholder="Name"
-								class="form__input form__input-name"
+								class="form__input"
 								id="nick"
 								name="nick"
 								v-model="userNickRef"
@@ -137,11 +191,11 @@
 			</p>
 			<form @submit.prevent="addName" class="form">
 				<div class="form__group">
-					<label class="form__label" for="nick">Name</label>
+					<label class="form__label visuallyhidden" for="nick">Name</label>
 					<input
 						type="text"
 						placeholder="Name"
-						class="form__input form__input-name"
+						class="form__input"
 						id="nick"
 						name="nick"
 						v-model="userNickRef"
@@ -157,15 +211,6 @@
 				</button>
 			</form>
 		</div>
-
-		<button
-			v-if="isLoggedIn"
-			type="submit"
-			class="form__button btn btn--form btn--exit"
-			@click="handleSignOut"
-		>
-			Sign Out
-		</button>
 	</div>
 </template>
 
@@ -176,7 +221,6 @@ import {
 	getAuth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-	signOut,
 	GoogleAuthProvider,
 	signInWithPopup,
 } from "firebase/auth";
@@ -191,6 +235,9 @@ export default {
 
 		const newEmail = ref("");
 		const newPassword = ref("");
+
+		const showOldPassword = ref(false);
+		const showNewPassword = ref(false);
 
 		const userNickRef = ref("");
 		const userNick = computed(() => store.getters["auth/getUserNick"]);
@@ -242,7 +289,7 @@ export default {
 
 				console.log("OLD USER", user);
 
-				store.commit("auth/setAuthState");
+				emit("close");
 			} catch (err) {
 				console.log("Can't find old user: ", err);
 
@@ -261,11 +308,9 @@ export default {
 				const user = userCredential.user;
 
 				console.log("NEW USER", user);
-
 				await set(dbRef(database, `users/${user.uid}/nick`), userNickRef);
 
-				store.commit("auth/setAuthState");
-				store.commit("auth/setNickName", userNickRef.value);
+				emit("close");
 			} catch (err) {
 				console.log("Auth error: ", err, err.code);
 
@@ -285,21 +330,16 @@ export default {
 			signInWithPopup(getAuth(), provider)
 				.then(async (res) => {
 					console.log("Google auth correct!:", res.user);
+					emit("close");
 				})
 				.catch((err) => {
 					console.log("Google auth error", err);
 				});
 		};
 
-		const handleSignOut = () => {
-			signOut(auth).then(() => {
-				// store.commit("auth/setNickName", "");
-				// store.commit("auth/setAuthState");
-				emit("close");
-			});
-		};
-
 		const addName = async () => {
+			console.log("ADD");
+
 			const user = store.getters["auth/getUser"];
 
 			await set(dbRef(database, `users/${user.uid}/nick`), userNickRef);
@@ -318,18 +358,22 @@ export default {
 			newRegister,
 			addName,
 			signInWithGoogle,
-			handleSignOut,
 			isLoggedIn,
 			isDisabled,
 			validateNickInput,
 			errMsgOld,
 			errMsgNew,
+			showOldPassword,
+			showNewPassword,
 		};
 	},
 };
 </script>
 
 <style lang="scss" scoped>
+$color-new-user: $color-7;
+$color-old-user: $color-2;
+
 .btn {
 	width: auto;
 
@@ -396,18 +440,46 @@ export default {
 	justify-content: center;
 	gap: 15px;
 
-	// height: 100%;
-
 	&__title {
 		margin-right: 20px;
 	}
 
-	&__label {
-		display: none;
-	}
-
 	&__input {
 		width: auto;
+	}
+
+	&__group:has(.checkbox-pass) {
+		position: relative;
+	}
+}
+
+.checkbox-pass {
+	position: absolute;
+	margin: 0;
+
+	right: 5px;
+	top: 50%;
+	translate: 0 -50%;
+
+	width: 24px;
+	height: 24px;
+
+	&__label {
+		position: absolute;
+
+		width: 100%;
+		height: 100%;
+
+		background-image: url("@/assets/icons/password-off.svg");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: contain;
+
+		cursor: pointer;
+
+		&:has(+ .checkbox-pass__linput:checked) {
+			background-image: url("@/assets/icons/password-on.svg");
+		}
 	}
 }
 
@@ -417,12 +489,6 @@ export default {
 	&__log {
 		display: flex;
 		flex-direction: column;
-	}
-
-	&__greeting {
-		margin-bottom: 20px;
-		font-family: $main-font-bold;
-		@include font-l;
 	}
 
 	&__enter {
@@ -465,29 +531,30 @@ export default {
 
 	&__block {
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		width: 100%;
 
 		&--login .btn {
 			background-color: transparent;
-			border-color: $color-2;
-			color: $color-2;
+			border-color: $color-old-user;
+			color: $color-old-user;
 
 			&:hover:not(:disabled),
 			&:focus {
-				background-color: $color-2;
+				background-color: $color-old-user;
 				color: $white-color;
 			}
 		}
 
 		&--signup .btn {
 			background-color: transparent;
-			border-color: $color-7;
-			color: $color-7;
+			border-color: $color-new-user;
+			color: $color-new-user;
 
 			&:hover:not(:disabled),
 			&:focus {
-				background-color: $color-7;
+				background-color: $color-new-user;
 				color: $white-color;
 			}
 		}
@@ -501,7 +568,7 @@ export default {
 
 	&:has(#new-user:checked) {
 		.user__radio::after {
-			background-color: $color-7;
+			background-color: $color-new-user;
 			translate: 25px -50%;
 		}
 
@@ -541,6 +608,18 @@ export default {
 	&__label {
 		@include font-l;
 		cursor: pointer;
+
+		@include hover {
+			// font-family: $main-font-bold;
+
+			&[for="new-user"] {
+				color: $color-new-user;
+			}
+
+			&[for="old-user"] {
+				color: $color-old-user;
+			}
+		}
 	}
 
 	&__radio {
@@ -563,7 +642,7 @@ export default {
 			left: 0;
 
 			border-radius: 50%;
-			background-color: $color-2;
+			background-color: $color-old-user;
 
 			translate: 5px -50%;
 			transition: all 0.4s ease-in-out;

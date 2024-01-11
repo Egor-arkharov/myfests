@@ -20,13 +20,19 @@
 				:view="view"
 			></request-tools>
 
-			<app-loader v-if="!isFests"></app-loader>
-			<!-- <app-loader v-if="isFests"></app-loader> -->
-			<p v-else-if="fests.length === 0" class="search-no">
+			<app-hint
+				v-if="isLoggedIn && firstTimeAuth"
+				:handleClick="handleHintButtonClick"
+				:text="'You don\'t have any festivals yet, so we\'ve generated a few for you. Change or delete festivals on their pages. Or create new!'"
+			></app-hint>
+
+			<p v-if="fests.length === 0 && !isFestsGenerating" class="search-no">
 				We&nbsp;don&rsquo;t have festivals with this artist yet. Try again!
 			</p>
 
 			<component v-else :is="'fest-' + view" :fests="fests" />
+
+			<app-loader v-if="isFestsGenerating"></app-loader>
 		</div>
 	</app-page>
 </template>
@@ -37,6 +43,7 @@ import { useStore } from "vuex";
 import { debounce } from "vue-debounce";
 import AppPage from "../components/ui/App/AppPage.vue";
 import AppLoader from "../components/ui/App/AppLoader.vue";
+import AppHint from "../components/ui/App/AppHint.vue";
 import RequestTools from "../components/request/RequestTools.vue";
 import FestTable from "../components/request/main/FestTable.vue";
 import FestList from "../components/request/main/FestList.vue";
@@ -104,18 +111,37 @@ export default {
 
 		const isFests = computed(() => store.getters["fest/getFests"].length);
 
+		const isFestsGenerating = computed(
+			() => store.getters["fest/getGeneratingFests"]
+		);
+
+		const firstTimeAuth = computed(
+			() => store.getters["auth/getfirstTimeAuth"]
+		);
+
+		const handleHintButtonClick = () => {
+			store.commit("auth/setFirstTimeAuth", false);
+		};
+
+		const isLoggedIn = computed(() => store.getters["auth/getLoggedIn"]);
+
 		return {
 			fests,
 			search,
 			view,
 			isFests,
 			changeView,
+			handleHintButtonClick,
 			titleAnimate,
+			isLoggedIn,
+			firstTimeAuth,
+			isFestsGenerating,
 		};
 	},
 	components: {
 		AppPage,
 		AppLoader,
+		AppHint,
 		FestTable,
 		RequestTools,
 		FestList,

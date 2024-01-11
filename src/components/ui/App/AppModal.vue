@@ -61,9 +61,15 @@ export default {
 		}
 	}
 
-	&--auth {
+	&--auth,
+	&--user {
 		width: 40%;
 		height: 90%;
+	}
+
+	&--user {
+		display: flex;
+		flex-direction: column;
 	}
 }
 .modal-backdrop {

@@ -5,7 +5,8 @@ import { imgData } from "@/assets/types/fest.type";
 export default {
 	namespaced: true,
 	state: {
-		reservedImg: [],
+		reservedImg:
+			JSON.parse(localStorage.getItem("img") || "[]")?.reservedImg ?? [],
 		freeImg: JSON.parse(localStorage.getItem("img") || "[]")?.freeImg ?? [],
 	},
 	mutations: {

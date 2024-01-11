@@ -75,7 +75,7 @@
 					<span>Sort by&nbsp;Genre</span>
 				</button>
 			</li>
-			<li class="tools__button-item">
+			<li v-if="!isLoggedIn" class="tools__button-item">
 				<button class="btn btn--with-icon btn--refresh" @click="refresh">
 					<inline-svg
 						:src="require(`@/assets/icons/tools/loading.svg`)"
@@ -83,6 +83,16 @@
 						height="30"
 					></inline-svg>
 					<span>Refresh</span>
+				</button>
+			</li>
+			<li v-if="isLoggedIn" class="tools__button-item">
+				<button class="btn btn--with-icon btn--refresh" @click="generate">
+					<inline-svg
+						:src="require(`@/assets/icons/tools/loading.svg`)"
+						width="30"
+						height="30"
+					></inline-svg>
+					<span>Generate</span>
 				</button>
 			</li>
 			<li class="tools__button-item">
@@ -169,7 +179,7 @@ export default {
 		};
 
 		const refresh = () => {
-			if (!store.getters["settings/getWarnModal"]) {
+			if (store.getters["settings/getWarnModal"]) {
 				modal.value = true;
 				modalView.value = "warn";
 				modalClass.value = "modal--warn";
@@ -181,6 +191,10 @@ export default {
 
 				store.dispatch("reInit");
 			}
+		};
+
+		const generate = async () => {
+			await store.dispatch("fest/generateFests", 1);
 		};
 
 		const openModalCreate = () => {
@@ -231,6 +245,9 @@ export default {
 			}, 100)
 		);
 
+		const isLoggedIn = computed(() => store.getters["auth/getLoggedIn"]);
+
+
 		return {
 			bandName,
 			input,
@@ -245,7 +262,9 @@ export default {
 			sortByGenre,
 			rotateDateIcon,
 			rotateGenreIcon,
+			isLoggedIn,
 			refresh,
+			generate,
 			openModalCreate,
 			sortFests,
 			validateInput,

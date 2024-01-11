@@ -41,7 +41,11 @@ export default {
 			});
 		});
 
-		return { decorRef, itemRefs, items };
+		const startAnimation = () => {
+			console.log("Когда-нибудь здесь что-нибудь будет))");
+		};
+
+		return { decorRef, itemRefs, items, startAnimation };
 	},
 	components: {
 		InlineSvg,

@@ -20,7 +20,9 @@ export default {
 		const mobileView = ref(store.getters["settings/getMobileView"]);
 		const breakpointXS = store.state.settings.breakpoints.xs;
 
-		store.commit("auth/setAuthState");
+		console.log("localStorage", localStorage);
+
+		store.dispatch("auth/initAuth");
 
 		onMounted(() => {
 			window.addEventListener(

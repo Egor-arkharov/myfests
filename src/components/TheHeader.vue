@@ -68,7 +68,8 @@
 			:modalClass="modalClass"
 			:title="modalTitle"
 		>
-			<auth-modal @close="modal = false" />
+			<auth-modal v-if="!isLoggedIn" />
+			<user-modal v-else />
 		</app-modal>
 	</teleport>
 </template>
@@ -81,6 +82,7 @@ import { useStore } from "vuex";
 
 import AppModal from "@/components/ui/App/AppModal.vue";
 import authModal from "@/components/request/modal/authModal.vue";
+import userModal from "@/components/request/modal/userModal.vue";
 
 export default {
 	setup() {
@@ -108,8 +110,14 @@ export default {
 
 		const openModalAuth = () => {
 			modal.value = true;
-			modalClass.value = "modal--auth";
-			modalTitle.value = "Welcome to the club";
+
+			if (!isLoggedIn.value) {
+				modalClass.value = "modal--auth";
+				modalTitle.value = "Welcome to the club";
+			} else {
+				modalClass.value = "modal--user";
+				modalTitle.value = "Settings";
+			}
 		};
 
 		const isLoggedIn = computed(() => store.getters["auth/getLoggedIn"]);
@@ -132,6 +140,7 @@ export default {
 		InlineSvg,
 		AppModal,
 		authModal,
+		userModal,
 	},
 };
 </script>

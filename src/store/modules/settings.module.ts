@@ -2,7 +2,7 @@ import { siteSettings } from "@/assets/types/fest.type";
 
 const state: siteSettings = {
 	titleAnimate: Boolean(sessionStorage.getItem("titleAnimate") ?? "true"),
-	warnModal: Boolean(sessionStorage.getItem("warnModal") ?? "false"),
+	warnModal: Boolean(sessionStorage.getItem("warnModal") ?? "true"),
 	sidebar: false,
 	mainView:
 		JSON.parse(localStorage.getItem("settings") || "[]")?.mainView ?? "table",
@@ -24,8 +24,8 @@ const mutations = {
 		sessionStorage.setItem("titleAnimate", JSON.stringify(false));
 	},
 	removeWarnModal(state: siteSettings) {
-		state.warnModal = true;
-		sessionStorage.setItem("warnModal", JSON.stringify(true));
+		state.warnModal = false;
+		sessionStorage.setItem("warnModal", JSON.stringify(false));
 	},
 	openSidebar(state: siteSettings) {
 		state.sidebar = true;

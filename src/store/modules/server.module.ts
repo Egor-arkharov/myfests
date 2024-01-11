@@ -1,16 +1,22 @@
+import store from "../index";
 import axios from "axios";
 import { getDocs } from "firebase/firestore";
 import festsCollection from "@/use/fireBaseStore";
 import { geoConfig } from "@/use/geoStore";
 import { City } from "country-state-city";
-import { shuffle, AMOUNT_BANDS_MAX, getMixedBands } from "@/use/utils";
+import {
+	shuffle,
+	AMOUNT_BANDS_MAX,
+	getMixedBands,
+	getRandomInt,
+} from "@/use/utils";
 import { ServerData } from "@/assets/types/fest.type";
 
 const state: ServerData = {
 	names: JSON.parse(localStorage.getItem("server") || "[]")?.names ?? [],
 	genres: JSON.parse(localStorage.getItem("server") || "[]")?.genres ?? [],
 	bands: JSON.parse(localStorage.getItem("server") || "{}")?.bands ?? {},
-	cities: JSON.parse(localStorage.getItem("server") || "[]")?.cities ?? [],
+	countries: JSON.parse(sessionStorage.getItem("countries") || "[]") ?? "",
 };
 
 const mutations = {
@@ -23,8 +29,8 @@ const mutations = {
 	setBands(state: ServerData, bands: ServerData["bands"]) {
 		state.bands = bands;
 	},
-	setCities(state: ServerData, cities: ServerData["cities"]) {
-		state.cities = cities;
+	setCountries(state: ServerData, countries: ServerData["countries"]) {
+		state.countries = countries;
 	},
 };
 
@@ -43,19 +49,15 @@ const actions = {
 			console.log(e.message);
 		}
 	},
-	async loadGeoData({ dispatch }: { dispatch: any }) {
-		const countries = await dispatch("loadCountries");
-
-		await dispatch("loadCities", countries);
-	},
-	async loadCountries() {
+	async loadCountries({ commit }: { commit: Function }) {
 		geoConfig.url = "https://api.countrystatecity.in/v1/countries";
 
 		try {
 			const response = await axios(geoConfig);
 			const data = response.data;
 
-			shuffle(data);
+			commit("setCountries", data);
+			sessionStorage.setItem("countries", JSON.stringify(data));
 
 			return data;
 		} catch (error) {
@@ -63,31 +65,60 @@ const actions = {
 			throw error;
 		}
 	},
-	async loadCities({ state }: { state: ServerData }, countries: any) {
-		for (const item of countries) {
-			if (state.cities.length === state.names.length) {
-				break;
+	async loadCities({ dispatch }: { dispatch: any }, countries: any[]) {
+		const randomCountryIndex = getRandomInt(countries.length);
+		const randomCountry = countries[randomCountryIndex];
+		// const randomCountry = countries[getRandomInt(countries.length)];
+
+		const fests = store.getters["fest/getFests"];
+
+		if (
+			fests.some(
+				(fest: any) => fest.place.countryName === randomCountry.countryName
+			)
+		) {
+			console.log("ТАКОЙ ФЕСТ УЖЕ ЕСТЬ, УДАЛЯЕМ");
+
+			countries.splice(randomCountryIndex, 1);
+			sessionStorage.setItem("countries", JSON.stringify(countries));
+
+			return dispatch("loadCities", countries);
+		}
+
+		geoConfig.url = `https://api.countrystatecity.in/v1/countries/${randomCountry.iso2}/`;
+
+		try {
+			const response = await axios(geoConfig);
+			const data = response.data;
+			const capital = data.capital;
+
+			const cityData: any = City.getAllCities().find(
+				(item) => item.name === capital
+			);
+
+			if (capital && cityData) {
+				cityData.countryName = data.name;
+
+				countries.splice(randomCountryIndex, 1);
+
+				return cityData;
+			} else {
+				console.error(
+					"NO CITYDATA OR CAPITAL",
+					randomCountry,
+					cityData,
+					capital
+				);
+
+				countries.splice(randomCountryIndex, 1);
+
+				sessionStorage.setItem("countries", JSON.stringify(countries));
+
+				return dispatch("loadCities", countries);
 			}
-
-			geoConfig.url = `https://api.countrystatecity.in/v1/countries/${item.iso2}/`;
-
-			await axios(geoConfig)
-				.then(function (response) {
-					const data = response.data;
-					const capital = data.capital;
-
-					const cityData: any = City.getAllCities().find(
-						(item) => item.name === capital
-					);
-
-					if (capital && cityData) {
-						cityData.countryName = data.name;
-						state.cities.push(cityData);
-					}
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
+		} catch (error) {
+			console.error(error);
+			throw error;
 		}
 	},
 };
@@ -96,7 +127,7 @@ const getters = {
 	getNames: (state: ServerData) => state.names,
 	getGenres: (state: ServerData) => state.genres,
 	getBands: (state: ServerData) => state.bands,
-	getCities: (state: ServerData) => state.cities,
+	getCountries: (state: ServerData) => state.countries,
 	getBandsByGenre: (state: ServerData, getters: any) => (genre: any) => {
 		const allGenres = getters.getGenres;
 

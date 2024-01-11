@@ -14,19 +14,29 @@
 				></inline-svg>
 			</div>
 		</div>
-		<p class="loader__text">Loading</p>
+		<p class="loader__text">Loading {{ festsCount }}/{{ festsTotal }}</p>
 	</div>
 </template>
 
 <script>
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import InlineSvg from "vue-inline-svg";
 
 export default {
 	setup() {
+		const store = useStore();
 		const icons = ["guitar", "dj", "mic", "drums", "keytar"];
+
+		const festsCount = computed(() => store.getters["fest/getGeneratedFests"]);
+		const festsTotal = computed(
+			() => store.getters["fest/getGeneratingFestsTotal"]
+		);
 
 		return {
 			icons,
+			festsCount,
+			festsTotal,
 		};
 	},
 	components: {
