@@ -19,10 +19,14 @@ export interface FestData {
 }
 
 export interface festState {
+	getters(arg0: string): any;
 	fests: FestData[];
 	generatingFests: Boolean;
+	stopGeneration: Boolean;
+	festsReseted: Boolean;
 	generatedFestsCount: number;
 	generatingFestsTotal: number;
+	looping: Boolean;
 }
 
 export interface ServerData {

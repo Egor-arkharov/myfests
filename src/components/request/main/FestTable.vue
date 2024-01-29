@@ -41,7 +41,7 @@
 				</th>
 				<th>Headliners</th>
 				<th>Full page</th>
-				<th>My fests</th>
+				<th>Fav fests</th>
 			</tr>
 		</thead>
 		<tbody>

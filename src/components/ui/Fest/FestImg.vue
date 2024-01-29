@@ -5,7 +5,7 @@
 			wrap_main: mainPage,
 			wrap_fest: festPage,
 			wrap_modal: modal,
-			wrap_myfests: myFests,
+			wrap_myfests: favFests,
 		}"
 	>
 		<picture v-if="fest.img.startsWith('/img-')">
@@ -16,7 +16,7 @@
 					wrap_main__img: mainPage,
 					wrap_fest__img: festPage,
 					wrap_modal__img: modal,
-					wrap_myfests__img: myFests,
+					wrap_myfests__img: favFests,
 				}"
 				:src="getImgUrl(fest.img + '.jpg')"
 				:alt="'Photo of the ' + fest.name + ' festival'"
@@ -29,7 +29,7 @@
 				wrap_main__img: mainPage,
 				wrap_fest__img: festPage,
 				wrap_modal__img: modal,
-				wrap_myfests__img: myFests,
+				wrap_myfests__img: favFests,
 			}"
 			:src="fest.img"
 			:alt="'Photo of the ' + fest.name + ' festival'"
@@ -41,7 +41,7 @@
 import VLazyImage from "v-lazy-image";
 
 export default {
-	props: ["fest", "mainPage", "festPage", "modal", "myFests"],
+	props: ["fest", "mainPage", "festPage", "modal", "favFests"],
 	setup() {
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
 

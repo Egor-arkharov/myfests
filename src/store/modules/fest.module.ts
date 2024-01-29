@@ -20,41 +20,46 @@ export default {
 	state: {
 		fests: JSON.parse(localStorage.getItem("fest") || "[]")?.fests ?? [],
 		generatingFests: false,
-		generatedFestsCount: 0,
-		generatingFestsTotal: null,
+		stopGeneration: false,
+		festsReseted: false,
+		generatedFestsCount:
+			JSON.parse(localStorage.getItem("generatedFestsCount") || "0") ?? 0,
+		generatingFestsTotal:
+			JSON.parse(localStorage.getItem("generatingFestsTotal") || "0") ?? 0,
+		looping: false,
 	},
 	mutations: {
-		addFest(state: festState, data: any) {
+		addFest(state: festState, payload: any) {
 			const allBands = store.getters["server/getBands"];
 
 			const newFest: FestData = {
-				name: data.name,
-				place: data.place,
-				date: data.date,
-				genre: data.genre,
-				bands: data.bands.concat(data.headliners),
-				headliners: data.headliners,
-				lineup: getLineup(data.bands, data.headliners, allBands),
-				img: data.img,
+				name: payload.name,
+				place: payload.place,
+				date: payload.date,
+				genre: payload.genre,
+				bands: payload.bands.concat(payload.headliners),
+				headliners: payload.headliners,
+				lineup: getLineup(payload.bands, payload.headliners, allBands),
+				img: payload.img,
 				id: Math.random().toString(36).substr(2, 9),
 				added: false,
-				own: true,
+				own: false,
 			};
 
 			state.fests.push(newFest);
-			localStorage["fest"] = JSON.stringify(state);
+
+			localStorage.setItem("fest", JSON.stringify(state));
+
+			// console.log(state.getters("getFests"));
 
 			if (store.getters["auth/getLoggedIn"]) {
 				const user = store.getters["auth/getUser"];
 				const database = getDatabase();
-
-				console.log("Add fest to FB");
-
 				set(dbRef(database, `users/${user.uid}/fests`), state.fests);
 			}
 		},
-		changeMyFests(state: festState, data: FestData) {
-			const fest = state.fests.find((el: FestData) => el === data);
+		changeMyFests(state: festState, payload: FestData) {
+			const fest = state.fests.find((el: FestData) => el === payload);
 
 			if (fest) {
 				fest.added = !fest.added;
@@ -81,6 +86,38 @@ export default {
 					break;
 			}
 		},
+		setGeneratingFests(state: festState, payload: Boolean) {
+			state.generatingFests = payload;
+		},
+		setGeneratedFests(state: festState, payload: number) {
+			state.generatedFestsCount = payload;
+			localStorage.setItem("generatedFestsCount", JSON.stringify(payload));
+		},
+		setGeneratingFestsTotal(state: festState, payload: number) {
+			state.generatingFestsTotal = payload;
+			localStorage.setItem("generatingFestsTotal", JSON.stringify(payload));
+		},
+		resetFests(state: festState) {
+			state.fests = [];
+			localStorage.setItem("fest", JSON.stringify(state));
+
+			state.generatedFestsCount = 0;
+			localStorage.setItem("generatingFestsTotal", JSON.stringify(0));
+
+			state.festsReseted = true;
+		},
+		setResetedFests(state: festState, payload: Boolean) {
+			state.festsReseted = payload;
+		},
+		stopGeneration(state: festState, payload: Boolean) {
+			state.stopGeneration = payload;
+		},
+		setFests(state: festState, payload: []) {
+			state.fests = payload;
+		},
+		setLooping(state: festState, payload: Boolean) {
+			state.looping = payload;
+		},
 	},
 	actions: {
 		async loadFestMap(_: any, payload: any) {
@@ -92,7 +129,6 @@ export default {
 			const mapOptions = {
 				center: myLatLng,
 				zoom: 8,
-				requestedLanguage: "en",
 			};
 
 			await loader
@@ -114,19 +150,42 @@ export default {
 				});
 		},
 		async loadFests(context: ActionContext<festState, {}>) {
+			console.log("Начинаю loadFests");
+
+			context.commit("setResetedFests", false);
+			context.commit("stopGeneration", false);
+
+			await store.dispatch("server/loadCountries");
+
 			const isLoggedIn = store.getters["auth/getLoggedIn"];
 
-			if (!isLoggedIn) {
-				console.log("Not Logged");
+			console.log(
+				"LOAD FESTS getGeneratedFests",
+				context.getters.getGeneratedFests
+			);
 
-				if (!context.state.fests.length) {
-					console.log("No fests");
+			let numberToGenerate: number = 0;
 
-					await context.dispatch("generateFests");
-				}
-				return;
+			if (isLoggedIn) {
+				numberToGenerate = server.getters.getGenres(server.state).length;
+
+				context.commit("setGeneratingFestsTotal", numberToGenerate);
+
+				await context.dispatch("generateAuthFests", numberToGenerate);
+			} else {
+				numberToGenerate = server.getters.getNames(server.state).length;
+
+				context.commit("setGeneratingFestsTotal", numberToGenerate);
+
+				await context.dispatch("generateFests", numberToGenerate);
 			}
 
+			console.log("Конец loadFests");
+		},
+		async generateAuthFests(
+			context: ActionContext<festState, {}>,
+			numberToGenerate: number
+		) {
 			const user = store.getters["auth/getUser"];
 			const database = getDatabase();
 
@@ -137,63 +196,91 @@ export default {
 				const snapshot = await get(userFests);
 
 				if (snapshot.exists()) {
-					console.log("Database has fests:", snapshot.val());
+					// console.log("Database has fests:", snapshot.val());
 					store.commit("auth/setFirstTimeAuth", false);
 
 					// Загружаем фесты из Firebase
-					context.state.fests = snapshot.val();
+					context.commit("setFests", snapshot.val());
 				} else {
-					console.log("No fests in DataBase");
+					// console.log("No fests in DataBase");
 
 					context.state.fests = [];
 
 					// Генерируем фесты сами
-					await context.dispatch(
-						"generateFests",
-						server.getters.getGenres(server.state).length
-					);
-
-					set(dbRef(database, `users/${user.uid}/fests`), context.state.fests);
+					await context.dispatch("generateFests", numberToGenerate);
 
 					store.commit("auth/setFirstTimeAuth", true);
 				}
 			} catch (error) {
 				console.error("Error fetching fests:", error);
 			}
+
+			// console.log("AFTER GENERATING", context.state.fests);
 		},
 		async generateFests(
-			{ state, dispatch }: { state: any; dispatch: any },
-			festAmount: number = server.getters.getNames(server.state).length
+			context: ActionContext<festState, {}>,
+			festAmount: number
 		) {
+			console.log("Начинаю generateFests", festAmount, "фестивалей");
+			context.commit("setGeneratingFests", true);
+
 			try {
-				console.log("generateFests", "festAmount: ", festAmount);
-
-				state.generatedFestsCount = 0;
-				state.generatingFests = true;
-				state.generatingFestsTotal = festAmount;
-
 				for (let i = 0; i < festAmount; i++) {
-					state.fests.push(await dispatch("getRandomFest"));
-					state.generatedFestsCount++;
-				}
+					context.commit("setLooping", true);
 
-				localStorage.setItem("fest", JSON.stringify(state));
+					const isStopGeneration = context.getters["getStopGeneration"];
 
-				if (store.getters["auth/getLoggedIn"]) {
-					const user = store.getters["auth/getUser"];
-					const database = getDatabase();
-					set(dbRef(database, `users/${user.uid}/fests`), state.fests);
+					if (isStopGeneration) {
+						console.log("Останавливаю генерацию, очищаю фесты");
+						context.commit("resetFests");
+						context.commit("setLooping", false);
+
+						break;
+					} else {
+						const newFest = await context.dispatch("getRandomFest");
+
+						console.log(
+							"Добавляю новый фест",
+							newFest,
+							"в массив из",
+							festAmount,
+							"фестивалей"
+						);
+
+						const generatedFests = context.getters["getGeneratedFests"];
+						const generatingFestsTotal =
+							context.getters["getGeneratingFestsTotal"];
+						context.commit("addFest", newFest);
+						context.commit("setGeneratedFests", generatedFests + 1);
+
+						if (generatedFests > generatingFestsTotal) {
+							console.error("Generating more fests then need");
+							context.commit("stopGeneration", true);
+						}
+					}
 				}
 			} catch (error) {
 				console.error("Error generating fests:", error);
 				throw error;
-			} finally {
-				state.generatingFests = false;
+			}
+
+			console.log(
+				"Конец generateFests. Всего было зарегестрировано",
+				context.getters.getGeneratedFests,
+				"из",
+				context.getters.getGeneratingFestsTotal
+			);
+
+			if (
+				context.getters.getGeneratedFests ===
+				context.getters.getGeneratingFestsTotal
+			) {
+				context.commit("stopGeneration", true);
+				context.commit("setGeneratingFests", false);
+				context.commit("setLooping", false);
 			}
 		},
 		async getRandomFest(context: ActionContext<festState, {}>) {
-			console.log("getRandomFest");
-
 			function getName() {
 				const names = server.getters.getNames(server.state);
 
@@ -266,8 +353,8 @@ export default {
 
 			function getImg() {
 				const imgs = img.getters.getReservedImg(img.state);
-
 				const existingImgs = new Set(context.state.fests.map((obj) => obj.img));
+
 				const missingImgs = imgs.filter(
 					(img) => !existingImgs.has(img.slice(1))
 				);
@@ -374,6 +461,15 @@ export default {
 		},
 		getGeneratingFestsTotal(state: festState) {
 			return state.generatingFestsTotal;
+		},
+		getStopGeneration(state: festState) {
+			return state.stopGeneration;
+		},
+		getResetedFests(state: festState) {
+			return state.festsReseted;
+		},
+		getLooping(state: festState) {
+			return state.looping;
 		},
 	},
 };

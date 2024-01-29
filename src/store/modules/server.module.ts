@@ -103,12 +103,12 @@ const actions = {
 
 				return cityData;
 			} else {
-				console.error(
-					"NO CITYDATA OR CAPITAL",
-					randomCountry,
-					cityData,
-					capital
-				);
+				// console.error(
+				// 	"NO CITYDATA OR CAPITAL",
+				// 	randomCountry,
+				// 	cityData,
+				// 	capital
+				// );
 
 				countries.splice(randomCountryIndex, 1);
 

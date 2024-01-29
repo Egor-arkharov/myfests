@@ -20,10 +20,12 @@
 				</button>
 				<ul class="nav__menu">
 					<li class="nav__item">
-						<router-link to="/" class="nav__link">All fests</router-link>
+						<router-link to="/" class="nav__link">Home</router-link>
 					</li>
 					<li class="nav__item">
-						<router-link to="/my-fests" class="nav__link">My fests</router-link>
+						<router-link to="/favourite-fests" class="nav__link"
+							>Favourite</router-link
+						>
 					</li>
 					<li class="nav__item">
 						<router-link to="/faq" class="nav__link">FAQ</router-link>

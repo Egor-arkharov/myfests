@@ -20,11 +20,12 @@
 				:view="view"
 			></request-tools>
 
-			<app-hint
+			<!-- ! Вернуть -->
+			<!-- <app-hint
 				v-if="isLoggedIn && firstTimeAuth"
 				:handleClick="handleHintButtonClick"
 				:text="'You don\'t have any festivals yet, so we\'ve generated a few for you. Change or delete festivals on their pages. Or create new!'"
-			></app-hint>
+			></app-hint> -->
 
 			<p v-if="fests.length === 0 && !isFestsGenerating" class="search-no">
 				We&nbsp;don&rsquo;t have festivals with this artist yet. Try again!

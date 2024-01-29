@@ -16,7 +16,7 @@ const state: AuthState = {
 
 const mutations = {
 	setAuthState(state: AuthState, payload: AuthState) {
-		console.log("mutate setAuthState", payload);
+		console.log("Mutate setAuthState", payload);
 
 		state.isLoggedIn = payload.isLoggedIn;
 		state.user = payload.user;
@@ -71,16 +71,13 @@ const actions = {
 				console.log("No user in DataBase");
 			}
 
-			console.log("auth before setting", context.state);
+			console.log("Auth before setting", context.state);
 
 			context.commit("setAuthState", {
 				isLoggedIn: !!user,
 				user,
 				nick,
 			});
-
-			await store.dispatch("server/loadCountries");
-			await store.dispatch("fest/loadFests");
 
 			console.log("Auth ends", context.state);
 		});

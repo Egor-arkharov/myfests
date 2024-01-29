@@ -21,7 +21,9 @@
 					</p>
 					<p>
 						Add festivals to&nbsp;your list and on&nbsp;the page
-						<router-link to="/my-fests" class="link">My fests</router-link>
+						<router-link to="/favourite-fests" class="link"
+							>Fav fests</router-link
+						>
 						look only at&nbsp;them. Or&nbsp;you can refresh all the data and
 						start all over again!
 					</p>

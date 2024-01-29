@@ -194,7 +194,10 @@ export default {
 		};
 
 		const generate = async () => {
-			await store.dispatch("fest/generateFests", 1);
+			// const numberToGenerate = 1;
+			// store.commit("fest/setTotalFestsToGenerate", numberToGenerate);
+			// await store.dispatch("fest/generateFests", numberToGenerate);
+			// store.commit("fest/setGeneratingFests", false);
 		};
 
 		const openModalCreate = () => {

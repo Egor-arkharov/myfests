@@ -1,6 +1,6 @@
 <template>
-	<app-page title="My fests" :userFests="true">
-		<div v-if="myFests.length">
+	<app-page title="Favourite fests" :userFests="true">
+		<div v-if="favFests.length">
 			<swiper
 				:slidesPerGroup="1"
 				:grabCursor="true"
@@ -12,12 +12,12 @@
 				@swiper="onSwiper"
 			>
 				<swiper-slide
-					v-for="fest in myFests"
+					v-for="fest in favFests"
 					:key="fest.id"
 					class="swiper-top__slide"
 				>
 					<div class="swiper-top__img">
-						<fest-img :fest="fest" :myFests="true"></fest-img>
+						<fest-img :fest="fest" :favFests="true"></fest-img>
 						<p class="swiper-top__text">{{ fest.name }}</p>
 					</div>
 				</swiper-slide>
@@ -32,7 +32,7 @@
 				class="swiper-bottom"
 			>
 				<swiper-slide
-					v-for="fest in myFests"
+					v-for="fest in favFests"
 					:key="fest.id"
 					class="swiper-bottom__slide"
 				>
@@ -67,7 +67,7 @@ export default {
 		const controlledSwiper = ref(null);
 		const store = useStore();
 
-		const myFests = computed(() => store.getters["fest/getMyFests"]);
+		const favFests = computed(() => store.getters["fest/getMyFests"]);
 
 		const setControlledSwiper = (swiper) => {
 			controlledSwiper.value = swiper;
@@ -89,7 +89,7 @@ export default {
 		const getImgUrl = (img) => require("@/assets/images/fests" + img);
 
 		return {
-			myFests,
+			favFests,
 			getImgUrl,
 			Navigation,
 			Controller,

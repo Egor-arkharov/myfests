@@ -79,9 +79,10 @@ export default {
 		};
 
 		const handleSignOut = () => {
-			signOut(auth).then(() => {
+			signOut(auth).then(async () => {
 				emit("close");
-				store.dispatch("reInit");
+				// await store.dispatch("reInit");
+				// await store.dispatch("fest/loadFests");
 			});
 		};
 

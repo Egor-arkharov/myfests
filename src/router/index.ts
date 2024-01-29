@@ -18,8 +18,8 @@ const routes = [
 		component: FestById,
 	},
 	{
-		path: "/my-fests",
-		name: "Myfests",
+		path: "/favourite-fests",
+		name: "Favfests",
 		component: UserFests,
 	},
 	{

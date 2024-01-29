@@ -29,16 +29,23 @@ export default createStore({
 
 			commit("img/setImages");
 
-			await dispatch("server/loadCountries");
-
-			await dispatch("fest/loadFests");
-
-			localStorage.setItem("fest", JSON.stringify(state.fest));
 			localStorage.setItem("img", JSON.stringify(state.img));
 			localStorage.setItem("settings", JSON.stringify(state.settings));
 			localStorage.setItem("server", JSON.stringify(state.server));
+
+			await dispatch("fest/loadFests");
+
+			// localStorage.setItem("fest", JSON.stringify(state.fest));
 		},
-		async reInit({ state, dispatch }: { state: any; dispatch: Function }) {
+		async reInit({
+			state,
+			commit,
+			dispatch,
+		}: {
+			state: any;
+			commit: Function;
+			dispatch: Function;
+		}) {
 			localStorage.clear();
 			console.log("local cleared: ", localStorage);
 			// localStorage.removeItem("fest");
@@ -47,11 +54,13 @@ export default createStore({
 			// localStorage.removeItem("settings");
 			// localStorage.removeItem("auth");
 
-			state.fest.fests = [];
+			// state.fest.fests = [];
 			state.server.bands = {};
 			state.server.names = [];
 			state.server.genres = [];
 			state.img.freeImg = [];
+
+			commit("fest/resetFests");
 
 			await dispatch("init");
 		},
